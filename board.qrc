@@ -1,5 +1,10 @@
 <RCC>
     <qresource prefix="/">
-        <file>RoyalGameofUr.jpg</file>
+        <file>square1.png</file>
+        <file>square2.png</file>
+        <file>square3.png</file>
+        <file>square4.png</file>
+        <file>square5.png</file>
+        <file>square6.png</file>
     </qresource>
 </RCC>
