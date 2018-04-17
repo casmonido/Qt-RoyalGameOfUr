@@ -3,8 +3,7 @@
 Board::Board(QGraphicsItem *parent)
     : QGraphicsObject(parent)
 {
-    zeroGround = new Square(this, QImage (":/square1.png"),
-                            X+Square::WIDTH, Y+Square::WIDTH);//(this, X - 100, y - 100);
+    zeroGround = new ZeroSquare(this, X, Y - 100);
     squares[0] = new Square(this, QImage (":/square1.png"),
                                 X+Square::WIDTH, Y+Square::WIDTH);
     squares[1] = new Square(this, QImage (":/square1.png"),
@@ -50,6 +49,7 @@ Board::Board(QGraphicsItem *parent)
                                 X+2*Square::WIDTH, Y+Square::WIDTH);
     squares[19] = new Square(this, QImage (":/square6.png"),
                                 X+5*Square::WIDTH, Y+Square::WIDTH);
+
 
 }
 
