@@ -17,7 +17,7 @@ public:
     void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget = 0) override;
     virtual int getX() const;
     virtual int getY() const;
-    virtual OccupySquareResults tryAndOccupy(Piece *p);
+    virtual OccupySquareResults tryAndOccupy(PieceColors c);
     virtual void leave();
 protected:
     int X, Y;
@@ -39,7 +39,7 @@ public:
 
     int getX() const;
     int getY() const;
-    OccupySquareResults tryAndOccupy(Piece *p);
+    OccupySquareResults tryAndOccupy(PieceColors c);
     void leave();
 };
 

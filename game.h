@@ -18,7 +18,8 @@ public:
     void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget = 0) override;
 
 private:
-    Piece *pieces [NUM_PIECES];
+    Piece *opponentsPieces [NUM_PIECES];
+    Piece *playersPieces [NUM_PIECES];
     Board *board;
 };
 
