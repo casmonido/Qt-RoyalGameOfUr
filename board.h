@@ -4,6 +4,7 @@
 #include <QPainter>
 #include <QColor>
 #include "square.h"
+#include "piece.h"
 
 class Board: public QGraphicsObject
 {
@@ -19,6 +20,7 @@ private:
     Square *squares [20];
     ZeroSquare *zeroGround;
     static const int X = -300, Y = -100, XW = 600, YW = 300;
+    Piece *pieces [7];
 };
 
 #endif // BOARD_H

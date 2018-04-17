@@ -49,7 +49,10 @@ Board::Board(QGraphicsItem *parent)
                                 X+2*Square::WIDTH, Y+Square::WIDTH);
     squares[19] = new Square(this, QImage (":/square6.png"),
                                 X+5*Square::WIDTH, Y+Square::WIDTH);
-
+    for (int i = 0; i < 5; i++)
+    {
+        pieces[i] = new Piece(this, zeroGround);
+    }
 
 }
 
@@ -63,6 +66,8 @@ Board::~Board()
     delete zeroGround;
     for (int i = 0; i < 20; i++)
         delete squares[i];
+    for (int i = 0; i < 5; i++)
+        delete pieces[i];
 }
 
 void Board::paint(QPainter *painter,
@@ -72,4 +77,6 @@ void Board::paint(QPainter *painter,
     Q_UNUSED(widget);
     for (int i = 0; i < 20; i++)
         squares[i]->paint(painter, option, widget);
+    for (int i = 0; i < 5; i++)
+        pieces[i]->paint(painter, option, widget);
 }
