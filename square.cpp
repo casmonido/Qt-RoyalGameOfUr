@@ -36,13 +36,24 @@ int Square::getY() const {
     return Y;
 }
 
+OccupySquareResults Square::tryAndOccupy(Piece *p) {
+    this->piecesNum++;
+    //this->color
+    return OK;
+}
+
+void Square::leave() {
+    this->piecesNum--;
+    //this->color =
+}
+
 ZeroSquare::ZeroSquare(QGraphicsItem *parent, int x, int y)
     : Square(parent, x, y)
 {
 }
 
 int ZeroSquare::getX() const {
-    return X + pieceNumber*Square::WIDTH;
+    return X + piecesNum*Square::WIDTH;
 }
 
 int ZeroSquare::getY() const {
@@ -51,7 +62,7 @@ int ZeroSquare::getY() const {
 
 QRectF ZeroSquare::boundingRect() const
 {
-    return QRectF(X, Y, WIDTH * pieceNumber, WIDTH); //left, top, width, height 600, 300
+    return QRectF(X, Y, WIDTH * piecesNum, WIDTH); //left, top, width, height 600, 300
 }
 
 void ZeroSquare::paint(QPainter *painter,

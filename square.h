@@ -2,6 +2,9 @@
 #define SQUARE_H
 #include <QGraphicsItem>
 #include <QPainter>
+#include "enums.h"
+#include "piece.h"
+class Piece;
 
 class Square : public QGraphicsObject
 {
@@ -13,11 +16,15 @@ public:
     void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget = 0) override;
     int getX() const;
     int getY() const;
+    OccupySquareResults tryAndOccupy(Piece *p);
+    void leave();
 protected:
     int X, Y;
+    int piecesNum = 0;
     Square(QGraphicsItem *parent = 0, int x=0, int y=0);
 private:
     QPixmap pixmap;
+    PieceColors color = NONE;
 };
 
 
@@ -31,8 +38,6 @@ public:
 
     int getX() const;
     int getY() const;
-private:
-    int pieceNumber = 0;
 };
 
 #endif // SQUARE_H

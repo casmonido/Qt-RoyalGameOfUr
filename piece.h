@@ -2,6 +2,7 @@
 #define PIECE_H
 #include <QGraphicsItem>
 #include "square.h"
+class Square;
 
 class Piece : public QGraphicsObject
 {

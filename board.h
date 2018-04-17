@@ -14,13 +14,13 @@ public:
 
     QRectF boundingRect() const override;
     void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget = 0) override;
-
+    Square *getStartingSquare();
 private:
-    QPixmap pixmap;
-    Square *squares [20];
-    ZeroSquare *zeroGround;
     static const int X = -300, Y = -100, XW = 600, YW = 300;
-    Piece *pieces [7];
+    static const int NUM_SQUARES = 20;
+    QPixmap pixmap;
+    Square *squares [NUM_SQUARES];
+    ZeroSquare *zeroGround;
 };
 
 #endif // BOARD_H
