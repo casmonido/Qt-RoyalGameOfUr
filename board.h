@@ -17,6 +17,7 @@ public:
 private:
     QPixmap pixmap;
     Square *squares [20];
+    Square *zeroGround;
     static const int X = -300, Y = -100, XW = 600, YW = 300;
 };
 

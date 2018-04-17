@@ -3,6 +3,8 @@
 Board::Board(QGraphicsItem *parent)
     : QGraphicsObject(parent)
 {
+    zeroGround = new Square(this, QImage (":/square1.png"),
+                            X+Square::WIDTH, Y+Square::WIDTH);//(this, X - 100, y - 100);
     squares[0] = new Square(this, QImage (":/square1.png"),
                                 X+Square::WIDTH, Y+Square::WIDTH);
     squares[1] = new Square(this, QImage (":/square1.png"),
@@ -58,6 +60,7 @@ QRectF Board::boundingRect() const
 
 Board::~Board()
 {
+    delete zeroGround;
     for (int i = 0; i < 20; i++)
         delete squares[i];
 }
@@ -67,8 +70,6 @@ void Board::paint(QPainter *painter,
 {
     Q_UNUSED(option);
     Q_UNUSED(widget);
-    //painter->setBrush(QColor(64, 120, 250, 220));
-    //painter->drawRect(X, Y, XW, YW);
     for (int i = 0; i < 20; i++)
         squares[i]->paint(painter, option, widget);
 }
