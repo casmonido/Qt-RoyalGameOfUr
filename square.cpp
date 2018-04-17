@@ -37,14 +37,20 @@ int Square::getY() const {
 }
 
 OccupySquareResults Square::tryAndOccupy(Piece *p) {
+    if (this->color != NONE && this->color != p->getColor())
+    {
+        // emit event
+        // .leave() performed by pieces
+    }
     this->piecesNum++;
-    //this->color
+    this->color = p->getColor();
     return OK;
 }
 
 void Square::leave() {
     this->piecesNum--;
-    //this->color =
+    if (this->piecesNum == 0)
+        this->color = NONE;
 }
 
 ZeroSquare::ZeroSquare(QGraphicsItem *parent, int x, int y)
@@ -70,4 +76,13 @@ void ZeroSquare::paint(QPainter *painter,
 {
     Q_UNUSED(option);
     Q_UNUSED(widget);
+}
+
+OccupySquareResults ZeroSquare::tryAndOccupy(Piece *p) {
+    this->piecesNum++;
+    return OK;
+}
+
+void ZeroSquare::leave() {
+    this->piecesNum--;
 }

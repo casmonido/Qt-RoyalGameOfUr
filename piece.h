@@ -2,6 +2,7 @@
 #define PIECE_H
 #include <QGraphicsItem>
 #include "square.h"
+#include "enums.h"
 class Square;
 
 class Piece : public QGraphicsObject
@@ -12,8 +13,9 @@ public:
 
     QRectF boundingRect() const override;
     void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget = 0) override;
-
+    virtual PieceColors getColor();
 private:
+    int x, y;
     Square *location;
 };
 

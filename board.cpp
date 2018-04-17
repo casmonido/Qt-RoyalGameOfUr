@@ -72,7 +72,7 @@ void Board::paint(QPainter *painter,
         squares[i]->paint(painter, option, widget);
 }
 
-Square *Board::getStartingSquare()
+ZeroSquare *Board::getStartingSquare()
 {
     return zeroGround;
 }

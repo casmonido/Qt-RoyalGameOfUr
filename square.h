@@ -1,5 +1,6 @@
 #ifndef SQUARE_H
 #define SQUARE_H
+#include <iostream>
 #include <QGraphicsItem>
 #include <QPainter>
 #include "enums.h"
@@ -14,17 +15,17 @@ public:
 
     QRectF boundingRect() const override;
     void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget = 0) override;
-    int getX() const;
-    int getY() const;
-    OccupySquareResults tryAndOccupy(Piece *p);
-    void leave();
+    virtual int getX() const;
+    virtual int getY() const;
+    virtual OccupySquareResults tryAndOccupy(Piece *p);
+    virtual void leave();
 protected:
     int X, Y;
     int piecesNum = 0;
+    PieceColors color = NONE;
     Square(QGraphicsItem *parent = 0, int x=0, int y=0);
 private:
     QPixmap pixmap;
-    PieceColors color = NONE;
 };
 
 
@@ -38,6 +39,8 @@ public:
 
     int getX() const;
     int getY() const;
+    OccupySquareResults tryAndOccupy(Piece *p);
+    void leave();
 };
 
 #endif // SQUARE_H
