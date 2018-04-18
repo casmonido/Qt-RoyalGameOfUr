@@ -2,7 +2,6 @@
 #define PIECE_H
 #include <QGraphicsItem>
 #include <QtWidgets>
-#include <iostream>
 #include <math.h>
 #include "square.h"
 #include "board.h"
@@ -12,7 +11,7 @@ class Square;
 class Piece : public QGraphicsObject
 {
 public:
-    static const double R;
+    static const int R = 50;
     Piece(QGraphicsItem *parent = 0, Square *location=0);
 
     QRectF boundingRect() const override;

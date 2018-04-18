@@ -20,7 +20,7 @@ public:
 private:
     static Board *instance;
     Board(QGraphicsItem *parent = 0);
-    static const int XW = 8, YW = 3;
+    static const int X = -300, Y = -100, XW = 600, YW = 300;
     static const int NUM_SQUARES = 20;
     QPixmap pixmap;
     Square *squares [NUM_SQUARES];

@@ -21,4 +21,8 @@ void Game::paint(QPainter *painter,
 {
     Q_UNUSED(option);
     Q_UNUSED(widget);
+    for (int i = 0; i < NUM_PIECES; i++)
+        opponentsPieces[i]->paint(painter, option, widget);
+    for (int i = 0; i < NUM_PIECES; i++)
+        playersPieces[i]->paint(painter, option, widget);
 }

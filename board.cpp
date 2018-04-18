@@ -3,53 +3,53 @@
 Board::Board(QGraphicsItem *parent)
     : QGraphicsObject(parent)
 {
-    zeroGround = new ZeroSquare(this, 0, 0-4);
+    zeroGround = new ZeroSquare(this, X, Y - 100);
 
     squares[0] = new Square(this, QImage (":/square1.png"),
-                                0, 0);
+                                X+Square::WIDTH, Y+Square::WIDTH);
     squares[1] = new Square(this, QImage (":/square1.png"),
-                                0+2, 0);
+                                X+2*Square::WIDTH, Y);
     squares[2] = new Square(this, QImage (":/square1.png"),
-                                0+2, 0+2);
+                                X+2*Square::WIDTH, Y+2*Square::WIDTH);
     squares[3] = new Square(this, QImage (":/square1.png"),
-                                0+4, 0+1);
+                                X+4*Square::WIDTH, Y+1*Square::WIDTH);
     squares[4] = new Square(this, QImage (":/square1.png"),
-                                0+7, 0+1);
+                                X+7*Square::WIDTH, Y+1*Square::WIDTH);
 
     squares[5] = new Square(this, QImage (":/square2.png"),
-                                0+7, 0+2);
+                                X+7*Square::WIDTH, Y+2*Square::WIDTH);
     squares[6] = new Square(this, QImage (":/square2.png"),
-                                0+7, 0);
+                                X+7*Square::WIDTH, Y);
 
     squares[7] = new Square(this, QImage (":/square3.png"),
-                                0, 0);
+                                X, Y+Square::WIDTH);
 
     squares[8] = new Square(this, QImage (":/square4.png"),
-                                0, 0);
+                                X, Y);
     squares[9] = new Square(this, QImage (":/square4.png"),
-                                0, 0+2);
+                                X, Y+2*Square::WIDTH);
     squares[10] = new Square(this, QImage (":/square4.png"),
-                                0+3, 0);
+                                X+3*Square::WIDTH, Y+Square::WIDTH);
     squares[11] = new Square(this, QImage (":/square4.png"),
-                                0+6, 0);
+                                X+6*Square::WIDTH, Y);
     squares[12] = new Square(this, QImage (":/square4.png"),
-                                0+6, 0+2);
+                                X+6*Square::WIDTH, Y+2*Square::WIDTH);
 
     squares[13] = new Square(this, QImage (":/square5.png"),
-                                0, 0);
+                                X+Square::WIDTH, Y);
     squares[14] = new Square(this, QImage (":/square5.png"),
-                                0, 0+2);
+                                X+Square::WIDTH, Y+2*Square::WIDTH);
     squares[15] = new Square(this, QImage (":/square5.png"),
-                                0+3, 0);
+                                X+3*Square::WIDTH, Y);
     squares[16] = new Square(this, QImage (":/square5.png"),
-                                0+3, 0+2);
+                                X+3*Square::WIDTH, Y+2*Square::WIDTH);
     squares[17] = new Square(this, QImage (":/square5.png"),
-                                0+6, 0);
+                                X+6*Square::WIDTH, Y+Square::WIDTH);
 
     squares[18] = new Square(this, QImage (":/square6.png"),
-                                0+2, 0);
+                                X+2*Square::WIDTH, Y+Square::WIDTH);
     squares[19] = new Square(this, QImage (":/square6.png"),
-                                0+5, 0);
+                                X+5*Square::WIDTH, Y+Square::WIDTH);
 
     playersPath[0] = squares[15];
     playersPath[1] = squares[1];
@@ -83,7 +83,7 @@ Square *Board::nextSquare(PieceColors c, int crossedPathLength)
 
 QRectF Board::boundingRect() const
 {
-    return QRectF(0, 0, XW, YW);
+    return QRectF(X, Y, XW, YW);
 }
 
 void Board::paint(QPainter *painter,
@@ -91,6 +91,8 @@ void Board::paint(QPainter *painter,
 {
     Q_UNUSED(option);
     Q_UNUSED(widget);
+    for (int i = 0; i < NUM_SQUARES; i++)
+        squares[i]->paint(painter, option, widget);
 }
 
 ZeroSquare *Board::getStartingSquare()

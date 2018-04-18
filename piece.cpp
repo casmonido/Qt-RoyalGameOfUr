@@ -10,17 +10,17 @@ void PlayersPiece::mousePressEvent(QGraphicsSceneMouseEvent *e)
     location = Board::getInstance()->nextSquare(getColor(), crossedPathLength);
     x = location->getX();
     y = location->getY();
-    this->setTransform(QTransform::fromTranslate(5, 5), true);
+    this->setTransform(QTransform::fromTranslate(x - prevX, y - prevY), true);
     update();
     crossedPathLength++;
-    std::cout << "mouse press " << crossedPathLength << "\n";
 }
 
 bool Piece::eventFilter(QObject* target, QEvent* e) {
     if (target == this && e->type() == QEvent::MouseButtonPress)
     {
         QMouseEvent* me = static_cast<QMouseEvent*>(e);
-        return true; // lub return false;
+        qDebug() << "pozycja" << me->pos();
+        return false; // lub return false;
     }
     return QObject::eventFilter(target, e);
 }
@@ -31,7 +31,7 @@ void PlayersPiece::paint(QPainter *painter, const QStyleOptionGraphicsItem *opti
     Q_UNUSED(option);
     Q_UNUSED(widget);
     painter->setBrush(QColor(255, 250, 250, 255));
-    painter->drawEllipse(0, 0, R, R);
+    painter->drawEllipse(x, y, R, R);
 }
 
 void OpponentsPiece::paint(QPainter *painter, const QStyleOptionGraphicsItem *option,
@@ -40,14 +40,13 @@ void OpponentsPiece::paint(QPainter *painter, const QStyleOptionGraphicsItem *op
     Q_UNUSED(option);
     Q_UNUSED(widget);
     painter->setBrush(QColor(5, 5, 5, 255));
-    painter->drawEllipse(0, 0, R, R);
+    painter->drawEllipse(x, y, R, R);
 }
 
 
 Piece::Piece(QGraphicsItem *parent, Square *location)
     : QGraphicsObject(parent)
 {
-    this->setPos(0.5, 0.5);
     this->location = location;
     this->location->tryAndOccupy(getColor());
     x = this->location->getX();
@@ -61,7 +60,7 @@ PieceColors Piece::getColor() {
 
 QRectF Piece::boundingRect() const
 {
-    return QRectF(0, 0, 2*R, 2*R);
+    return QRectF(x, y, 2*R, 2*R);
 }
 
 PieceColors OpponentsPiece::getColor()
