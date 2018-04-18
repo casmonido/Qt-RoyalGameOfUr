@@ -3,7 +3,7 @@
 Square::Square(QGraphicsItem *parent, QImage image, int x, int y)
     : QGraphicsObject(parent)
 {
-    this->pixmap = QPixmap::fromImage(image).scaled(WIDTH, WIDTH);
+    this->pixmap = QPixmap::fromImage(image);//.scaled(WIDTH, WIDTH);
     X = x;
     Y = y;
 }
@@ -17,7 +17,7 @@ Square::Square(QGraphicsItem *parent, int x, int y)
 
 QRectF Square::boundingRect() const
 {
-    return QRectF(X, Y, WIDTH, WIDTH); //left, top, width, height 600, 300
+    return QRectF(0, 0, WIDTH, WIDTH);
 }
 
 void Square::paint(QPainter *painter,
@@ -25,7 +25,7 @@ void Square::paint(QPainter *painter,
 {
     Q_UNUSED(option);
     Q_UNUSED(widget);
-    painter->drawPixmap(QPointF(X, Y), pixmap);
+    painter->drawPixmap(QPointF(0, 0), pixmap);
 }
 
 int Square::getX() const {
@@ -68,7 +68,7 @@ int ZeroSquare::getY() const {
 
 QRectF ZeroSquare::boundingRect() const
 {
-    return QRectF(X, Y, WIDTH * piecesNum, WIDTH); //left, top, width, height 600, 300
+    return QRectF(0, 0, WIDTH * piecesNum, WIDTH); //left, top, width, height 600, 300
 }
 
 void ZeroSquare::paint(QPainter *painter,

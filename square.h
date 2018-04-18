@@ -10,7 +10,7 @@ class Piece;
 class Square : public QGraphicsObject
 {
 public:
-    static const int WIDTH =100;
+    static const int WIDTH =1;
     Square(QGraphicsItem *parent = 0, QImage image = QImage (":/square1.png"), int x=0, int y=0);
 
     QRectF boundingRect() const override;

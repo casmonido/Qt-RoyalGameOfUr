@@ -16,16 +16,20 @@ protected:
 };
 
 Board *Board::instance = 0;
+const double Piece::R = 0.6;
 
 int main(int argc, char **argv)
 {
     QApplication app(argc, argv);
-    QGraphicsScene scene(-400, -300, 1000, 600);
+    QGraphicsScene scene(0, 0, 2000, 1000); //tyle px
 
     Game *game = new Game;
     game->setPos(0, 0);
     scene.addItem(game);
     GraphicsView view(&scene);
+    view.showMaximized();
+    QRectF bounds = scene.itemsBoundingRect();
+    view.fitInView( scene.sceneRect(), Qt::KeepAspectRatio );
     view.setRenderHint(QPainter::Antialiasing);
     view.setViewportUpdateMode(QGraphicsView::BoundingRectViewportUpdate);
     view.setBackgroundBrush(QColor(255, 255, 240));
