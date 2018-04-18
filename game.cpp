@@ -6,9 +6,9 @@ Game::Game(QGraphicsItem *parent)
     Board *board = Board::getInstance(this);
     board->setPos(0, 0);
     for (int i = 0; i < NUM_PIECES; i++)
-        playersPieces[i] = new PlayersPiece(this, board->getStartingSquare());
+        playersPieces[i] = new PlayersPiece(this, board->getStartingSquare(WHITE));
     for (int i = 0; i < NUM_PIECES; i++)
-        opponentsPieces[i] = new OpponentsPiece(this, board->getStartingSquare());
+        opponentsPieces[i] = new OpponentsPiece(this, board->getStartingSquare(BLACK));
 }
 
 QRectF Game::boundingRect() const

@@ -15,16 +15,15 @@ public:
     static Board *getInstance(QGraphicsItem *parent = 0);
     QRectF boundingRect() const override;
     void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget = 0) override;
-    ZeroSquare *getStartingSquare();
+    ZeroSquare *getStartingSquare(PieceColors c);
     Square *nextSquare(PieceColors c, int crossedPathLength);
 private:
     static Board *instance;
     Board(QGraphicsItem *parent = 0);
-    static const int X = -300, Y = -100, XW = 600, YW = 300;
     static const int NUM_SQUARES = 20, PATH_LEN = 14;
     QPixmap pixmap;
     Square *squares [NUM_SQUARES];
-    ZeroSquare *zeroGround;
+    ZeroSquare *whiteZeroGround, *blackZeroGround;
     Square *playersPath [PATH_LEN];
 };
 

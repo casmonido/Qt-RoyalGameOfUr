@@ -20,10 +20,10 @@ Board *Board::instance = 0;
 int main(int argc, char **argv)
 {
     QApplication app(argc, argv);
-    QGraphicsScene scene(-1*Square::WIDTH, -2*Square::WIDTH, 10*Square::WIDTH, 6*Square::WIDTH);
+    QGraphicsScene scene(-1*Square::WIDTH, -2*Square::WIDTH, 10*Square::WIDTH, 8*Square::WIDTH);
 
     Game *game = new Game;
-    game->setPos(0, 0);
+    game->setPos(0, Square::WIDTH);
     scene.addItem(game);
 
     GraphicsView view(&scene);

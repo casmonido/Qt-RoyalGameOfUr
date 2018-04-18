@@ -48,10 +48,10 @@ Piece::Piece(QGraphicsItem *parent, Square *location)
     : QGraphicsObject(parent)
 {
     this->location = location;
-    this->location->tryAndOccupy(getColor());
     x = this->location->getX();
     y = this->location->getY();
-    this->setPos(x, y);
+    this->location->tryAndOccupy(getColor());
+    this->setPos(x + Square::WIDTH/4, y + Square::WIDTH/4);
     this->installEventFilter(this);
 }
 
