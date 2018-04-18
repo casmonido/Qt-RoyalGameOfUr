@@ -2,8 +2,27 @@
 
 void PlayersPiece::mousePressEvent(QGraphicsSceneMouseEvent *e)
 {
-    this->location = Board::getInstance()->nextSquare(getColor(), crossedPathLength);
+    if (!(e->buttons() & Qt::LeftButton))
+        return;
+    location->leave();
+    int prevX = x;
+    int prevY= y;
+    location = Board::getInstance()->nextSquare(getColor(), crossedPathLength);
+    x = location->getX();
+    y = location->getY();
+    this->setTransform(QTransform::fromTranslate(x - prevX, y - prevY), true);
+    update();
     crossedPathLength++;
+}
+
+bool Piece::eventFilter(QObject* target, QEvent* e) {
+    if (target == this && e->type() == QEvent::MouseButtonPress)
+    {
+        QMouseEvent* me = static_cast<QMouseEvent*>(e);
+        qDebug() << "pozycja" << me->pos();
+        return false; // lub return false;
+    }
+    return QObject::eventFilter(target, e);
 }
 
 void PlayersPiece::paint(QPainter *painter, const QStyleOptionGraphicsItem *option,
@@ -32,6 +51,7 @@ Piece::Piece(QGraphicsItem *parent, Square *location)
     this->location->tryAndOccupy(getColor());
     x = this->location->getX();
     y = this->location->getY();
+    this->installEventFilter(this);
 }
 
 PieceColors Piece::getColor() {

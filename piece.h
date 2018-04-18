@@ -2,6 +2,7 @@
 #define PIECE_H
 #include <QGraphicsItem>
 #include <QtWidgets>
+#include <math.h>
 #include "square.h"
 #include "board.h"
 #include "enums.h"
@@ -15,6 +16,7 @@ public:
 
     QRectF boundingRect() const override;
     virtual PieceColors getColor() = 0;
+    bool eventFilter(QObject *target, QEvent *e);
 protected:
     int x, y;
     int crossedPathLength = 0;
