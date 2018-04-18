@@ -20,7 +20,7 @@ Board *Board::instance = 0;
 int main(int argc, char **argv)
 {
     QApplication app(argc, argv);
-    QGraphicsScene scene(-100, -200, 1000, 600);
+    QGraphicsScene scene(-1*Square::WIDTH, -2*Square::WIDTH, 10*Square::WIDTH, 6*Square::WIDTH);
 
     Game *game = new Game;
     game->setPos(0, 0);
@@ -31,6 +31,6 @@ int main(int argc, char **argv)
     view.setViewportUpdateMode(QGraphicsView::BoundingRectViewportUpdate);
     view.setBackgroundBrush(QColor(255, 255, 240));
     view.setWindowTitle("The royal game of Ur");
-    view.show();
+    view.showMaximized();
     return app.exec();
 }

@@ -21,11 +21,11 @@ private:
     static Board *instance;
     Board(QGraphicsItem *parent = 0);
     static const int X = -300, Y = -100, XW = 600, YW = 300;
-    static const int NUM_SQUARES = 20;
+    static const int NUM_SQUARES = 20, PATH_LEN = 14;
     QPixmap pixmap;
     Square *squares [NUM_SQUARES];
     ZeroSquare *zeroGround;
-    Square *playersPath [14];
+    Square *playersPath [PATH_LEN];
 };
 
 #endif // BOARD_H

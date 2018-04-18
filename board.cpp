@@ -3,7 +3,7 @@
 Board::Board(QGraphicsItem *parent)
     : QGraphicsObject(parent)
 {
-    zeroGround = new ZeroSquare(this, X, Y - 100);
+    zeroGround = new ZeroSquare(this, 0, -1*Square::WIDTH);
 
     squares[0] = new Square(this, QImage (":/square1.png"),
                                 Square::WIDTH, Square::WIDTH);
@@ -76,7 +76,7 @@ Board *Board::getInstance(QGraphicsItem *parent) {
 
 Square *Board::nextSquare(PieceColors c, int crossedPathLength)
 {
-    if (c == WHITE)
+    if (c == WHITE && crossedPathLength < PATH_LEN)
         return playersPath[crossedPathLength];
     return zeroGround;
 }

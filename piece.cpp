@@ -10,7 +10,7 @@ void PlayersPiece::mousePressEvent(QGraphicsSceneMouseEvent *e)
     location = Board::getInstance()->nextSquare(getColor(), crossedPathLength);
     x = location->getX();
     y = location->getY();
-    this->setTransform(QTransform::fromTranslate(5, -5), true);
+    this->setTransform(QTransform::fromTranslate(x - prevX, y - prevY), true);
     update();
     crossedPathLength++;
 }
