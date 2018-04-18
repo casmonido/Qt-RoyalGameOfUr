@@ -1,5 +1,9 @@
 #include "piece.h"
 
+void PlayersPiece::mousePressEvent(QGraphicsSceneMouseEvent *e)
+{
+
+}
 
 void PlayersPiece::paint(QPainter *painter, const QStyleOptionGraphicsItem *option,
            QWidget *widget)

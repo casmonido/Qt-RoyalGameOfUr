@@ -3,12 +3,12 @@
 Game::Game(QGraphicsItem *parent)
     : QGraphicsObject(parent)
 {
-    board = new Board(this);
+    board = Board::getInstance(this);
     board->setPos(0, 0);
     for (int i = 0; i < NUM_PIECES; i++)
-        opponentsPieces[i] = new OpponentsPiece(this, board->getStartingSquare());
-    for (int i = 0; i < NUM_PIECES; i++)
         playersPieces[i] = new PlayersPiece(this, board->getStartingSquare());
+    for (int i = 0; i < NUM_PIECES; i++)
+        opponentsPieces[i] = new OpponentsPiece(this, board->getStartingSquare());
 }
 
 Game::~Game()

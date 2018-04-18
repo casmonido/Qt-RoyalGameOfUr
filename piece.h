@@ -1,6 +1,7 @@
 #ifndef PIECE_H
 #define PIECE_H
 #include <QGraphicsItem>
+#include <QtWidgets>
 #include "square.h"
 #include "enums.h"
 class Square;
@@ -33,6 +34,8 @@ public:
     PlayersPiece(QGraphicsItem *parent = 0, Square *location=0);
     PieceColors getColor();
     void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget = 0) override;
+
+    void mousePressEvent(QGraphicsSceneMouseEvent *e);
 };
 
 #endif // PIECE_H
