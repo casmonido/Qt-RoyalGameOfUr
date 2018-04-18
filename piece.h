@@ -3,6 +3,7 @@
 #include <QGraphicsItem>
 #include <QtWidgets>
 #include "square.h"
+#include "board.h"
 #include "enums.h"
 class Square;
 
@@ -16,6 +17,7 @@ public:
     virtual PieceColors getColor() = 0;
 protected:
     int x, y;
+    int crossedPathLength = 0;
     Square *location;
 };
 

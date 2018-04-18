@@ -6,6 +6,8 @@
 #include "square.h"
 #include "piece.h"
 #include "enums.h"
+class ZeroSquare;
+class Square;
 
 class Board: public QGraphicsObject
 {

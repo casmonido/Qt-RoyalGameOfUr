@@ -2,7 +2,8 @@
 
 void PlayersPiece::mousePressEvent(QGraphicsSceneMouseEvent *e)
 {
-
+    this->location = Board::getInstance()->nextSquare(getColor(), crossedPathLength);
+    crossedPathLength++;
 }
 
 void PlayersPiece::paint(QPainter *painter, const QStyleOptionGraphicsItem *option,

@@ -3,7 +3,7 @@
 Game::Game(QGraphicsItem *parent)
     : QGraphicsObject(parent)
 {
-    board = Board::getInstance(this);
+    Board *board = Board::getInstance(this);
     board->setPos(0, 0);
     for (int i = 0; i < NUM_PIECES; i++)
         playersPieces[i] = new PlayersPiece(this, board->getStartingSquare());
@@ -11,18 +11,9 @@ Game::Game(QGraphicsItem *parent)
         opponentsPieces[i] = new OpponentsPiece(this, board->getStartingSquare());
 }
 
-Game::~Game()
-{
-    delete board;
-    for (int i = 0; i < NUM_PIECES; i++)
-        delete opponentsPieces[i];
-    for (int i = 0; i < NUM_PIECES; i++)
-        delete playersPieces[i];
-}
-
 QRectF Game::boundingRect() const
 {
-    return board->boundingRect();
+    return Board::getInstance()->boundingRect();
 }
 
 void Game::paint(QPainter *painter,
