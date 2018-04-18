@@ -10,7 +10,7 @@ void PlayersPiece::mousePressEvent(QGraphicsSceneMouseEvent *e)
     location = Board::getInstance()->nextSquare(getColor(), crossedPathLength);
     x = location->getX();
     y = location->getY();
-    this->setTransform(QTransform::fromTranslate(x - prevX, y - prevY), true);
+    this->setTransform(QTransform::fromTranslate(5, -5), true);
     update();
     crossedPathLength++;
 }
@@ -31,7 +31,7 @@ void PlayersPiece::paint(QPainter *painter, const QStyleOptionGraphicsItem *opti
     Q_UNUSED(option);
     Q_UNUSED(widget);
     painter->setBrush(QColor(255, 250, 250, 255));
-    painter->drawEllipse(x, y, R, R);
+    painter->drawEllipse(0, 0, R, R);
 }
 
 void OpponentsPiece::paint(QPainter *painter, const QStyleOptionGraphicsItem *option,
@@ -40,7 +40,7 @@ void OpponentsPiece::paint(QPainter *painter, const QStyleOptionGraphicsItem *op
     Q_UNUSED(option);
     Q_UNUSED(widget);
     painter->setBrush(QColor(5, 5, 5, 255));
-    painter->drawEllipse(x, y, R, R);
+    painter->drawEllipse(0, 0, R, R);
 }
 
 
@@ -51,6 +51,7 @@ Piece::Piece(QGraphicsItem *parent, Square *location)
     this->location->tryAndOccupy(getColor());
     x = this->location->getX();
     y = this->location->getY();
+    this->setPos(x, y);
     this->installEventFilter(this);
 }
 
@@ -60,7 +61,7 @@ PieceColors Piece::getColor() {
 
 QRectF Piece::boundingRect() const
 {
-    return QRectF(x, y, 2*R, 2*R);
+    return QRectF(0, 0, R, R);
 }
 
 PieceColors OpponentsPiece::getColor()

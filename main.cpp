@@ -20,11 +20,12 @@ Board *Board::instance = 0;
 int main(int argc, char **argv)
 {
     QApplication app(argc, argv);
-    QGraphicsScene scene(-400, -300, 1000, 600);
+    QGraphicsScene scene(-100, -200, 1000, 600);
 
     Game *game = new Game;
     game->setPos(0, 0);
     scene.addItem(game);
+
     GraphicsView view(&scene);
     view.setRenderHint(QPainter::Antialiasing);
     view.setViewportUpdateMode(QGraphicsView::BoundingRectViewportUpdate);
