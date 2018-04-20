@@ -7,7 +7,9 @@
 #include "piece.h"
 #include "enums.h"
 #include "board.h"
+#include "dies.h"
 class Board;
+class Dies;
 
 class Game: public QGraphicsObject
 {
@@ -20,6 +22,7 @@ public:
 private:
     Piece *opponentsPieces [NUM_PIECES];
     Piece *playersPieces [NUM_PIECES];
+    Dies *dies;
 };
 
 #endif // GAME_H

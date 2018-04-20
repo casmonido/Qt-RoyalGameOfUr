@@ -5,14 +5,16 @@ HEADERS += \
     piece.h \
     square.h \
     enums.h \
-    game.h
+    game.h \
+    dies.h
 
 SOURCES += \
         main.cpp \
     board.cpp \
     piece.cpp \
     square.cpp \
-    game.cpp
+    game.cpp \
+    dies.cpp
 
 # install
 target.path = $$[QT_INSTALL_EXAMPLES]/widgets/graphicsview/royalurgame

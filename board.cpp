@@ -84,7 +84,7 @@ Square *Board::nextSquare(PieceColors c, int crossedPathLength)
 
 QRectF Board::boundingRect() const
 {
-    return QRectF(0, 0, 6*Square::WIDTH, 3*Square::WIDTH);
+    return QRectF(0, -1*Square::WIDTH, 8*Square::WIDTH, 4*Square::WIDTH);
 }
 
 void Board::paint(QPainter *painter,

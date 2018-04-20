@@ -9,6 +9,8 @@ Game::Game(QGraphicsItem *parent)
         playersPieces[i] = new PlayersPiece(this, board->getStartingSquare(WHITE));
     for (int i = 0; i < NUM_PIECES; i++)
         opponentsPieces[i] = new OpponentsPiece(this, board->getStartingSquare(BLACK));
+    dies = new Dies(this);
+    dies->setPos( 8*Square::WIDTH, 4*Square::WIDTH);
 }
 
 QRectF Game::boundingRect() const
