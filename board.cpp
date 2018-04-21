@@ -83,13 +83,6 @@ Board::Board(QGraphicsItem *parent)
     opponentsPath[13] = squares[12];
 }
 
-Board *Board::getInstance(QGraphicsItem *parent) {
-    if (!Board::instance)
-        Board::instance = new Board(parent);
-    return Board::instance;
-}
-
-
 Square *Board::nextSquare(PieceColors c, int crossedPathLength)
 {
     if (crossedPathLength >= PATH_LEN)

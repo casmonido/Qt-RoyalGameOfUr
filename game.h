@@ -9,21 +9,27 @@
 #include "board.h"
 #include "dies.h"
 class Board;
-class Dies;
+class DiesSet;
 class Piece;
+class ZeroSquare;
+class Square;
 
 class Game: public QGraphicsObject
 {
+    Q_OBJECT
 public:
     static const int NUM_PIECES = 7;
     Game(QGraphicsItem *parent = 0);
     QRectF boundingRect() const override;
     void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget = 0) override;
+    ZeroSquare *getStartingSquare(PieceColors c);
+    Square *nextSquare(PieceColors c, int crossedPathLength);
 
 private:
     Piece *opponentsPieces [NUM_PIECES];
     Piece *playersPieces [NUM_PIECES];
-    Dies *dies;
+    DiesSet *dies;
+    Board *board;
 };
 
 #endif // GAME_H

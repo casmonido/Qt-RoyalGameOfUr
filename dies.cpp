@@ -10,7 +10,7 @@ Die::Die(QGraphicsItem *parent)
     rolledNumber = 0;
 }
 
-Dies::Dies(QGraphicsItem *parent)
+DiesSet::DiesSet(QGraphicsItem *parent)
     : Die(parent)
 {
 }
@@ -27,11 +27,11 @@ void Die::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidg
     painter->drawEllipse(QPoint(0, 0), BoardSquare::WIDTH, BoardSquare::WIDTH);
 }
 
-QRectF Dies::boundingRect() const {
+QRectF DiesSet::boundingRect() const {
     return QRectF(0, 0, BoardSquare::WIDTH, BoardSquare::WIDTH);
 }
 
-void Dies::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget) {
+void DiesSet::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget) {
     Q_UNUSED(option);
     Q_UNUSED(widget);
     painter->setBrush(QColor(5, 5, 5, 255));
@@ -45,6 +45,6 @@ int Die::roll() {
     return rolledNumber;
 }
 
-int Dies::roll() {
+int DiesSet::roll() {
     return rolledNumber;
 }

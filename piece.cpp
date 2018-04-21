@@ -6,7 +6,7 @@ void PlayersPiece::mousePressEvent(QGraphicsSceneMouseEvent *e)
         return;
     //QPoint prevxy = location->getGameXY(this);
     location->leave(this);
-    location = Board::getInstance()->nextSquare(getColor(), crossedPathLength);
+    location = parent->nextSquare(getColor(), crossedPathLength);
     location->tryAndOccupy(this);
     QPoint xy = location->getGameXY(this);
     //this->setTransform(QTransform::fromTranslate(xy.x() - prevxy.x(), xy.y() - prevxy.y()), true);
@@ -31,7 +31,7 @@ void PlayersPiece::paint(QPainter *painter, const QStyleOptionGraphicsItem *opti
     Q_UNUSED(option);
     Q_UNUSED(widget);
     painter->setBrush(QColor(255, 250, 250, 255));
-    painter->drawEllipse(-0.5*R, -0.5*R, R, R);
+    painter->drawEllipse(boundingRect());
 }
 
 void OpponentsPiece::paint(QPainter *painter, const QStyleOptionGraphicsItem *option,
@@ -40,13 +40,14 @@ void OpponentsPiece::paint(QPainter *painter, const QStyleOptionGraphicsItem *op
     Q_UNUSED(option);
     Q_UNUSED(widget);
     painter->setBrush(QColor(5, 5, 5, 255));
-    painter->drawEllipse(-0.5*R, -0.5*R, R, R);
+    painter->drawEllipse(boundingRect());
 }
 
 
-Piece::Piece(QGraphicsItem *parent, Square *location)
+Piece::Piece(Game *parent, Square *location)
     : QGraphicsObject(parent)
 {
+    this->parent = parent;
     this->location = location;
     this->location->tryAndOccupy(this);
     //this->setParent(location);
@@ -68,7 +69,7 @@ PieceColors OpponentsPiece::getColor()
     return OPPONENTS;
 }
 
-OpponentsPiece::OpponentsPiece(QGraphicsItem *parent, Square *location)
+OpponentsPiece::OpponentsPiece(Game *parent, Square *location)
     : Piece(parent, location)
 {
 }
@@ -78,7 +79,7 @@ PieceColors PlayersPiece::getColor()
     return PLAYERS;
 }
 
-PlayersPiece::PlayersPiece(QGraphicsItem *parent, Square *location)
+PlayersPiece::PlayersPiece(Game *parent, Square *location)
     : Piece(parent, location)
 {
 }

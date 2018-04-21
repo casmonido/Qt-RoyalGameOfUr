@@ -23,7 +23,7 @@ void BoardSquare::paint(QPainter *painter,
 
 QPoint BoardSquare::getGameXY(Piece *p) const {
     Q_UNUSED(p);
-    return xy;
+    return this->pos().toPoint();//xy;
 }
 
 OccupySquareResults BoardSquare::tryAndOccupy(Piece *p) {

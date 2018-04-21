@@ -16,10 +16,10 @@ private:
     int roll();
 };
 
-class Dies : public Die
+class DiesSet : public Die
 {
 public:
-    Dies(QGraphicsItem *parent = 0);
+    DiesSet(QGraphicsItem *parent = 0);
     QRectF boundingRect() const override;
     void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget = 0) override;
 private:
