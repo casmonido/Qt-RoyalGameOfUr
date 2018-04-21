@@ -18,6 +18,7 @@ public:
     void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget = 0) override;
     ZeroSquare *getStartingSquare(PieceColors c);
     Square *nextSquare(PieceColors c, int crossedPathLength);
+    Square *destinationSquare(PieceColors c, unsigned int crossedPathLength, unsigned int pathToCross);
 private:
     static const int NUM_SQUARES = 20, PATH_LEN = 14;
     BoardSquare *squares [NUM_SQUARES];

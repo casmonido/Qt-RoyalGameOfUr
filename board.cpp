@@ -97,6 +97,22 @@ Square *Board::nextSquare(PieceColors c, int crossedPathLength)
     return getStartingSquare(c);
 }
 
+Square *Board::destinationSquare(PieceColors c, unsigned int crossedPathLength, unsigned int pathToCross)
+{
+    if (pathToCross == 0)
+        return getStartingSquare(c);
+    if (crossedPathLength + pathToCross > PATH_LEN)
+    {
+        return getStartingSquare(c); //tak naprawdę powinien istnieć jakiś końcowy wspólny?
+        // emituj event że square skończył podróż i nie powinien się odrysowywać
+    }
+    if (c == PLAYERS)
+        return playersPath[crossedPathLength + pathToCross - 1];
+    if (c = OPPONENTS)
+        return opponentsPath[crossedPathLength + pathToCross - 1];
+    return getStartingSquare(c);
+}
+
 QRectF Board::boundingRect() const
 {
     return QRectF(-4*BoardSquare::WIDTH, -3*BoardSquare::WIDTH,

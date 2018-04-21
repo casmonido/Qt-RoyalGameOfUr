@@ -38,11 +38,11 @@ Dice::Dice(Game *parent, QPointF pos)
     srand (time(NULL));
     game = parent;
     for (int i = 0; i < NUM_DIES; ++i)
-        dies[i] = new Die(this, QPointF((i-1.5)*BoardSquare::WIDTH, 0*BoardSquare::WIDTH));
+        dies[i] = new Die(this, QPointF((i-1.5)*BoardSquare::WIDTH, -0.5*BoardSquare::WIDTH));
 }
 
 QRectF Dice::boundingRect() const {
-    return QRectF(-2*BoardSquare::WIDTH, -1.5*BoardSquare::WIDTH, 4*BoardSquare::WIDTH, 3*BoardSquare::WIDTH);
+    return QRectF(-2*BoardSquare::WIDTH, -1*BoardSquare::WIDTH, 4*BoardSquare::WIDTH, 2*BoardSquare::WIDTH);
 }
 
 void Dice::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget) {
@@ -55,7 +55,7 @@ void Dice::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWid
 //    std::string s = "Move by " + n + " squares";
 //    char const *num = s.c_str();
     painter->setFont(QFont("Arial", 40));
-    painter->drawText(QRectF(-2*BoardSquare::WIDTH, 0.5*BoardSquare::WIDTH,
+    painter->drawText(QRectF(-2*BoardSquare::WIDTH, 0*BoardSquare::WIDTH,
                              4*BoardSquare::WIDTH, BoardSquare::WIDTH),
                       Qt::AlignCenter, "ROLL");
 }

@@ -10,7 +10,7 @@ Game::Game(QGraphicsItem *parent)
     for (int i = 0; i < NUM_PIECES; i++)
         opponentsPieces[i] = new OpponentsPiece(this, board->getStartingSquare(OPPONENTS));
     dies = new Dice(this);
-    dies->setPos(5*BoardSquare::WIDTH, -1*BoardSquare::WIDTH);
+    dies->setPos(5*BoardSquare::WIDTH, -0.5*BoardSquare::WIDTH);
 }
 
 int Game::getSquaresToMove() {
@@ -23,6 +23,8 @@ void Game::setOtherPlayersTurn() {
     else
         turn = PLAYERS_TURN;
     diceRolled = false;
+    emit turnChanged(turn);
+    emit diceRolledChanged(false);
 }
 
 ZeroSquare *Game::getStartingSquare(PieceColors c) {
@@ -31,6 +33,15 @@ ZeroSquare *Game::getStartingSquare(PieceColors c) {
 
 Square *Game::nextSquare(PieceColors c, int crossedPathLength) {
     return board->nextSquare(c, crossedPathLength);
+}
+
+Square *Game::destinationSquare(PieceColors c, unsigned int crossedPathLength, unsigned int pathToCross) {
+    return board->destinationSquare(c, crossedPathLength, pathToCross);
+}
+
+void Game::setDiceRolled() {
+    diceRolled = true;
+    emit diceRolledChanged(true);
 }
 
 QRectF Game::boundingRect() const

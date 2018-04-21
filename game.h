@@ -17,6 +17,8 @@ class Square;
 class Game: public QGraphicsObject
 {
     Q_OBJECT
+    Q_PROPERTY(Turns turn READ getTurn NOTIFY turnChanged)
+    Q_PROPERTY(bool diceRolled READ getDiceRolled NOTIFY diceRolledChanged)
 public:
     static const int NUM_PIECES = 7;
     Game(QGraphicsItem *parent = 0);
@@ -24,11 +26,16 @@ public:
     void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget = 0) override;
     ZeroSquare *getStartingSquare(PieceColors c);
     Square *nextSquare(PieceColors c, int crossedPathLength);
+    Square *destinationSquare(PieceColors c, unsigned int crossedPathLength, unsigned int pathToCross);
     Turns getTurn() const {return turn;}
     int getSquaresToMove();
     void setOtherPlayersTurn();
     bool getDiceRolled() {return diceRolled;}
-    void setDiceRolled() {diceRolled = true;}
+    void setDiceRolled();
+
+signals:
+    void turnChanged(Turns);
+    void diceRolledChanged(bool);
 
 private:
     Piece *opponentsPieces [NUM_PIECES];

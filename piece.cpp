@@ -16,7 +16,7 @@ void Piece::move(unsigned int squaresToMove)
     if (squaresToMove == 0)
         return;
     location->leave(this);
-    location = game->nextSquare(getColor(), crossedPathLength);
+    location = game->destinationSquare(getColor(), crossedPathLength, squaresToMove);
     location->tryAndOccupy(this);
     this->setParentItem(location);
     this->setPos(location->getChildCenterPos(this));
