@@ -3,54 +3,54 @@
 Board::Board(QGraphicsItem *parent)
     : QGraphicsObject(parent)
 {
-    whiteZeroGround = new ZeroSquare(this, 0, -1*Square::WIDTH);
-    blackZeroGround = new ZeroSquare(this, 0, 3*Square::WIDTH);
+    whiteZeroGround = new ZeroSquare(this, 4*Square::WIDTH, 0.5*Square::WIDTH);
+    blackZeroGround = new ZeroSquare(this, 4*Square::WIDTH, 5.5*Square::WIDTH);
 
     squares[0] = new Square(this, QImage (":/square1.png"),
-                                Square::WIDTH, Square::WIDTH);
+                                -1.5*Square::WIDTH, -1*Square::WIDTH);
     squares[1] = new Square(this, QImage (":/square1.png"),
-                                2*Square::WIDTH, 0);
+                                -2.5*Square::WIDTH, 0*Square::WIDTH);
     squares[2] = new Square(this, QImage (":/square1.png"),
-                                2*Square::WIDTH, 2*Square::WIDTH);
+                                0.5*Square::WIDTH, 0*Square::WIDTH);
     squares[3] = new Square(this, QImage (":/square1.png"),
-                                4*Square::WIDTH, 1*Square::WIDTH);
+                                3.5*Square::WIDTH, 0*Square::WIDTH);
     squares[4] = new Square(this, QImage (":/square1.png"),
-                                7*Square::WIDTH, 1*Square::WIDTH);
+                                -1.5*Square::WIDTH, 1*Square::WIDTH);
 
     squares[5] = new Square(this, QImage (":/square2.png"),
-                                7*Square::WIDTH, 2*Square::WIDTH);
+                                7.5*Square::WIDTH, 4*Square::WIDTH);
     squares[6] = new Square(this, QImage (":/square2.png"),
-                                7*Square::WIDTH, 0);
+                                7.5*Square::WIDTH, 2*Square::WIDTH);
 
     squares[7] = new Square(this, QImage (":/square3.png"),
-                                0, Square::WIDTH);
+                                0.5*Square::WIDTH, 3*Square::WIDTH);
 
     squares[8] = new Square(this, QImage (":/square4.png"),
-                                0, 0);
+                                0.5*Square::WIDTH, 2*Square::WIDTH);
     squares[9] = new Square(this, QImage (":/square4.png"),
-                                0, 2*Square::WIDTH);
+                                0.5*Square::WIDTH, 4*Square::WIDTH);
     squares[10] = new Square(this, QImage (":/square4.png"),
-                                3*Square::WIDTH, Square::WIDTH);
+                                3.5*Square::WIDTH, 3*Square::WIDTH);
     squares[11] = new Square(this, QImage (":/square4.png"),
-                                6*Square::WIDTH, 0);
+                                6.5*Square::WIDTH, 2*Square::WIDTH);
     squares[12] = new Square(this, QImage (":/square4.png"),
-                                6*Square::WIDTH, 2*Square::WIDTH);
+                                6.5*Square::WIDTH, 4*Square::WIDTH);
 
     squares[13] = new Square(this, QImage (":/square5.png"),
-                                Square::WIDTH, 0);
+                                1.5*Square::WIDTH, 2*Square::WIDTH);
     squares[14] = new Square(this, QImage (":/square5.png"),
-                                Square::WIDTH, 2*Square::WIDTH);
+                                1.5*Square::WIDTH, 4*Square::WIDTH);
     squares[15] = new Square(this, QImage (":/square5.png"),
-                                3*Square::WIDTH, 0);
+                                3.5*Square::WIDTH, 2*Square::WIDTH);
     squares[16] = new Square(this, QImage (":/square5.png"),
-                                3*Square::WIDTH, 2*Square::WIDTH);
+                                3.5*Square::WIDTH, 4*Square::WIDTH);
     squares[17] = new Square(this, QImage (":/square5.png"),
-                                6*Square::WIDTH, Square::WIDTH);
+                                6.5*Square::WIDTH, 3*Square::WIDTH);
 
     squares[18] = new Square(this, QImage (":/square6.png"),
-                                2*Square::WIDTH, Square::WIDTH);
+                                2.5*Square::WIDTH, 3*Square::WIDTH);
     squares[19] = new Square(this, QImage (":/square6.png"),
-                                5*Square::WIDTH, Square::WIDTH);
+                                5.5*Square::WIDTH, 3*Square::WIDTH);
 
     playersPath[0] = squares[15];
     playersPath[1] = squares[1];
@@ -84,7 +84,8 @@ Square *Board::nextSquare(PieceColors c, int crossedPathLength)
 
 QRectF Board::boundingRect() const
 {
-    return QRectF(0, -1*Square::WIDTH, 8*Square::WIDTH, 4*Square::WIDTH);
+    //return QRectF(-4*Square::WIDTH, -3*Square::WIDTH, 8*Square::WIDTH, 6*Square::WIDTH);
+    return QRectF();
 }
 
 void Board::paint(QPainter *painter,
