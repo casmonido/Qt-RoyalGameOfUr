@@ -9,4 +9,8 @@ enum PieceColors {
     OPPONENTS, PLAYERS, NONE
 };
 
+enum Turns {
+    PLAYERS_TURN, OPPONENTS_TURN
+};
+
 #endif // ENUMS_H

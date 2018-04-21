@@ -4,6 +4,11 @@ void PlayersPiece::mousePressEvent(QGraphicsSceneMouseEvent *e)
 {
     if (!(e->buttons() & Qt::LeftButton))
         return;
+    move();
+}
+
+void Piece::move()
+{
     location->leave(this);
     location = game->nextSquare(getColor(), crossedPathLength);
     location->tryAndOccupy(this);

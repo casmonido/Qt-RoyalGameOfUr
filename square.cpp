@@ -22,7 +22,7 @@ void BoardSquare::paint(QPainter *painter,
 
 QPointF BoardSquare::getChildCenterPos(Piece *p) const {
     Q_UNUSED(p);
-    return QPointF(0, 0); //jesli >1 pionek na polu to troche przesuniete
+    return QPointF(-3*piecesNum, -3*piecesNum);
 }
 
 OccupySquareResults BoardSquare::tryAndOccupy(Piece *p) {

@@ -24,12 +24,15 @@ public:
     void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget = 0) override;
     ZeroSquare *getStartingSquare(PieceColors c);
     Square *nextSquare(PieceColors c, int crossedPathLength);
+    Turns getTurn() const {return turn;}
+    int getSquaresToMove() const;
 
 private:
     Piece *opponentsPieces [NUM_PIECES];
     Piece *playersPieces [NUM_PIECES];
     DiesSet *dies;
     Board *board;
+    Turns turn;
 };
 
 #endif // GAME_H
