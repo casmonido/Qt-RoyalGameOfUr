@@ -21,7 +21,7 @@ protected:
     int crossedPathLength = 0;
     Square *location;
     Game *game;
-    void move();
+    void move(unsigned int);
 };
 
 

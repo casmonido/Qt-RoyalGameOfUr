@@ -25,7 +25,7 @@ public:
     ZeroSquare *getStartingSquare(PieceColors c);
     Square *nextSquare(PieceColors c, int crossedPathLength);
     Turns getTurn() const {return turn;}
-    int getSquaresToMove() const;
+    int getSquaresToMove();
 
 private:
     Piece *opponentsPieces [NUM_PIECES];

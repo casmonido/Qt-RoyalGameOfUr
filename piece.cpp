@@ -4,11 +4,14 @@ void PlayersPiece::mousePressEvent(QGraphicsSceneMouseEvent *e)
 {
     if (!(e->buttons() & Qt::LeftButton))
         return;
-    move();
+    if (game->getTurn() == PLAYERS_TURN)
+        move(game->getSquaresToMove());
 }
 
-void Piece::move()
+void Piece::move(unsigned int squaresToMove)
 {
+    if (squaresToMove == 0)
+        return;
     location->leave(this);
     location = game->nextSquare(getColor(), crossedPathLength);
     location->tryAndOccupy(this);

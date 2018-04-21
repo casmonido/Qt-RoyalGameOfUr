@@ -56,13 +56,13 @@ void DiesSet::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, Q
     painter->drawText(QPointF(0, 0), num);
 }
 
-int Die::roll() {
+unsigned int Die::roll() {
     rolledNumber = rand() % 2;
     update();
     return rolledNumber;
 }
 
-int DiesSet::roll() {
+unsigned int DiesSet::roll() {
     rolledNumber = 0;
     for (int i = 0; i < NUM_DIES; ++i)
         rolledNumber += dies[i]->roll();
@@ -77,4 +77,10 @@ void Die::setToZero() {
 void DiesSet::setToZero() {
     for (int i = 0; i < NUM_DIES; ++i)
         dies[i]->setToZero();
+}
+
+unsigned int DiesSet::getSquaresToMoveAndReset() {
+    unsigned int tmp = rolledNumber;
+    setToZero();
+    return tmp;
 }

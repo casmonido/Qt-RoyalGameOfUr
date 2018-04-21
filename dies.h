@@ -11,10 +11,10 @@ public:
     Die(QGraphicsItem *parent = 0);
     QRectF boundingRect() const override;
     void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget = 0) override;
-    int roll();
+    unsigned int roll();
     void setToZero();
 private:
-    int rolledNumber = 0; //0 / 1
+    unsigned int rolledNumber = 0; //0 / 1
 };
 
 class DiesSet : public Die
@@ -24,13 +24,13 @@ public:
     DiesSet(QGraphicsItem *parent = 0);
     QRectF boundingRect() const override;
     void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget = 0) override;
-    int roll();
+    unsigned int roll();
     void setToZero();
-    int getSquaresToMove() const {return rolledNumber;}
+    unsigned int getSquaresToMoveAndReset();
 
 private:
     Die *dies[NUM_DIES];
-    int rolledNumber = 0;
+    unsigned int rolledNumber = 0;
 };
 
 #endif // DIES_H

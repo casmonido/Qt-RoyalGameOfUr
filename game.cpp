@@ -13,8 +13,8 @@ Game::Game(QGraphicsItem *parent)
     dies->setPos(5*BoardSquare::WIDTH, 0*BoardSquare::WIDTH);
 }
 
-int Game::getSquaresToMove() const {
-    return dies->getSquaresToMove();
+int Game::getSquaresToMove() {
+    return dies->getSquaresToMoveAndReset();
 }
 
 ZeroSquare *Game::getStartingSquare(PieceColors c) {
