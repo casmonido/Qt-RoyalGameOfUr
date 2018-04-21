@@ -4,26 +4,14 @@ void PlayersPiece::mousePressEvent(QGraphicsSceneMouseEvent *e)
 {
     if (!(e->buttons() & Qt::LeftButton))
         return;
-    //QPoint prevxy = location->getGameXY(this);
     location->leave(this);
-    location = parent->nextSquare(getColor(), crossedPathLength);
+    location = game->nextSquare(getColor(), crossedPathLength);
     location->tryAndOccupy(this);
-    QPoint xy = location->getGameXY(this);
-    //this->setTransform(QTransform::fromTranslate(xy.x() - prevxy.x(), xy.y() - prevxy.y()), true);
-    this->setPos(xy);
+    this->setParentItem(location);
+    this->setPos(location->getChildCenterPos(this));
     update();
     crossedPathLength++;
 }
-
-//bool Piece::eventFilter(QObject* target, QEvent* e) {
-//    if (target == this && e->type() == QEvent::MouseButtonPress)
-//    {
-//        QMouseEvent* me = static_cast<QMouseEvent*>(e);
-//        qDebug() << "pozycja" << me->pos();
-//        return false; // lub return false;
-//    }
-//    return QObject::eventFilter(target, e);
-//}
 
 void PlayersPiece::paint(QPainter *painter, const QStyleOptionGraphicsItem *option,
            QWidget *widget)
@@ -47,12 +35,11 @@ void OpponentsPiece::paint(QPainter *painter, const QStyleOptionGraphicsItem *op
 Piece::Piece(Game *parent, Square *location)
     : QGraphicsObject(parent)
 {
-    this->parent = parent;
+    this->game = parent;
     this->location = location;
     this->location->tryAndOccupy(this);
-    //this->setParent(location);
-    this->setPos(location->getGameXY(this));
-    //this->installEventFilter(this);
+    this->setParentItem(location);
+    this->setPos(location->getChildCenterPos(this));
 }
 
 PieceColors Piece::getColor() {

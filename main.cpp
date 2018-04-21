@@ -12,7 +12,8 @@ public:
 protected:
     void resizeEvent(QResizeEvent *) override
     {
-        this->fitInView(QRectF(-8*BoardSquare::WIDTH, -4*BoardSquare::WIDTH, 16*BoardSquare::WIDTH, 8*BoardSquare::WIDTH), Qt::KeepAspectRatio);
+        this->fitInView(QRectF(-8*BoardSquare::WIDTH, -4*BoardSquare::WIDTH,
+                               16*BoardSquare::WIDTH, 8*BoardSquare::WIDTH), Qt::KeepAspectRatio);
     }
 };
 
@@ -26,7 +27,6 @@ int main(int argc, char **argv)
 
     scene.addItem(game);
     GraphicsView view(&scene);
-    //view.fitInView(QRectF(-8*Square::WIDTH, -4*Square::WIDTH, 16*Square::WIDTH, 8*Square::WIDTH), Qt::KeepAspectRatio);
     view.setRenderHint(QPainter::Antialiasing);
     view.setViewportUpdateMode(QGraphicsView::BoundingRectViewportUpdate);
     view.setBackgroundBrush(QColor(220, 255, 255));

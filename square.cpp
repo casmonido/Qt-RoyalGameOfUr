@@ -1,11 +1,10 @@
 #include "square.h"
 
 BoardSquare::BoardSquare(QGraphicsItem *parent, QImage image, int x, int y)
-    : QGraphicsObject(parent)
+    : Square(parent)
 {
     this->pixmap = QPixmap::fromImage(image).scaled(WIDTH, WIDTH);
-    xy = QPoint(x, y);
-    this->setPos(xy);
+    this->setPos(x, y);
 }
 
 QRectF BoardSquare::boundingRect() const
@@ -21,9 +20,9 @@ void BoardSquare::paint(QPainter *painter,
     painter->drawPixmap(QPointF(-0.5*WIDTH, -0.5*WIDTH), pixmap);
 }
 
-QPoint BoardSquare::getGameXY(Piece *p) const {
+QPointF BoardSquare::getChildCenterPos(Piece *p) const {
     Q_UNUSED(p);
-    return this->pos().toPoint();//xy;
+    return QPointF(0, 0); //jesli >1 pionek na polu to troche przesuniete
 }
 
 OccupySquareResults BoardSquare::tryAndOccupy(Piece *p) {
@@ -45,20 +44,18 @@ void BoardSquare::leave(Piece *p) {
 }
 
 ZeroSquare::ZeroSquare(QGraphicsItem *parent, int x, int y)
-    : QGraphicsObject(parent)
+    : Square(parent)
 {
     for (int i = 0; i < Game::NUM_PIECES; ++i)
         pieces[i] = NULL;
     this->setPos(x, y);
-    X = x;
-    Y = y;
 }
 
-QPoint ZeroSquare::getGameXY(Piece *p) const {
+QPointF ZeroSquare::getChildCenterPos(Piece *p) const {
     for (int i = 0; i < Game::NUM_PIECES; ++i)
         if (pieces[i] == p)
-            return QPoint(X - 3*BoardSquare::WIDTH + i * BoardSquare::WIDTH, Y);
-    return QPoint(X, Y);
+            return QPointF((i-3)*BoardSquare::WIDTH, 0);
+    return QPointF(0, 0);
 }
 
 QRectF ZeroSquare::boundingRect() const

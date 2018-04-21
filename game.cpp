@@ -3,7 +3,6 @@
 Game::Game(QGraphicsItem *parent)
     : QGraphicsObject(parent)
 {
-    //Board *board = Board::getInstance(this);
     board = new Board(this);
     board->setPos(-3*BoardSquare::WIDTH, 0*BoardSquare::WIDTH);
     for (int i = 0; i < NUM_PIECES; i++)

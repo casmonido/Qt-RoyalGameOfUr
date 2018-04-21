@@ -14,20 +14,20 @@ class Piece : public QGraphicsObject
 {
 public:
     static const int R = 50;
-    Piece(Game *parent = 0, Square *location=0);
+    Piece(Game *game = 0, Square *location=0);
     QRectF boundingRect() const override;
     virtual PieceColors getColor() = 0;
 protected:
     int crossedPathLength = 0;
     Square *location;
-    Game *parent;
+    Game *game;
 };
 
 
 class OpponentsPiece : public Piece
 {
 public:
-    OpponentsPiece(Game *parent = 0, Square *location=0);
+    OpponentsPiece(Game *game = 0, Square *location=0);
     PieceColors getColor();
     void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget = 0) override;
 };
@@ -35,7 +35,7 @@ public:
 class PlayersPiece : public Piece
 {
 public:
-    PlayersPiece(Game *parent = 0, Square *location=0);
+    PlayersPiece(Game *game = 0, Square *location=0);
     PieceColors getColor();
     void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget = 0) override;
     void mousePressEvent(QGraphicsSceneMouseEvent *e);
