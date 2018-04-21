@@ -4,8 +4,11 @@ void PlayersPiece::mousePressEvent(QGraphicsSceneMouseEvent *e)
 {
     if (!(e->buttons() & Qt::LeftButton))
         return;
-    if (game->getTurn() == PLAYERS_TURN)
+    if (game->getTurn() == PLAYERS_TURN && game->getDiceRolled())
+    {
         move(game->getSquaresToMove());
+        game->setOtherPlayersTurn();
+    }
 }
 
 void Piece::move(unsigned int squaresToMove)

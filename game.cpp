@@ -9,12 +9,20 @@ Game::Game(QGraphicsItem *parent)
         playersPieces[i] = new PlayersPiece(this, board->getStartingSquare(PLAYERS));
     for (int i = 0; i < NUM_PIECES; i++)
         opponentsPieces[i] = new OpponentsPiece(this, board->getStartingSquare(OPPONENTS));
-    dies = new DiesSet(this);
-    dies->setPos(5*BoardSquare::WIDTH, 0*BoardSquare::WIDTH);
+    dies = new Dice(this);
+    dies->setPos(5*BoardSquare::WIDTH, -1*BoardSquare::WIDTH);
 }
 
 int Game::getSquaresToMove() {
     return dies->getSquaresToMoveAndReset();
+}
+
+void Game::setOtherPlayersTurn() {
+    if (turn == PLAYERS_TURN)
+        turn = OPPONENTS_TURN;
+    else
+        turn = PLAYERS_TURN;
+    diceRolled = false;
 }
 
 ZeroSquare *Game::getStartingSquare(PieceColors c) {

@@ -7,9 +7,9 @@
 #include "piece.h"
 #include "enums.h"
 #include "board.h"
-#include "dies.h"
+#include "dice.h"
 class Board;
-class DiesSet;
+class Dice;
 class Piece;
 class ZeroSquare;
 class Square;
@@ -26,13 +26,17 @@ public:
     Square *nextSquare(PieceColors c, int crossedPathLength);
     Turns getTurn() const {return turn;}
     int getSquaresToMove();
+    void setOtherPlayersTurn();
+    bool getDiceRolled() {return diceRolled;}
+    void setDiceRolled() {diceRolled = true;}
 
 private:
     Piece *opponentsPieces [NUM_PIECES];
     Piece *playersPieces [NUM_PIECES];
-    DiesSet *dies;
+    Dice *dies;
     Board *board;
-    Turns turn;
+    Turns turn = PLAYERS_TURN;
+    bool diceRolled = false;
 };
 
 #endif // GAME_H

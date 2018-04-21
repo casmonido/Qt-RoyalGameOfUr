@@ -1,12 +1,12 @@
-#include "dies.h"
+#include "dice.h"
 #include <stdio.h>
 #include <stdlib.h>
 #include <time.h>
 
-Die::Die(QGraphicsItem *parent)
+Die::Die(QGraphicsItem *parent, QPointF pos)
     : QGraphicsObject(parent)
 {
-    rolledNumber = 0;
+    this->setPos(pos);
 }
 
 QRectF Die::boundingRect() const {
@@ -28,32 +28,36 @@ void Die::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidg
     if (rolledNumber > 0)
     {
         painter->setBrush(Qt::black);
-        painter->drawEllipse(-1, -1, 2, 2);
+        painter->drawEllipse(-2, -2+(0.1*BoardSquare::WIDTH), 4, 4);
     }
 }
 
-DiesSet::DiesSet(QGraphicsItem *parent)
-    : Die(parent)
+Dice::Dice(Game *parent, QPointF pos)
+    : Die(parent, pos)
 {
     srand (time(NULL));
+    game = parent;
     for (int i = 0; i < NUM_DIES; ++i)
-        dies[i] = new Die(this);
+        dies[i] = new Die(this, QPointF((i-1.5)*BoardSquare::WIDTH, 0*BoardSquare::WIDTH));
 }
 
-QRectF DiesSet::boundingRect() const {
-    return QRectF(-3*BoardSquare::WIDTH, -4*BoardSquare::WIDTH, 6*BoardSquare::WIDTH, 8*BoardSquare::WIDTH);
+QRectF Dice::boundingRect() const {
+    return QRectF(-2*BoardSquare::WIDTH, -1.5*BoardSquare::WIDTH, 4*BoardSquare::WIDTH, 3*BoardSquare::WIDTH);
 }
 
-void DiesSet::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget) {
+void Dice::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget) {
     Q_UNUSED(option);
     Q_UNUSED(widget);
     painter->setBrush(Qt::gray);
     painter->drawRect(boundingRect());
     painter->setBrush(QColor(5, 5, 5, 255));
-    std::string s = std::to_string(rolledNumber);
-    char const *num = s.c_str();
-    painter->setFont(QFont("Arial", 30));
-    painter->drawText(QPointF(0, 0), num);
+//    std::string n = std::to_string(rolledNumber);
+//    std::string s = "Move by " + n + " squares";
+//    char const *num = s.c_str();
+    painter->setFont(QFont("Arial", 40));
+    painter->drawText(QRectF(-2*BoardSquare::WIDTH, 0.5*BoardSquare::WIDTH,
+                             4*BoardSquare::WIDTH, BoardSquare::WIDTH),
+                      Qt::AlignCenter, "ROLL");
 }
 
 unsigned int Die::roll() {
@@ -62,7 +66,7 @@ unsigned int Die::roll() {
     return rolledNumber;
 }
 
-unsigned int DiesSet::roll() {
+unsigned int Dice::roll() {
     rolledNumber = 0;
     for (int i = 0; i < NUM_DIES; ++i)
         rolledNumber += dies[i]->roll();
@@ -74,13 +78,24 @@ void Die::setToZero() {
     rolledNumber = 0;
 }
 
-void DiesSet::setToZero() {
+void Dice::setToZero() {
     for (int i = 0; i < NUM_DIES; ++i)
         dies[i]->setToZero();
 }
 
-unsigned int DiesSet::getSquaresToMoveAndReset() {
+unsigned int Dice::getSquaresToMoveAndReset() {
     unsigned int tmp = rolledNumber;
     setToZero();
     return tmp;
+}
+
+void Dice::mousePressEvent(QGraphicsSceneMouseEvent *e)
+{
+    if (!(e->buttons() & Qt::LeftButton))
+        return;
+    if (!game->getDiceRolled())
+    {
+        roll();
+        game->setDiceRolled();
+    }
 }
