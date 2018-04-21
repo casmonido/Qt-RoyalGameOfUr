@@ -10,7 +10,9 @@ Game::Game(QGraphicsItem *parent)
     for (int i = 0; i < NUM_PIECES; i++)
         opponentsPieces[i] = new OpponentsPiece(this, board->getStartingSquare(OPPONENTS));
     dies = new Dice(this);
-    dies->setPos(5*BoardSquare::WIDTH, -0.5*BoardSquare::WIDTH);
+    dies->setPos(4*BoardSquare::WIDTH, -0.5*BoardSquare::WIDTH);
+    connect(this, SIGNAL(diceRolledChanged(bool)),
+        dies, SLOT(diceRolledChanged(bool)));
 }
 
 int Game::getSquaresToMove() {
@@ -46,7 +48,7 @@ void Game::setDiceRolled() {
 
 QRectF Game::boundingRect() const
 {
-    return QRectF();
+    return QRectF(-8*BoardSquare::WIDTH, -4*BoardSquare::WIDTH, 16*BoardSquare::WIDTH, 8*BoardSquare::WIDTH);
 }
 
 void Game::paint(QPainter *painter,
@@ -54,5 +56,20 @@ void Game::paint(QPainter *painter,
 {
     Q_UNUSED(option);
     Q_UNUSED(widget);
-    Q_UNUSED(painter);
+    painter->setPen(Qt::red);
+    QRectF rect = QRectF(1*BoardSquare::WIDTH, -4*BoardSquare::WIDTH, 6*BoardSquare::WIDTH, BoardSquare::WIDTH);
+    painter->drawRect(rect);
+    painter->setFont(QFont("Arial", 40));
+    painter->drawText(rect, Qt::AlignCenter, "Opponent's turn");
+    rect = QRectF(1*BoardSquare::WIDTH, 3*BoardSquare::WIDTH, 6*BoardSquare::WIDTH, BoardSquare::WIDTH);
+    painter->drawRect(rect);
+    painter->setFont(QFont("Arial", 40));
+    painter->drawText(rect, Qt::AlignCenter, "Your turn");
+    std::string n = std::to_string(45); //rolledNumber event
+    std::string s = "Move by " + n + " squares";
+    char const *num = s.c_str();
+    rect = QRectF(1*BoardSquare::WIDTH, 1.5*BoardSquare::WIDTH, 6*BoardSquare::WIDTH, 1.5*BoardSquare::WIDTH);
+    painter->drawRect(rect);
+    painter->setFont(QFont("Arial", 40));
+    painter->drawText(rect, Qt::AlignCenter, num);
 }

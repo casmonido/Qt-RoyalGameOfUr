@@ -48,16 +48,22 @@ QRectF Dice::boundingRect() const {
 void Dice::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget) {
     Q_UNUSED(option);
     Q_UNUSED(widget);
-    painter->setBrush(Qt::gray);
+    painter->setBrush(buttonColor);
     painter->drawRect(boundingRect());
     painter->setBrush(QColor(5, 5, 5, 255));
-//    std::string n = std::to_string(rolledNumber);
-//    std::string s = "Move by " + n + " squares";
-//    char const *num = s.c_str();
     painter->setFont(QFont("Arial", 40));
     painter->drawText(QRectF(-2*BoardSquare::WIDTH, 0*BoardSquare::WIDTH,
                              4*BoardSquare::WIDTH, BoardSquare::WIDTH),
                       Qt::AlignCenter, "ROLL");
+}
+
+void Dice::diceRolledChanged(bool b)
+{
+    if (b)
+        buttonColor = Qt::gray;
+    else
+        buttonColor = Qt::green;
+    update();
 }
 
 unsigned int Die::roll() {
