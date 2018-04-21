@@ -9,7 +9,7 @@
 class Piece;
 class Game;
 
-class Square
+class Square: public QObject
 {
 public:
     virtual QPoint getGameXY(Piece *) const = 0;

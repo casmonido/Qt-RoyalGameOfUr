@@ -10,7 +10,7 @@ BoardSquare::BoardSquare(QGraphicsItem *parent, QImage image, int x, int y)
 
 QRectF BoardSquare::boundingRect() const
 {
-    return QRectF(-WIDTH/2, -WIDTH/2, WIDTH, WIDTH);
+    return QRectF(-0.5*WIDTH, -0.5*WIDTH, WIDTH, WIDTH);
 }
 
 void BoardSquare::paint(QPainter *painter,
@@ -18,7 +18,7 @@ void BoardSquare::paint(QPainter *painter,
 {
     Q_UNUSED(option);
     Q_UNUSED(widget);
-    painter->drawPixmap(QPointF(-WIDTH/2, -WIDTH/2), pixmap);
+    painter->drawPixmap(QPointF(-0.5*WIDTH, -0.5*WIDTH), pixmap);
 }
 
 QPoint BoardSquare::getGameXY(Piece *p) const {
@@ -63,7 +63,7 @@ QPoint ZeroSquare::getGameXY(Piece *p) const {
 
 QRectF ZeroSquare::boundingRect() const
 {
-    return QRectF(-3.5*BoardSquare::WIDTH, -1/2*BoardSquare::WIDTH, 7*BoardSquare::WIDTH, BoardSquare::WIDTH);
+    return QRectF(-3.5*BoardSquare::WIDTH, -0.5*BoardSquare::WIDTH, 7*BoardSquare::WIDTH, BoardSquare::WIDTH);
 }
 
 void ZeroSquare::paint(QPainter *painter,
@@ -71,7 +71,9 @@ void ZeroSquare::paint(QPainter *painter,
 {
     Q_UNUSED(option);
     Q_UNUSED(widget);
-    Q_UNUSED(painter);
+    //Q_UNUSED(painter);
+    painter->setBrush(QColor(5, 85, 85, 255));
+    painter->drawRect(boundingRect());
 }
 
 OccupySquareResults ZeroSquare::tryAndOccupy(Piece *p) {

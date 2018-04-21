@@ -3,8 +3,8 @@
 Board::Board(QGraphicsItem *parent)
     : QGraphicsObject(parent)
 {
-    playersZeroGround = new ZeroSquare(this, 0*BoardSquare::WIDTH, -2.5*BoardSquare::WIDTH);
-    opponentsZeroGround = new ZeroSquare(this, 0*BoardSquare::WIDTH, 2.5*BoardSquare::WIDTH);
+    playersZeroGround = new ZeroSquare(this, 0*BoardSquare::WIDTH, -2*BoardSquare::WIDTH);
+    opponentsZeroGround = new ZeroSquare(this, 0*BoardSquare::WIDTH, 2*BoardSquare::WIDTH);
 
     squares[0] = new BoardSquare(this, QImage (":/square1.png"),
                                 -1.5*BoardSquare::WIDTH, -1*BoardSquare::WIDTH);
@@ -106,7 +106,8 @@ Square *Board::nextSquare(PieceColors c, int crossedPathLength)
 
 QRectF Board::boundingRect() const
 {
-    return QRectF();
+    return QRectF(-4*BoardSquare::WIDTH, -3*BoardSquare::WIDTH,
+                  8*BoardSquare::WIDTH, 6*BoardSquare::WIDTH);
 }
 
 void Board::paint(QPainter *painter,
@@ -114,7 +115,9 @@ void Board::paint(QPainter *painter,
 {
     Q_UNUSED(option);
     Q_UNUSED(widget);
-    Q_UNUSED(painter);
+    //Q_UNUSED(painter);
+    painter->setBrush(QColor(235, 185, 185, 255));
+    painter->drawRect(boundingRect());
 }
 
 ZeroSquare *Board::getStartingSquare(PieceColors c)
