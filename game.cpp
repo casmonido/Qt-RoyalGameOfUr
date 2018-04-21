@@ -4,13 +4,13 @@ Game::Game(QGraphicsItem *parent)
     : QGraphicsObject(parent)
 {
     Board *board = Board::getInstance(this);
-    board->setPos(-3*Square::WIDTH, 0*Square::WIDTH);
+    board->setPos(-3*BoardSquare::WIDTH, 0*BoardSquare::WIDTH);
     for (int i = 0; i < NUM_PIECES; i++)
-        playersPieces[i] = new PlayersPiece(this, board->getStartingSquare(WHITE));
+        playersPieces[i] = new PlayersPiece(this, board->getStartingSquare(PLAYERS));
     for (int i = 0; i < NUM_PIECES; i++)
-        opponentsPieces[i] = new OpponentsPiece(this, board->getStartingSquare(BLACK));
-    //dies = new Dies(this);
-    //dies->setPos( 8*Square::WIDTH, 4*Square::WIDTH);
+        opponentsPieces[i] = new OpponentsPiece(this, board->getStartingSquare(OPPONENTS));
+    dies = new Dies(this);
+    dies->setPos(5*BoardSquare::WIDTH, 0*BoardSquare::WIDTH);
 }
 
 QRectF Game::boundingRect() const
@@ -23,4 +23,5 @@ void Game::paint(QPainter *painter,
 {
     Q_UNUSED(option);
     Q_UNUSED(widget);
+    Q_UNUSED(painter);
 }

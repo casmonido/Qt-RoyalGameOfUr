@@ -12,7 +12,7 @@ public:
 protected:
     void resizeEvent(QResizeEvent *) override
     {
-        this->fitInView(QRectF(-8*Square::WIDTH, -4*Square::WIDTH, 16*Square::WIDTH, 8*Square::WIDTH), Qt::KeepAspectRatio);
+        this->fitInView(QRectF(-8*BoardSquare::WIDTH, -4*BoardSquare::WIDTH, 16*BoardSquare::WIDTH, 8*BoardSquare::WIDTH), Qt::KeepAspectRatio);
     }
 };
 
@@ -21,9 +21,9 @@ Board *Board::instance = 0;
 int main(int argc, char **argv)
 {
     QApplication app(argc, argv);
-    QGraphicsScene scene(-8*Square::WIDTH, -4*Square::WIDTH, 16*Square::WIDTH, 8*Square::WIDTH);
+    QGraphicsScene scene(-8*BoardSquare::WIDTH, -4*BoardSquare::WIDTH, 16*BoardSquare::WIDTH, 8*BoardSquare::WIDTH);
     Game *game = new Game;
-    game->setPos(0*Square::WIDTH, 0*Square::WIDTH);
+    game->setPos(0*BoardSquare::WIDTH, 0*BoardSquare::WIDTH);
 
     scene.addItem(game);
     GraphicsView view(&scene);

@@ -13,12 +13,9 @@ class Piece : public QGraphicsObject
 public:
     static const int R = 50;
     Piece(QGraphicsItem *parent = 0, Square *location=0);
-
     QRectF boundingRect() const override;
     virtual PieceColors getColor() = 0;
-    bool eventFilter(QObject *target, QEvent *e);
 protected:
-    int x, y;
     int crossedPathLength = 0;
     Square *location;
 };
@@ -38,7 +35,6 @@ public:
     PlayersPiece(QGraphicsItem *parent = 0, Square *location=0);
     PieceColors getColor();
     void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget = 0) override;
-
     void mousePressEvent(QGraphicsSceneMouseEvent *e);
 };
 

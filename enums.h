@@ -6,8 +6,7 @@ enum OccupySquareResults {
 };
 
 enum PieceColors {
-    BLACK, WHITE, NONE
+    OPPONENTS, PLAYERS, NONE
 };
-
 
 #endif // ENUMS_H

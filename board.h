@@ -6,8 +6,9 @@
 #include "square.h"
 #include "piece.h"
 #include "enums.h"
-class ZeroSquare;
 class Square;
+class ZeroSquare;
+class BoardSquare;
 
 class Board: public QGraphicsObject
 {
@@ -22,9 +23,10 @@ private:
     Board(QGraphicsItem *parent = 0);
     static const int NUM_SQUARES = 20, PATH_LEN = 14;
     QPixmap pixmap;
-    Square *squares [NUM_SQUARES];
-    ZeroSquare *whiteZeroGround, *blackZeroGround;
-    Square *playersPath [PATH_LEN];
+    BoardSquare *squares [NUM_SQUARES];
+    ZeroSquare *playersZeroGround, *opponentsZeroGround;
+    BoardSquare *playersPath [PATH_LEN];
+    BoardSquare *opponentsPath [PATH_LEN];
 };
 
 #endif // BOARD_H

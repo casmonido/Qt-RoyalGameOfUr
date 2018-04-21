@@ -16,7 +16,7 @@ Dies::Dies(QGraphicsItem *parent)
 }
 
 QRectF Die::boundingRect() const {
-    return QRectF(0, 0, Square::WIDTH, Square::WIDTH);
+    return QRectF(0, 0, BoardSquare::WIDTH, BoardSquare::WIDTH);
 }
 
 void Die::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget) {
@@ -24,11 +24,11 @@ void Die::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidg
     Q_UNUSED(widget);
     painter->setPen(Qt::white);
     //painter->setBrush(QColor(50, 50, 50, 255));
-    painter->drawEllipse(QPoint(0, 0), Square::WIDTH, Square::WIDTH);
+    painter->drawEllipse(QPoint(0, 0), BoardSquare::WIDTH, BoardSquare::WIDTH);
 }
 
 QRectF Dies::boundingRect() const {
-    return QRectF(0, 0, Square::WIDTH, Square::WIDTH);
+    return QRectF(0, 0, BoardSquare::WIDTH, BoardSquare::WIDTH);
 }
 
 void Dies::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget) {

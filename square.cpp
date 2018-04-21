@@ -1,28 +1,19 @@
 #include "square.h"
 
-Square::Square(QGraphicsItem *parent, QImage image, int x, int y)
+BoardSquare::BoardSquare(QGraphicsItem *parent, QImage image, int x, int y)
     : QGraphicsObject(parent)
 {
     this->pixmap = QPixmap::fromImage(image).scaled(WIDTH, WIDTH);
-    this->setPos(x, y);
-    X = x;
-    Y = y;
+    xy = QPoint(x, y);
+    this->setPos(xy);
 }
 
-Square::Square(QGraphicsItem *parent, int x, int y)
-    : QGraphicsObject(parent)
+QRectF BoardSquare::boundingRect() const
 {
-    this->setPos(x, y);
-    X = x;
-    Y = y;
+    return QRectF(-WIDTH/2, -WIDTH/2, WIDTH, WIDTH);
 }
 
-QRectF Square::boundingRect() const
-{
-    return QRectF(-WIDTH/2, -WIDTH/2, WIDTH, WIDTH); //left, top, width, height 600, 300
-}
-
-void Square::paint(QPainter *painter,
+void BoardSquare::paint(QPainter *painter,
            const QStyleOptionGraphicsItem *option, QWidget *widget)
 {
     Q_UNUSED(option);
@@ -30,48 +21,49 @@ void Square::paint(QPainter *painter,
     painter->drawPixmap(QPointF(-WIDTH/2, -WIDTH/2), pixmap);
 }
 
-int Square::getX() const {
-    return X;
+QPoint BoardSquare::getGameXY(Piece *p) const {
+    Q_UNUSED(p);
+    return xy;
 }
 
-int Square::getY() const {
-    return Y;
-}
-
-OccupySquareResults Square::tryAndOccupy(PieceColors c) {
-    if (this->color != NONE && this->color != c)
+OccupySquareResults BoardSquare::tryAndOccupy(Piece *p) {
+    if (this->color != NONE && this->color != p->getColor())
     {
         // emit event
         // .leave() performed by pieces
     }
     this->piecesNum++;
-    this->color = c;
-    return OK;
+    this->color = p->getColor();
+    return OK; // gdybym nie okroiła zasad to tu mogłoby też być ONE_MORE_HOP
 }
 
-void Square::leave() {
+void BoardSquare::leave(Piece *p) {
+    Q_UNUSED(p);
     this->piecesNum--;
     if (this->piecesNum == 0)
         this->color = NONE;
 }
 
 ZeroSquare::ZeroSquare(QGraphicsItem *parent, int x, int y)
-    : Square(parent, x, y)
+    : QGraphicsObject(parent)
 {
+    for (int i = 0; i < Game::NUM_PIECES; ++i)
+        pieces[i] = NULL;
+    this->setPos(x, y);
+    X = x;
+    Y = y;
 }
 
-int ZeroSquare::getX() const {
-    return X + piecesNum*Square::WIDTH;
-}
-
-int ZeroSquare::getY() const {
-    return Y;
+QPoint ZeroSquare::getGameXY(Piece *p) const {
+    for (int i = 0; i < Game::NUM_PIECES; ++i)
+        if (pieces[i] == p)
+            return QPoint(X - 3*BoardSquare::WIDTH + i * BoardSquare::WIDTH, Y);
+    return QPoint(X, Y);
 }
 
 QRectF ZeroSquare::boundingRect() const
 {
-    //return QRectF(-4*WIDTH, WIDTH/2, WIDTH * 8, WIDTH);
-    return QRectF();
+    return QRectF(-3.5*BoardSquare::WIDTH, -1/2*BoardSquare::WIDTH, 7*BoardSquare::WIDTH, BoardSquare::WIDTH);
 }
 
 void ZeroSquare::paint(QPainter *painter,
@@ -79,13 +71,24 @@ void ZeroSquare::paint(QPainter *painter,
 {
     Q_UNUSED(option);
     Q_UNUSED(widget);
+    Q_UNUSED(painter);
 }
 
-OccupySquareResults ZeroSquare::tryAndOccupy(PieceColors c) {
-    this->piecesNum++;
+OccupySquareResults ZeroSquare::tryAndOccupy(Piece *p) {
+    for (int i = 0; i < Game::NUM_PIECES; ++i)
+        if (pieces[i] == NULL)
+        {
+            pieces[i] = p;
+            break;
+        }
     return OK;
 }
 
-void ZeroSquare::leave() {
-    this->piecesNum--;
+void ZeroSquare::leave(Piece *p) {
+    for (int i = 0; i < Game::NUM_PIECES; ++i)
+        if (pieces[i] == p)
+        {
+            pieces[i] = 0;
+            break;
+        }
 }

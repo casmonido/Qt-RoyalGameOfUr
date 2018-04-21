@@ -10,6 +10,7 @@
 #include "dies.h"
 class Board;
 class Dies;
+class Piece;
 
 class Game: public QGraphicsObject
 {

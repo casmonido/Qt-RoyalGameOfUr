@@ -3,69 +3,84 @@
 Board::Board(QGraphicsItem *parent)
     : QGraphicsObject(parent)
 {
-    whiteZeroGround = new ZeroSquare(this, 4*Square::WIDTH, 0.5*Square::WIDTH);
-    blackZeroGround = new ZeroSquare(this, 4*Square::WIDTH, 5.5*Square::WIDTH);
+    playersZeroGround = new ZeroSquare(this, 0*BoardSquare::WIDTH, -2.5*BoardSquare::WIDTH);
+    opponentsZeroGround = new ZeroSquare(this, 0*BoardSquare::WIDTH, 2.5*BoardSquare::WIDTH);
 
-    squares[0] = new Square(this, QImage (":/square1.png"),
-                                -1.5*Square::WIDTH, -1*Square::WIDTH);
-    squares[1] = new Square(this, QImage (":/square1.png"),
-                                -2.5*Square::WIDTH, 0*Square::WIDTH);
-    squares[2] = new Square(this, QImage (":/square1.png"),
-                                0.5*Square::WIDTH, 0*Square::WIDTH);
-    squares[3] = new Square(this, QImage (":/square1.png"),
-                                3.5*Square::WIDTH, 0*Square::WIDTH);
-    squares[4] = new Square(this, QImage (":/square1.png"),
-                                -1.5*Square::WIDTH, 1*Square::WIDTH);
+    squares[0] = new BoardSquare(this, QImage (":/square1.png"),
+                                -1.5*BoardSquare::WIDTH, -1*BoardSquare::WIDTH);
+    squares[1] = new BoardSquare(this, QImage (":/square1.png"),
+                                -2.5*BoardSquare::WIDTH, 0*BoardSquare::WIDTH);
+    squares[2] = new BoardSquare(this, QImage (":/square1.png"),
+                                0.5*BoardSquare::WIDTH, 0*BoardSquare::WIDTH);
+    squares[3] = new BoardSquare(this, QImage (":/square1.png"),
+                                3.5*BoardSquare::WIDTH, 0*BoardSquare::WIDTH);
+    squares[4] = new BoardSquare(this, QImage (":/square1.png"),
+                                -1.5*BoardSquare::WIDTH, 1*BoardSquare::WIDTH);
 
-    squares[5] = new Square(this, QImage (":/square2.png"),
-                                7.5*Square::WIDTH, 4*Square::WIDTH);
-    squares[6] = new Square(this, QImage (":/square2.png"),
-                                7.5*Square::WIDTH, 2*Square::WIDTH);
+    squares[5] = new BoardSquare(this, QImage (":/square2.png"),
+                                3.5*BoardSquare::WIDTH, -1*BoardSquare::WIDTH);
+    squares[6] = new BoardSquare(this, QImage (":/square2.png"),
+                                3.5*BoardSquare::WIDTH, 1*BoardSquare::WIDTH);
 
-    squares[7] = new Square(this, QImage (":/square3.png"),
-                                0.5*Square::WIDTH, 3*Square::WIDTH);
+    squares[7] = new BoardSquare(this, QImage (":/square3.png"),
+                                -3.5*BoardSquare::WIDTH, 0*BoardSquare::WIDTH);
 
-    squares[8] = new Square(this, QImage (":/square4.png"),
-                                0.5*Square::WIDTH, 2*Square::WIDTH);
-    squares[9] = new Square(this, QImage (":/square4.png"),
-                                0.5*Square::WIDTH, 4*Square::WIDTH);
-    squares[10] = new Square(this, QImage (":/square4.png"),
-                                3.5*Square::WIDTH, 3*Square::WIDTH);
-    squares[11] = new Square(this, QImage (":/square4.png"),
-                                6.5*Square::WIDTH, 2*Square::WIDTH);
-    squares[12] = new Square(this, QImage (":/square4.png"),
-                                6.5*Square::WIDTH, 4*Square::WIDTH);
+    squares[8] = new BoardSquare(this, QImage (":/square4.png"),
+                                -0.5*BoardSquare::WIDTH, 0*BoardSquare::WIDTH);
+    squares[9] = new BoardSquare(this, QImage (":/square4.png"),
+                                -3.5*BoardSquare::WIDTH, -1*BoardSquare::WIDTH);
+    squares[10] = new BoardSquare(this, QImage (":/square4.png"),
+                                -3.5*BoardSquare::WIDTH, 1*BoardSquare::WIDTH);
+    squares[11] = new BoardSquare(this, QImage (":/square4.png"),
+                                2.5*BoardSquare::WIDTH, -1*BoardSquare::WIDTH);
+    squares[12] = new BoardSquare(this, QImage (":/square4.png"),
+                                2.5*BoardSquare::WIDTH, 1*BoardSquare::WIDTH);
 
-    squares[13] = new Square(this, QImage (":/square5.png"),
-                                1.5*Square::WIDTH, 2*Square::WIDTH);
-    squares[14] = new Square(this, QImage (":/square5.png"),
-                                1.5*Square::WIDTH, 4*Square::WIDTH);
-    squares[15] = new Square(this, QImage (":/square5.png"),
-                                3.5*Square::WIDTH, 2*Square::WIDTH);
-    squares[16] = new Square(this, QImage (":/square5.png"),
-                                3.5*Square::WIDTH, 4*Square::WIDTH);
-    squares[17] = new Square(this, QImage (":/square5.png"),
-                                6.5*Square::WIDTH, 3*Square::WIDTH);
+    squares[13] = new BoardSquare(this, QImage (":/square5.png"),
+                                -0.5*BoardSquare::WIDTH, -1*BoardSquare::WIDTH);
+    squares[14] = new BoardSquare(this, QImage (":/square5.png"),
+                                -0.5*BoardSquare::WIDTH, 1*BoardSquare::WIDTH);
+    squares[15] = new BoardSquare(this, QImage (":/square5.png"),
+                                -2.5*BoardSquare::WIDTH, -1*BoardSquare::WIDTH);
+    squares[16] = new BoardSquare(this, QImage (":/square5.png"),
+                                -2.5*BoardSquare::WIDTH, 1*BoardSquare::WIDTH);
+    squares[17] = new BoardSquare(this, QImage (":/square5.png"),
+                                2.5*BoardSquare::WIDTH, 0*BoardSquare::WIDTH);
 
-    squares[18] = new Square(this, QImage (":/square6.png"),
-                                2.5*Square::WIDTH, 3*Square::WIDTH);
-    squares[19] = new Square(this, QImage (":/square6.png"),
-                                5.5*Square::WIDTH, 3*Square::WIDTH);
+    squares[18] = new BoardSquare(this, QImage (":/square6.png"),
+                                -1.5*BoardSquare::WIDTH, 0*BoardSquare::WIDTH);
+    squares[19] = new BoardSquare(this, QImage (":/square6.png"),
+                                1.5*BoardSquare::WIDTH, 0*BoardSquare::WIDTH);
 
-    playersPath[0] = squares[15];
-    playersPath[1] = squares[1];
-    playersPath[2] = squares[13];
-    playersPath[3] = squares[8];
+    playersPath[0] = squares[13];
+    playersPath[1] = squares[0];
+    playersPath[2] = squares[15];
+    playersPath[3] = squares[9];
     playersPath[4] = squares[7];
-    playersPath[5] = squares[0];
+    playersPath[5] = squares[1];
     playersPath[6] = squares[18];
-    playersPath[7] = squares[10];
-    playersPath[8] = squares[3];
+    playersPath[7] = squares[8];
+    playersPath[8] = squares[2];
     playersPath[9] = squares[19];
     playersPath[10] = squares[17];
-    playersPath[11] = squares[4];
-    playersPath[12] = squares[6];
+    playersPath[11] = squares[3];
+    playersPath[12] = squares[5];
     playersPath[13] = squares[11];
+
+    opponentsPath[0] = squares[14];
+    opponentsPath[1] = squares[4];
+    opponentsPath[2] = squares[16];
+    opponentsPath[3] = squares[10];
+    opponentsPath[4] = squares[7];
+    opponentsPath[5] = squares[1];
+    opponentsPath[6] = squares[18];
+    opponentsPath[7] = squares[8];
+    opponentsPath[8] = squares[2];
+    opponentsPath[9] = squares[19];
+    opponentsPath[10] = squares[17];
+    opponentsPath[11] = squares[3];
+    opponentsPath[12] = squares[6];
+    opponentsPath[13] = squares[12];
 }
 
 Board *Board::getInstance(QGraphicsItem *parent) {
@@ -77,14 +92,20 @@ Board *Board::getInstance(QGraphicsItem *parent) {
 
 Square *Board::nextSquare(PieceColors c, int crossedPathLength)
 {
-    if (c == WHITE && crossedPathLength < PATH_LEN)
+    if (crossedPathLength >= PATH_LEN)
+    {
+        return getStartingSquare(c);
+        // emituj event że square skończył podróż i nie powinien się odrysowywać
+    }
+    if (c == PLAYERS)
         return playersPath[crossedPathLength];
+    if (c = OPPONENTS)
+        return opponentsPath[crossedPathLength];
     return getStartingSquare(c);
 }
 
 QRectF Board::boundingRect() const
 {
-    //return QRectF(-4*Square::WIDTH, -3*Square::WIDTH, 8*Square::WIDTH, 6*Square::WIDTH);
     return QRectF();
 }
 
@@ -93,11 +114,12 @@ void Board::paint(QPainter *painter,
 {
     Q_UNUSED(option);
     Q_UNUSED(widget);
+    Q_UNUSED(painter);
 }
 
 ZeroSquare *Board::getStartingSquare(PieceColors c)
 {
-    if (c == WHITE)
-        return whiteZeroGround;
-    return blackZeroGround;
+    if (c == PLAYERS)
+        return playersZeroGround;
+    return opponentsZeroGround;
 }
