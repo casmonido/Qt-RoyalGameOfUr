@@ -31,17 +31,16 @@ void Game::rolledNumberChanged(unsigned int num)
 
 void Game::makeMoveOnTurnChanged(Turns t)
 {
-    if (t == OPPONENTS_TURN)
-    {
-        dice->roll();
-        setDiceRolled();
-        int i = 0;
-        do {
-            i = rand() % NUM_PIECES;
-        } while (opponentsPieces[i]->getWholePathCrossed()); // potential infinite loop
-        opponentsPieces[i]->move(getSquaresToMove());
-        setOtherPlayersTurn();
-    }
+    if (t != OPPONENTS_TURN)
+        return;
+    dice->roll();
+    setDiceRolled();
+    int i = 0;
+    do {
+        i = rand() % NUM_PIECES;
+    } while (opponentsPieces[i]->getWholePathCrossed()); // potential infinite loop
+    opponentsPieces[i]->move(getSquaresToMove());
+    setOtherPlayersTurn();
 }
 
 void Game::flashTurnOnTurnChanged(Turns t)
@@ -63,6 +62,23 @@ int Game::getSquaresToMove() {
 }
 
 void Game::setOtherPlayersTurn() {
+    int playerScore = getPlayersScore();
+    int opponentsScore = getOpponentsScore();
+    if (playerScore >= NUM_PIECES && opponentsScore >= NUM_PIECES)
+    {
+        emit gameEnd(DRAW);
+        return;
+    }
+    if (playerScore >= NUM_PIECES)
+    {
+        emit gameEnd(PLAYER);
+        return;
+    }
+    if (opponentsScore >= NUM_PIECES)
+    {
+        emit gameEnd(OPPONENT);
+        return;
+    }
     if (turn == PLAYERS_TURN)
         turn = OPPONENTS_TURN;
     else
@@ -74,6 +90,19 @@ void Game::setOtherPlayersTurn() {
 
 ZeroSquare *Game::getStartingSquare(PieceColors c) {
     return board->getStartingSquare(c);
+}
+
+unsigned int Game::getPlayersScore() {
+    unsigned int tmp = 0;
+    for (int i = 0; i < NUM_PIECES; i++)
+        tmp += playersPieces[i]->getWholePathCrossed() ? 1 : 0;
+    return tmp;
+}
+unsigned int Game::getOpponentsScore() {
+    unsigned int tmp = 0;
+    for (int i = 0; i < NUM_PIECES; i++)
+        tmp += opponentsPieces[i]->getWholePathCrossed() ? 1 : 0;
+    return tmp;
 }
 
 Square *Game::destinationSquare(Piece *p, unsigned int crossedPathLength, unsigned int pathToCross) {

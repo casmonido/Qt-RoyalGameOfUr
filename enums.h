@@ -10,7 +10,11 @@ enum PieceColors {
 };
 
 enum Turns {
-    PLAYERS_TURN, OPPONENTS_TURN
+    PLAYERS_TURN, OPPONENTS_TURN, GAME_END
+};
+
+enum WhoWon {
+    PLAYER, OPPONENT, DRAW
 };
 
 #endif // ENUMS_H

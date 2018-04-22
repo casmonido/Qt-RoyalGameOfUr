@@ -31,7 +31,6 @@ int main(int argc, char **argv)
     view.setViewportUpdateMode(QGraphicsView::BoundingRectViewportUpdate);
     view.setBackgroundBrush(QColor(220, 255, 255));
     view.setWindowTitle("The royal game of Ur");
-    //view.showMaximized();
     view.show();
     return app.exec();
 }

@@ -93,7 +93,6 @@ Square *Board::destinationSquare(Piece *p, unsigned int crossedPathLength, unsig
     {
         p->setWholePathCrossed();
         return lastSquare;
-        // emituj event że square skończył podróż i nie powinien się odrysowywać
     }
     if (p->getColor() == PLAYERS)
         return playersPath[crossedPathLength + pathToCross];

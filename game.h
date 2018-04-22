@@ -31,9 +31,12 @@ public:
     void setOtherPlayersTurn();
     bool getDiceRolled() {return diceRolled;}
     void setDiceRolled();
+    unsigned int getPlayersScore();
+    unsigned int getOpponentsScore();
 
 signals:
     void turnChanged(Turns);
+    void gameEnd(WhoWon);
     void diceRolledChanged(bool);
 
 private:
