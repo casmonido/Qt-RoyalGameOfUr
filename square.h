@@ -48,4 +48,15 @@ private:
     Piece *pieces[7]; //Game::NUM_PIECES
 };
 
+class LastSquare: public Square
+{
+public:
+    LastSquare(QGraphicsItem *parent = 0, int x=0, int y=0);
+    QPointF getChildCenterPos(Piece *) const;
+    OccupySquareResults tryAndOccupy(Piece *);
+    void leave(Piece *);
+    QRectF boundingRect() const;
+    void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget = 0);
+};
+
 #endif // SQUARE_H

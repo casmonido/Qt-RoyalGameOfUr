@@ -9,6 +9,7 @@
 class Square;
 class ZeroSquare;
 class BoardSquare;
+class LastSquare;
 
 class Board: public QGraphicsObject
 {
@@ -20,11 +21,12 @@ public:
     Square *nextSquare(PieceColors c, int crossedPathLength);
     Square *destinationSquare(PieceColors c, unsigned int crossedPathLength, unsigned int pathToCross);
 private:
-    static const int NUM_SQUARES = 20, PATH_LEN = 14;
+    static const int NUM_SQUARES = 20, PATH_LEN = 16;
     BoardSquare *squares [NUM_SQUARES];
     ZeroSquare *playersZeroGround, *opponentsZeroGround;
-    BoardSquare *playersPath [PATH_LEN];
-    BoardSquare *opponentsPath [PATH_LEN];
+    LastSquare *lastSquare;
+    Square *playersPath [PATH_LEN];
+    Square *opponentsPath [PATH_LEN];
 };
 
 #endif // BOARD_H

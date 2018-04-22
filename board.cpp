@@ -5,7 +5,7 @@ Board::Board(QGraphicsItem *parent)
 {
     playersZeroGround = new ZeroSquare(this, 0*BoardSquare::WIDTH, -2*BoardSquare::WIDTH);
     opponentsZeroGround = new ZeroSquare(this, 0*BoardSquare::WIDTH, 2*BoardSquare::WIDTH);
-
+    lastSquare = new LastSquare(this, 100*BoardSquare::WIDTH, 100*BoardSquare::WIDTH);
     squares[0] = new BoardSquare(this, QImage (":/square1.png"),
                                 -1.5*BoardSquare::WIDTH, -1*BoardSquare::WIDTH);
     squares[1] = new BoardSquare(this, QImage (":/square1.png"),
@@ -52,35 +52,39 @@ Board::Board(QGraphicsItem *parent)
     squares[19] = new BoardSquare(this, QImage (":/square6.png"),
                                 1.5*BoardSquare::WIDTH, 0*BoardSquare::WIDTH);
 
-    playersPath[0] = squares[13];
-    playersPath[1] = squares[0];
-    playersPath[2] = squares[15];
-    playersPath[3] = squares[9];
-    playersPath[4] = squares[7];
-    playersPath[5] = squares[1];
-    playersPath[6] = squares[18];
-    playersPath[7] = squares[8];
-    playersPath[8] = squares[2];
-    playersPath[9] = squares[19];
-    playersPath[10] = squares[17];
-    playersPath[11] = squares[3];
-    playersPath[12] = squares[5];
-    playersPath[13] = squares[11];
+    playersPath[0] = playersZeroGround;
+    playersPath[1] = squares[13];
+    playersPath[2] = squares[0];
+    playersPath[3] = squares[15];
+    playersPath[4] = squares[9];
+    playersPath[5] = squares[7];
+    playersPath[6] = squares[1];
+    playersPath[7] = squares[18];
+    playersPath[8] = squares[8];
+    playersPath[9] = squares[2];
+    playersPath[10] = squares[19];
+    playersPath[11] = squares[17];
+    playersPath[12] = squares[3];
+    playersPath[13] = squares[5];
+    playersPath[14] = squares[11];
+    playersPath[15] = lastSquare;
 
-    opponentsPath[0] = squares[14];
-    opponentsPath[1] = squares[4];
-    opponentsPath[2] = squares[16];
-    opponentsPath[3] = squares[10];
-    opponentsPath[4] = squares[7];
-    opponentsPath[5] = squares[1];
-    opponentsPath[6] = squares[18];
-    opponentsPath[7] = squares[8];
-    opponentsPath[8] = squares[2];
-    opponentsPath[9] = squares[19];
-    opponentsPath[10] = squares[17];
-    opponentsPath[11] = squares[3];
-    opponentsPath[12] = squares[6];
-    opponentsPath[13] = squares[12];
+    opponentsPath[0] = opponentsZeroGround;
+    opponentsPath[1] = squares[14];
+    opponentsPath[2] = squares[4];
+    opponentsPath[3] = squares[16];
+    opponentsPath[4] = squares[10];
+    opponentsPath[5] = squares[7];
+    opponentsPath[6] = squares[1];
+    opponentsPath[7] = squares[18];
+    opponentsPath[8] = squares[8];
+    opponentsPath[9] = squares[2];
+    opponentsPath[10] = squares[19];
+    opponentsPath[11] = squares[17];
+    opponentsPath[12] = squares[3];
+    opponentsPath[13] = squares[6];
+    opponentsPath[14] = squares[12];
+    opponentsPath[15] = lastSquare;
 }
 
 Square *Board::nextSquare(PieceColors c, int crossedPathLength)
@@ -99,18 +103,16 @@ Square *Board::nextSquare(PieceColors c, int crossedPathLength)
 
 Square *Board::destinationSquare(PieceColors c, unsigned int crossedPathLength, unsigned int pathToCross)
 {
-    if (pathToCross == 0)
-        return getStartingSquare(c);
-    if (crossedPathLength + pathToCross > PATH_LEN)
+    if (crossedPathLength + pathToCross > PATH_LEN-1)
     {
-        return getStartingSquare(c); //tak naprawdę powinien istnieć jakiś końcowy wspólny?
+        return lastSquare;
         // emituj event że square skończył podróż i nie powinien się odrysowywać
     }
     if (c == PLAYERS )
-        return playersPath[crossedPathLength + pathToCross - 1];
+        return playersPath[crossedPathLength + pathToCross];
     else
-        return opponentsPath[crossedPathLength + pathToCross - 1];
-    return getStartingSquare(c);
+        return opponentsPath[crossedPathLength + pathToCross];
+    return getStartingSquare(c); //wont happen
 }
 
 QRectF Board::boundingRect() const

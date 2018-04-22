@@ -73,7 +73,8 @@ void ZeroSquare::paint(QPainter *painter,
     painter->drawRect(boundingRect());
 }
 
-OccupySquareResults ZeroSquare::tryAndOccupy(Piece *p) {
+OccupySquareResults ZeroSquare::tryAndOccupy(Piece *p)
+{
     for (int i = 0; i < Game::NUM_PIECES; ++i)
         if (pieces[i] == NULL)
         {
@@ -83,11 +84,41 @@ OccupySquareResults ZeroSquare::tryAndOccupy(Piece *p) {
     return OK;
 }
 
-void ZeroSquare::leave(Piece *p) {
+void ZeroSquare::leave(Piece *p)
+{
     for (int i = 0; i < Game::NUM_PIECES; ++i)
         if (pieces[i] == p)
         {
             pieces[i] = 0;
             break;
         }
+}
+
+LastSquare::LastSquare(QGraphicsItem *parent, int x, int y)
+    : Square(parent) {
+    this->setPos(x, y);
+}
+
+QRectF LastSquare::boundingRect() const {
+    return QRectF();
+}
+
+void LastSquare::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget) {
+    Q_UNUSED(painter);
+    Q_UNUSED(option);
+    Q_UNUSED(widget);
+}
+
+QPointF LastSquare::getChildCenterPos(Piece *p) const {
+    Q_UNUSED(p);
+    return QPointF(0, 0);
+}
+
+OccupySquareResults LastSquare::tryAndOccupy(Piece *p) {
+    Q_UNUSED(p);
+    return OK;
+}
+
+void LastSquare::leave(Piece *p) {
+     Q_UNUSED(p);
 }

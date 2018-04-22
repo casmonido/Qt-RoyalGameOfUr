@@ -21,7 +21,7 @@ void Piece::move(unsigned int squaresToMove)
     this->setParentItem(location);
     this->setPos(location->getChildCenterPos(this));
     update();
-    crossedPathLength++;
+    crossedPathLength += squaresToMove;
 }
 
 void PlayersPiece::paint(QPainter *painter, const QStyleOptionGraphicsItem *option,
