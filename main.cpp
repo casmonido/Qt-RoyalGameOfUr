@@ -20,6 +20,7 @@ protected:
 
 int main(int argc, char **argv)
 {
+    Q_INIT_RESOURCE(board);
     QApplication app(argc, argv);
     QGraphicsScene scene(-8*BoardSquare::WIDTH, -4*BoardSquare::WIDTH, 16*BoardSquare::WIDTH, 8*BoardSquare::WIDTH);
     Game *game = new Game;

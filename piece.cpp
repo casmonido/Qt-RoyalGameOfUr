@@ -1,5 +1,17 @@
 #include "piece.h"
 
+Piece::Piece(Game *parent, Square *location)
+    : QGraphicsObject(parent)
+{
+    this->game = parent;
+    this->location = location;
+    this->location->tryAndOccupy(this);
+    this->setParentItem(location);
+    this->setPos(location->getChildCenterPos(this));
+    animation  = new QPropertyAnimation(this, "pos");
+    animation->setDuration(1000);
+}
+
 void PlayersPiece::mousePressEvent(QGraphicsSceneMouseEvent *e)
 {
     if (!(e->buttons() & Qt::LeftButton))
@@ -21,7 +33,10 @@ void Piece::move(unsigned int squaresToMove)
     this->setParentItem(location);
     this->setPos(location->getChildCenterPos(this));
     crossedPathLength += squaresToMove;
-    update();
+    //update();
+    animation->setEndValue(QPoint(100,100));
+    animation->setEasingCurve(QEasingCurve::OutElastic);
+    animation->start();
 }
 
 void PlayersPiece::paint(QPainter *painter, const QStyleOptionGraphicsItem *option,
@@ -40,17 +55,6 @@ void OpponentsPiece::paint(QPainter *painter, const QStyleOptionGraphicsItem *op
     Q_UNUSED(widget);
     painter->setBrush(QColor(5, 5, 5, 255));
     painter->drawEllipse(boundingRect());
-}
-
-
-Piece::Piece(Game *parent, Square *location)
-    : QGraphicsObject(parent)
-{
-    this->game = parent;
-    this->location = location;
-    this->location->tryAndOccupy(this);
-    this->setParentItem(location);
-    this->setPos(location->getChildCenterPos(this));
 }
 
 PieceColors Piece::getColor() {

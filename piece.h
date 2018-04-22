@@ -24,6 +24,7 @@ protected:
     bool wholePathCrossed = false;
     int crossedPathLength = 0;
     Square *location;
+    QPropertyAnimation *animation;
     Game *game;
 };
 
