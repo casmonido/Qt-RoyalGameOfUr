@@ -44,6 +44,12 @@ private:
     Board *board;
     Turns turn = PLAYERS_TURN;
     bool diceRolled = false;
+    QColor oppontentsTurnColor = Qt::gray;
+    QColor playersTurnColor = Qt::gray;
+    std::string numSquares = "0";
+private slots:
+    void flashTurnOnTurnChanged(Turns);
+    void rolledNumberChanged(unsigned int);
 };
 
 #endif // GAME_H

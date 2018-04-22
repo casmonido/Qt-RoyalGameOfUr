@@ -13,6 +13,32 @@ Game::Game(QGraphicsItem *parent)
     dies->setPos(4*BoardSquare::WIDTH, -0.5*BoardSquare::WIDTH);
     connect(this, SIGNAL(diceRolledChanged(bool)),
         dies, SLOT(diceRolledChanged(bool)));
+    connect(this, SIGNAL(turnChanged(Turns)),
+        this, SLOT(flashTurnOnTurnChanged(Turns)));
+    connect(dies, SIGNAL(rolledNumberChanged(unsigned int)),
+        this, SLOT(rolledNumberChanged(unsigned int)));
+    emit turnChanged(turn);
+    emit diceRolledChanged(diceRolled);
+}
+
+void Game::rolledNumberChanged(unsigned int num)
+{
+    numSquares = std::to_string(num);
+    update();
+}
+
+void Game::flashTurnOnTurnChanged(Turns t)
+{
+    if (t == PLAYERS_TURN)
+    {
+        oppontentsTurnColor = Qt::gray;
+        playersTurnColor = Qt::green;
+    } else
+    {
+        oppontentsTurnColor = Qt::red;
+        playersTurnColor = Qt::gray;
+    }
+    update();
 }
 
 int Game::getSquaresToMove() {
@@ -56,17 +82,18 @@ void Game::paint(QPainter *painter,
 {
     Q_UNUSED(option);
     Q_UNUSED(widget);
-    painter->setPen(Qt::red);
+    painter->setPen(oppontentsTurnColor);
     QRectF rect = QRectF(1*BoardSquare::WIDTH, -4*BoardSquare::WIDTH, 6*BoardSquare::WIDTH, BoardSquare::WIDTH);
     painter->drawRect(rect);
     painter->setFont(QFont("Arial", 40));
     painter->drawText(rect, Qt::AlignCenter, "Opponent's turn");
+    painter->setPen(playersTurnColor);
     rect = QRectF(1*BoardSquare::WIDTH, 3*BoardSquare::WIDTH, 6*BoardSquare::WIDTH, BoardSquare::WIDTH);
     painter->drawRect(rect);
     painter->setFont(QFont("Arial", 40));
     painter->drawText(rect, Qt::AlignCenter, "Your turn");
-    std::string n = std::to_string(45); //rolledNumber event
-    std::string s = "Move by " + n + " squares";
+    painter->setPen(Qt::black);
+    std::string s = "Move by " + numSquares + " squares";
     char const *num = s.c_str();
     rect = QRectF(1*BoardSquare::WIDTH, 1.5*BoardSquare::WIDTH, 6*BoardSquare::WIDTH, 1.5*BoardSquare::WIDTH);
     painter->drawRect(rect);

@@ -76,7 +76,8 @@ unsigned int Dice::roll() {
     rolledNumber = 0;
     for (int i = 0; i < NUM_DIES; ++i)
         rolledNumber += dies[i]->roll();
-    update(); //moze lepiej event na rolledNumber?
+    update();
+    emit rolledNumberChanged(rolledNumber);
     return rolledNumber;
 }
 
@@ -85,8 +86,10 @@ void Die::setToZero() {
 }
 
 void Dice::setToZero() {
+    rolledNumber = 0;
     for (int i = 0; i < NUM_DIES; ++i)
         dies[i]->setToZero();
+    emit rolledNumberChanged(rolledNumber);
 }
 
 unsigned int Dice::getSquaresToMoveAndReset() {

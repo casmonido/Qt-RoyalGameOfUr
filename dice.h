@@ -32,7 +32,8 @@ public:
     void setToZero();
     unsigned int getSquaresToMoveAndReset();
     void mousePressEvent(QGraphicsSceneMouseEvent *e);
-
+signals:
+    void rolledNumberChanged(unsigned int);
 private:
     Die *dies[NUM_DIES];
     Game *game;
