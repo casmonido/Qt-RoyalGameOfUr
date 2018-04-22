@@ -54,7 +54,7 @@ Piece::Piece(Game *parent, Square *location)
 }
 
 PieceColors Piece::getColor() {
-    return PLAYERS;
+    return NONE;
 }
 
 QRectF Piece::boundingRect() const

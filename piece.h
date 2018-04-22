@@ -17,11 +17,11 @@ public:
     Piece(Game *game = 0, Square *location=0);
     QRectF boundingRect() const override;
     virtual PieceColors getColor() = 0;
+    void move(unsigned int);
 protected:
     int crossedPathLength = 0;
     Square *location;
     Game *game;
-    void move(unsigned int);
 };
 
 

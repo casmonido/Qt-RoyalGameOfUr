@@ -9,13 +9,15 @@ Game::Game(QGraphicsItem *parent)
         playersPieces[i] = new PlayersPiece(this, board->getStartingSquare(PLAYERS));
     for (int i = 0; i < NUM_PIECES; i++)
         opponentsPieces[i] = new OpponentsPiece(this, board->getStartingSquare(OPPONENTS));
-    dies = new Dice(this);
-    dies->setPos(4*BoardSquare::WIDTH, -0.5*BoardSquare::WIDTH);
+    dice = new Dice(this);
+    dice->setPos(4*BoardSquare::WIDTH, -0.5*BoardSquare::WIDTH);
     connect(this, SIGNAL(diceRolledChanged(bool)),
-        dies, SLOT(diceRolledChanged(bool)));
+        dice, SLOT(diceRolledChanged(bool)));
     connect(this, SIGNAL(turnChanged(Turns)),
         this, SLOT(flashTurnOnTurnChanged(Turns)));
-    connect(dies, SIGNAL(rolledNumberChanged(unsigned int)),
+    connect(this, SIGNAL(turnChanged(Turns)),
+        this, SLOT(makeMoveOnTurnChanged(Turns)));
+    connect(dice, SIGNAL(rolledNumberChanged(unsigned int)),
         this, SLOT(rolledNumberChanged(unsigned int)));
     emit turnChanged(turn);
     emit diceRolledChanged(diceRolled);
@@ -25,6 +27,18 @@ void Game::rolledNumberChanged(unsigned int num)
 {
     numSquares = std::to_string(num);
     update();
+}
+
+void Game::makeMoveOnTurnChanged(Turns t)
+{
+    if (t == OPPONENTS_TURN)
+    {
+        dice->roll();
+        setDiceRolled();
+        int i = rand() % NUM_PIECES;
+        opponentsPieces[i]->move(getSquaresToMove());
+        setOtherPlayersTurn();
+    }
 }
 
 void Game::flashTurnOnTurnChanged(Turns t)
@@ -42,7 +56,7 @@ void Game::flashTurnOnTurnChanged(Turns t)
 }
 
 int Game::getSquaresToMove() {
-    return dies->getSquaresToMoveAndReset();
+    return dice->getSquaresToMoveAndReset();
 }
 
 void Game::setOtherPlayersTurn() {

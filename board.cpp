@@ -92,7 +92,7 @@ Square *Board::nextSquare(PieceColors c, int crossedPathLength)
     }
     if (c == PLAYERS)
         return playersPath[crossedPathLength];
-    if (c = OPPONENTS)
+    else
         return opponentsPath[crossedPathLength];
     return getStartingSquare(c);
 }
@@ -106,9 +106,9 @@ Square *Board::destinationSquare(PieceColors c, unsigned int crossedPathLength, 
         return getStartingSquare(c); //tak naprawdę powinien istnieć jakiś końcowy wspólny?
         // emituj event że square skończył podróż i nie powinien się odrysowywać
     }
-    if (c == PLAYERS)
+    if (c == PLAYERS )
         return playersPath[crossedPathLength + pathToCross - 1];
-    if (c = OPPONENTS)
+    else
         return opponentsPath[crossedPathLength + pathToCross - 1];
     return getStartingSquare(c);
 }

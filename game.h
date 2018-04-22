@@ -40,7 +40,7 @@ signals:
 private:
     Piece *opponentsPieces [NUM_PIECES];
     Piece *playersPieces [NUM_PIECES];
-    Dice *dies;
+    Dice *dice;
     Board *board;
     Turns turn = PLAYERS_TURN;
     bool diceRolled = false;
@@ -50,6 +50,7 @@ private:
 private slots:
     void flashTurnOnTurnChanged(Turns);
     void rolledNumberChanged(unsigned int);
+    void makeMoveOnTurnChanged(Turns);
 };
 
 #endif // GAME_H
