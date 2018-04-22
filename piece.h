@@ -18,7 +18,10 @@ public:
     QRectF boundingRect() const override;
     virtual PieceColors getColor() = 0;
     void move(unsigned int);
+    void setWholePathCrossed() {wholePathCrossed=true;}
+    bool getWholePathCrossed() {return wholePathCrossed;}
 protected:
+    bool wholePathCrossed = false;
     int crossedPathLength = 0;
     Square *location;
     Game *game;

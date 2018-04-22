@@ -4,7 +4,7 @@ void PlayersPiece::mousePressEvent(QGraphicsSceneMouseEvent *e)
 {
     if (!(e->buttons() & Qt::LeftButton))
         return;
-    if (game->getTurn() == PLAYERS_TURN && game->getDiceRolled())
+    if (!wholePathCrossed && (game->getTurn() == PLAYERS_TURN) && game->getDiceRolled())
     {
         move(game->getSquaresToMove());
         game->setOtherPlayersTurn();
@@ -16,12 +16,12 @@ void Piece::move(unsigned int squaresToMove)
     if (squaresToMove == 0)
         return;
     location->leave(this);
-    location = game->destinationSquare(getColor(), crossedPathLength, squaresToMove);
+    location = game->destinationSquare(this, crossedPathLength, squaresToMove);
     location->tryAndOccupy(this);
     this->setParentItem(location);
     this->setPos(location->getChildCenterPos(this));
-    update();
     crossedPathLength += squaresToMove;
+    update();
 }
 
 void PlayersPiece::paint(QPainter *painter, const QStyleOptionGraphicsItem *option,

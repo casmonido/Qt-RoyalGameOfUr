@@ -87,32 +87,19 @@ Board::Board(QGraphicsItem *parent)
     opponentsPath[15] = lastSquare;
 }
 
-Square *Board::nextSquare(PieceColors c, int crossedPathLength)
-{
-    if (crossedPathLength >= PATH_LEN)
-    {
-        return getStartingSquare(c); //tak naprawdę powinien istnieć jakiś końcowy wspólny?
-        // emituj event że square skończył podróż i nie powinien się odrysowywać
-    }
-    if (c == PLAYERS)
-        return playersPath[crossedPathLength];
-    else
-        return opponentsPath[crossedPathLength];
-    return getStartingSquare(c);
-}
-
-Square *Board::destinationSquare(PieceColors c, unsigned int crossedPathLength, unsigned int pathToCross)
+Square *Board::destinationSquare(Piece *p, unsigned int crossedPathLength, unsigned int pathToCross)
 {
     if (crossedPathLength + pathToCross > PATH_LEN-1)
     {
+        p->setWholePathCrossed();
         return lastSquare;
         // emituj event że square skończył podróż i nie powinien się odrysowywać
     }
-    if (c == PLAYERS )
+    if (p->getColor() == PLAYERS)
         return playersPath[crossedPathLength + pathToCross];
     else
         return opponentsPath[crossedPathLength + pathToCross];
-    return getStartingSquare(c); //wont happen
+    return getStartingSquare(p->getColor()); //wont happen
 }
 
 QRectF Board::boundingRect() const

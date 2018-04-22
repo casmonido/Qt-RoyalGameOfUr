@@ -25,8 +25,7 @@ public:
     QRectF boundingRect() const override;
     void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget = 0) override;
     ZeroSquare *getStartingSquare(PieceColors c);
-    Square *nextSquare(PieceColors c, int crossedPathLength);
-    Square *destinationSquare(PieceColors c, unsigned int crossedPathLength, unsigned int pathToCross);
+    Square *destinationSquare(Piece *p, unsigned int crossedPathLength, unsigned int pathToCross);
     Turns getTurn() const {return turn;}
     int getSquaresToMove();
     void setOtherPlayersTurn();

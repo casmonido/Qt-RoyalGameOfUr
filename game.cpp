@@ -35,7 +35,10 @@ void Game::makeMoveOnTurnChanged(Turns t)
     {
         dice->roll();
         setDiceRolled();
-        int i = rand() % NUM_PIECES;
+        int i = 0;
+        do {
+            i = rand() % NUM_PIECES;
+        } while (opponentsPieces[i]->getWholePathCrossed()); // potential infinite loop
         opponentsPieces[i]->move(getSquaresToMove());
         setOtherPlayersTurn();
     }
@@ -73,12 +76,8 @@ ZeroSquare *Game::getStartingSquare(PieceColors c) {
     return board->getStartingSquare(c);
 }
 
-Square *Game::nextSquare(PieceColors c, int crossedPathLength) {
-    return board->nextSquare(c, crossedPathLength);
-}
-
-Square *Game::destinationSquare(PieceColors c, unsigned int crossedPathLength, unsigned int pathToCross) {
-    return board->destinationSquare(c, crossedPathLength, pathToCross);
+Square *Game::destinationSquare(Piece *p, unsigned int crossedPathLength, unsigned int pathToCross) {
+    return board->destinationSquare(p, crossedPathLength, pathToCross);
 }
 
 void Game::setDiceRolled() {
