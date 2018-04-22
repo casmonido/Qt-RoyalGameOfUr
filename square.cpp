@@ -22,7 +22,8 @@ void BoardSquare::paint(QPainter *painter,
 
 QPointF BoardSquare::getChildCenterPos(Piece *p) const {
     Q_UNUSED(p);
-    return QPointF(-3*piecesNum, -3*piecesNum);
+    QPointF qp = QPointF(-3*piecesNum, -3*piecesNum);
+    return this->mapToItem(this->parentItem()->parentItem(), qp);
 }
 
 OccupySquareResults BoardSquare::tryAndOccupy(Piece *p) {
@@ -54,7 +55,10 @@ ZeroSquare::ZeroSquare(QGraphicsItem *parent, int x, int y)
 QPointF ZeroSquare::getChildCenterPos(Piece *p) const {
     for (int i = 0; i < Game::NUM_PIECES; ++i)
         if (pieces[i] == p)
-            return QPointF((i-3)*BoardSquare::WIDTH, 0);
+        {
+            QPointF qp = QPointF((i-3)*BoardSquare::WIDTH, 0);
+            return this->mapToItem(this->parentItem()->parentItem(), qp);
+        }
     return QPointF(0, 0);
 }
 
@@ -68,9 +72,7 @@ void ZeroSquare::paint(QPainter *painter,
 {
     Q_UNUSED(option);
     Q_UNUSED(widget);
-    //Q_UNUSED(painter);
-    painter->setBrush(QColor(5, 85, 85, 255));
-    painter->drawRect(boundingRect());
+    Q_UNUSED(painter);
 }
 
 OccupySquareResults ZeroSquare::tryAndOccupy(Piece *p)

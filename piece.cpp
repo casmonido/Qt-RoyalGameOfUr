@@ -6,7 +6,7 @@ Piece::Piece(Game *parent, Square *location)
     this->game = parent;
     this->location = location;
     this->location->tryAndOccupy(this);
-    this->setParentItem(location);
+    //this->setParentItem(location);
     this->setPos(location->getChildCenterPos(this));
     animation  = new QPropertyAnimation(this, "pos");
     animation->setDuration(1000);
@@ -28,13 +28,13 @@ void Piece::move(unsigned int squaresToMove)
     if (squaresToMove == 0)
         return;
     location->leave(this);
+    animation->setStartValue(this->parentItem()->mapFromScene(this->pos()));
     location = game->destinationSquare(this, crossedPathLength, squaresToMove);
     location->tryAndOccupy(this);
-    this->setParentItem(location);
     this->setPos(location->getChildCenterPos(this));
     crossedPathLength += squaresToMove;
     //update();
-    animation->setEndValue(QPoint(100,100));
+    animation->setEndValue(this->parentItem()->mapFromScene(this->pos()));
     animation->setEasingCurve(QEasingCurve::OutElastic);
     animation->start();
 }
