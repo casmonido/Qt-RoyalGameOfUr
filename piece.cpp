@@ -6,10 +6,21 @@ Piece::Piece(Game *parent, Square *location)
     this->game = parent;
     this->location = location;
     this->location->tryAndOccupy(this);
-    //this->setParentItem(location);
     this->setPos(location->getChildCenterPos(this));
     animation  = new QPropertyAnimation(this, "pos");
-    animation->setDuration(1000);
+    animation->setDuration(Game::ONE_MOVE_TIME);
+    animation->setEasingCurve(QEasingCurve::BezierSpline);
+}
+
+void Piece::goBackToBeginning(PieceColors c) {
+    if (c != this->getColor())
+        return;
+    location->leave(this);
+    crossedPathLength = 0;
+    location = game->destinationSquare(this, crossedPathLength, 0);
+    location->tryAndOccupy(this);
+    animation->setEndValue(location->getChildCenterPos(this));
+    animation->start();
 }
 
 void PlayersPiece::mousePressEvent(QGraphicsSceneMouseEvent *e)
@@ -28,14 +39,10 @@ void Piece::move(unsigned int squaresToMove)
     if (squaresToMove == 0)
         return;
     location->leave(this);
-    animation->setStartValue(this->parentItem()->mapFromScene(this->pos()));
     location = game->destinationSquare(this, crossedPathLength, squaresToMove);
     location->tryAndOccupy(this);
-    this->setPos(location->getChildCenterPos(this));
     crossedPathLength += squaresToMove;
-    //update();
-    animation->setEndValue(this->parentItem()->mapFromScene(this->pos()));
-    animation->setEasingCurve(QEasingCurve::OutElastic);
+    animation->setEndValue(location->getChildCenterPos(this));
     animation->start();
 }
 
@@ -63,6 +70,8 @@ PieceColors Piece::getColor() {
 
 QRectF Piece::boundingRect() const
 {
+    if (wholePathCrossed)
+        return QRectF(0, 0, 0, 0);
     return QRectF(-0.5*R, -0.5*R, R, R);
 }
 

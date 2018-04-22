@@ -28,17 +28,17 @@ QPointF BoardSquare::getChildCenterPos(Piece *p) const {
 
 OccupySquareResults BoardSquare::tryAndOccupy(Piece *p) {
     if (this->color != NONE && this->color != p->getColor())
-    {
-        // emit event
-        // .leave() performed by pieces
-    }
+        emit commandLeave(color);
+    connect(this, SIGNAL(commandLeave(PieceColors)),
+        p, SLOT(goBackToBeginning(PieceColors)));
     this->piecesNum++;
     this->color = p->getColor();
     return OK; // gdybym nie okroiła zasad to tu mogłoby też być ONE_MORE_HOP
 }
 
 void BoardSquare::leave(Piece *p) {
-    Q_UNUSED(p);
+    disconnect(this, SIGNAL(commandLeave(PieceColors)),
+        p, SLOT(goBackToBeginning(PieceColors)));
     this->piecesNum--;
     if (this->piecesNum == 0)
         this->color = NONE;

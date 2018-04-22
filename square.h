@@ -11,6 +11,7 @@ class Game;
 
 class Square: public QGraphicsObject
 {
+    Q_OBJECT
 public:
     Square(QGraphicsItem *parent = 0): QGraphicsObject(parent) {}
     virtual QPointF getChildCenterPos(Piece *) const = 0;
@@ -20,6 +21,7 @@ public:
 
 class BoardSquare: public Square
 {
+    Q_OBJECT
 public:
     static const int WIDTH = 100;
     BoardSquare(QGraphicsItem *parent = 0, QImage image = QImage(":/square1.png"), int x=0, int y=0);
@@ -28,6 +30,8 @@ public:
     QPointF getChildCenterPos(Piece *) const;
     OccupySquareResults tryAndOccupy(Piece *);
     void leave(Piece *);
+signals:
+    void commandLeave(PieceColors);
 private:
     int piecesNum = 0;
     PieceColors color = NONE;

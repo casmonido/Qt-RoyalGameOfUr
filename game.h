@@ -21,6 +21,7 @@ class Game: public QGraphicsObject
     Q_PROPERTY(bool diceRolled READ getDiceRolled NOTIFY diceRolledChanged)
 public:
     static const int NUM_PIECES = 7;
+    static const int ONE_MOVE_TIME = 1000;
     Game(QGraphicsItem *parent = 0);
     QRectF boundingRect() const override;
     void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget = 0) override;
