@@ -36,11 +36,14 @@ signals:
     void rolledNumberChanged(unsigned int);
 private:
     Die *dies[NUM_DIES];
+    QTimer *activeTimer;
+    std::string buttonText = "Roll";
     Game *game;
     unsigned int rolledNumber = 0;
     QColor buttonColor = Qt::green;
 private slots:
     void diceRolledChanged(bool);
+    void changeButtonTextOnNumberChanged(unsigned int);
 };
 
 #endif // DIES_H

@@ -10,6 +10,9 @@ Piece::Piece(Game *parent, Square *location)
     animation  = new QPropertyAnimation(this, "pos");
     animation->setDuration(Game::ONE_MOVE_TIME);
     animation->setEasingCurve(QEasingCurve::BezierSpline);
+    activeTimer = new QTimer(this);
+    activeTimer->setSingleShot(true);
+    connect(activeTimer, SIGNAL(timeout()), game, SLOT(setOtherPlayersTurn()));
 }
 
 void Piece::goBackToBeginning(PieceColors c) {
@@ -30,7 +33,7 @@ void PlayersPiece::mousePressEvent(QGraphicsSceneMouseEvent *e)
     if (!wholePathCrossed && (game->getTurn() == PLAYERS_TURN) && game->getDiceRolled())
     {
         move(game->getSquaresToMove());
-        game->setOtherPlayersTurn();
+
     }
 }
 
@@ -44,6 +47,7 @@ void Piece::move(unsigned int squaresToMove)
     crossedPathLength += squaresToMove;
     animation->setEndValue(location->getChildCenterPos(this));
     animation->start();
+    activeTimer->start(Game::ONE_MOVE_TIME);
 }
 
 void PlayersPiece::paint(QPainter *painter, const QStyleOptionGraphicsItem *option,

@@ -29,7 +29,6 @@ public:
     Square *destinationSquare(Piece *p, unsigned int crossedPathLength, unsigned int pathToCross);
     Turns getTurn() const {return turn;}
     int getSquaresToMove();
-    void setOtherPlayersTurn();
     bool getDiceRolled() {return diceRolled;}
     void setDiceRolled();
     unsigned int getPlayersScore();
@@ -50,10 +49,12 @@ private:
     QColor oppontentsTurnColor = Qt::gray;
     QColor playersTurnColor = Qt::gray;
     std::string numSquares = "0";
+    //QTimer *activeTimer;
 private slots:
     void flashTurnOnTurnChanged(Turns);
-    void rolledNumberChanged(unsigned int);
     void makeMoveOnTurnChanged(Turns);
+public slots:
+    void setOtherPlayersTurn();
 };
 
 #endif // GAME_H

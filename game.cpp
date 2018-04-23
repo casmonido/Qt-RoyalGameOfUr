@@ -11,22 +11,16 @@ Game::Game(QGraphicsItem *parent)
         opponentsPieces[i] = new OpponentsPiece(this, board->getStartingSquare(OPPONENTS));
     dice = new Dice(this);
     dice->setPos(4*BoardSquare::WIDTH, -0.5*BoardSquare::WIDTH);
+//    activeTimer = new QTimer(this);
+//    activeTimer->setSingleShot(true);
     connect(this, SIGNAL(diceRolledChanged(bool)),
         dice, SLOT(diceRolledChanged(bool)));
     connect(this, SIGNAL(turnChanged(Turns)),
         this, SLOT(flashTurnOnTurnChanged(Turns)));
     connect(this, SIGNAL(turnChanged(Turns)),
         this, SLOT(makeMoveOnTurnChanged(Turns)));
-    connect(dice, SIGNAL(rolledNumberChanged(unsigned int)),
-        this, SLOT(rolledNumberChanged(unsigned int)));
     emit turnChanged(turn);
     emit diceRolledChanged(diceRolled);
-}
-
-void Game::rolledNumberChanged(unsigned int num)
-{
-    numSquares = std::to_string(num);
-    update();
 }
 
 void Game::makeMoveOnTurnChanged(Turns t)
@@ -40,7 +34,8 @@ void Game::makeMoveOnTurnChanged(Turns t)
         i = rand() % NUM_PIECES;
     } while (opponentsPieces[i]->getWholePathCrossed()); // potential infinite loop
     opponentsPieces[i]->move(getSquaresToMove());
-    setOtherPlayersTurn();
+    //connect(activeTimer, SIGNAL(timeout()), this, SLOT(setOtherPlayersTurn()));
+    //activeTimer->start(Game::ONE_MOVE_TIME);
 }
 
 void Game::flashTurnOnTurnChanged(Turns t)
@@ -116,7 +111,7 @@ void Game::setDiceRolled() {
 
 QRectF Game::boundingRect() const
 {
-    return QRectF(-8*BoardSquare::WIDTH, -4*BoardSquare::WIDTH, 16*BoardSquare::WIDTH, 8*BoardSquare::WIDTH);
+    return QRectF(-8*BoardSquare::WIDTH, -3*BoardSquare::WIDTH, 16*BoardSquare::WIDTH, 6*BoardSquare::WIDTH);
 }
 
 void Game::paint(QPainter *painter,
@@ -125,20 +120,19 @@ void Game::paint(QPainter *painter,
     Q_UNUSED(option);
     Q_UNUSED(widget);
     painter->setPen(oppontentsTurnColor);
-    QRectF rect = QRectF(1*BoardSquare::WIDTH, -4*BoardSquare::WIDTH, 6*BoardSquare::WIDTH, BoardSquare::WIDTH);
+    QRectF rect = QRectF(1*BoardSquare::WIDTH, -2.5*BoardSquare::WIDTH, 6*BoardSquare::WIDTH, BoardSquare::WIDTH);
     painter->drawRect(rect);
     painter->setFont(QFont("Arial", 40));
     painter->drawText(rect, Qt::AlignCenter, "Opponent's turn");
     painter->setPen(playersTurnColor);
-    rect = QRectF(1*BoardSquare::WIDTH, 3*BoardSquare::WIDTH, 6*BoardSquare::WIDTH, BoardSquare::WIDTH);
+    rect = QRectF(1*BoardSquare::WIDTH, 2*BoardSquare::WIDTH, 6*BoardSquare::WIDTH, BoardSquare::WIDTH);
     painter->drawRect(rect);
     painter->setFont(QFont("Arial", 40));
     painter->drawText(rect, Qt::AlignCenter, "Your turn");
     painter->setPen(Qt::black);
     std::string s = "Move by " + numSquares + " squares";
     char const *num = s.c_str();
-    rect = QRectF(1*BoardSquare::WIDTH, 1.5*BoardSquare::WIDTH, 6*BoardSquare::WIDTH, 1.5*BoardSquare::WIDTH);
-    painter->drawRect(rect);
+    rect = QRectF(1*BoardSquare::WIDTH, 0.5*BoardSquare::WIDTH, 6*BoardSquare::WIDTH, 1.5*BoardSquare::WIDTH);
     painter->setFont(QFont("Arial", 40));
     painter->drawText(rect, Qt::AlignCenter, num);
 }

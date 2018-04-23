@@ -29,6 +29,7 @@ protected:
     Square *location;
     QPropertyAnimation *animation;
     Game *game;
+    QTimer *activeTimer;
 };
 
 
