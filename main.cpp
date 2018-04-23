@@ -30,7 +30,7 @@ int main(int argc, char **argv)
     GraphicsView view(&scene);
     view.setRenderHint(QPainter::Antialiasing);
     view.setViewportUpdateMode(QGraphicsView::BoundingRectViewportUpdate);
-    view.setBackgroundBrush(QColor(220, 255, 255));
+    view.setBackgroundBrush(QColor(32, 12, 75));
     view.setWindowTitle("The royal game of Ur");
     view.show();
     return app.exec();

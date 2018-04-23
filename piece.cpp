@@ -33,21 +33,22 @@ void PlayersPiece::mousePressEvent(QGraphicsSceneMouseEvent *e)
     if (!wholePathCrossed && (game->getTurn() == PLAYERS_TURN) && game->getDiceRolled())
     {
         move(game->getSquaresToMove());
-
+        //change turn was here previously
     }
 }
 
 void Piece::move(unsigned int squaresToMove)
 {
-    if (squaresToMove == 0)
-        return;
-    location->leave(this);
-    location = game->destinationSquare(this, crossedPathLength, squaresToMove);
-    location->tryAndOccupy(this);
-    crossedPathLength += squaresToMove;
-    animation->setEndValue(location->getChildCenterPos(this));
-    animation->start();
-    activeTimer->start(Game::ONE_MOVE_TIME);
+    if (squaresToMove != 0)
+    {
+        location->leave(this);
+        location = game->destinationSquare(this, crossedPathLength, squaresToMove);
+        location->tryAndOccupy(this);
+        crossedPathLength += squaresToMove;
+        animation->setEndValue(location->getChildCenterPos(this));
+        animation->start();
+    }
+    activeTimer->start(1.5*Game::ONE_MOVE_TIME);
 }
 
 void PlayersPiece::paint(QPainter *painter, const QStyleOptionGraphicsItem *option,

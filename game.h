@@ -48,7 +48,6 @@ private:
     bool diceRolled = false;
     QColor oppontentsTurnColor = Qt::gray;
     QColor playersTurnColor = Qt::gray;
-    std::string numSquares = "0";
     //QTimer *activeTimer;
 private slots:
     void flashTurnOnTurnChanged(Turns);

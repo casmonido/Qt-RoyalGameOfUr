@@ -10,9 +10,7 @@ Game::Game(QGraphicsItem *parent)
     for (int i = 0; i < NUM_PIECES; i++)
         opponentsPieces[i] = new OpponentsPiece(this, board->getStartingSquare(OPPONENTS));
     dice = new Dice(this);
-    dice->setPos(4*BoardSquare::WIDTH, -0.5*BoardSquare::WIDTH);
-//    activeTimer = new QTimer(this);
-//    activeTimer->setSingleShot(true);
+    dice->setPos(4*BoardSquare::WIDTH, 0*BoardSquare::WIDTH);
     connect(this, SIGNAL(diceRolledChanged(bool)),
         dice, SLOT(diceRolledChanged(bool)));
     connect(this, SIGNAL(turnChanged(Turns)),
@@ -34,8 +32,6 @@ void Game::makeMoveOnTurnChanged(Turns t)
         i = rand() % NUM_PIECES;
     } while (opponentsPieces[i]->getWholePathCrossed()); // potential infinite loop
     opponentsPieces[i]->move(getSquaresToMove());
-    //connect(activeTimer, SIGNAL(timeout()), this, SLOT(setOtherPlayersTurn()));
-    //activeTimer->start(Game::ONE_MOVE_TIME);
 }
 
 void Game::flashTurnOnTurnChanged(Turns t)
@@ -46,7 +42,7 @@ void Game::flashTurnOnTurnChanged(Turns t)
         playersTurnColor = Qt::green;
     } else
     {
-        oppontentsTurnColor = Qt::red;
+        oppontentsTurnColor = Qt::green;
         playersTurnColor = Qt::gray;
     }
     update();
@@ -93,6 +89,7 @@ unsigned int Game::getPlayersScore() {
         tmp += playersPieces[i]->getWholePathCrossed() ? 1 : 0;
     return tmp;
 }
+
 unsigned int Game::getOpponentsScore() {
     unsigned int tmp = 0;
     for (int i = 0; i < NUM_PIECES; i++)
@@ -125,14 +122,8 @@ void Game::paint(QPainter *painter,
     painter->setFont(QFont("Arial", 40));
     painter->drawText(rect, Qt::AlignCenter, "Opponent's turn");
     painter->setPen(playersTurnColor);
-    rect = QRectF(1*BoardSquare::WIDTH, 2*BoardSquare::WIDTH, 6*BoardSquare::WIDTH, BoardSquare::WIDTH);
+    rect = QRectF(1*BoardSquare::WIDTH, 1.5*BoardSquare::WIDTH, 6*BoardSquare::WIDTH, BoardSquare::WIDTH);
     painter->drawRect(rect);
     painter->setFont(QFont("Arial", 40));
     painter->drawText(rect, Qt::AlignCenter, "Your turn");
-    painter->setPen(Qt::black);
-    std::string s = "Move by " + numSquares + " squares";
-    char const *num = s.c_str();
-    rect = QRectF(1*BoardSquare::WIDTH, 0.5*BoardSquare::WIDTH, 6*BoardSquare::WIDTH, 1.5*BoardSquare::WIDTH);
-    painter->setFont(QFont("Arial", 40));
-    painter->drawText(rect, Qt::AlignCenter, num);
 }

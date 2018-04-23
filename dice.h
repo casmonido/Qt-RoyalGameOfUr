@@ -43,7 +43,6 @@ private:
     QColor buttonColor = Qt::green;
 private slots:
     void diceRolledChanged(bool);
-    void changeButtonTextOnNumberChanged(unsigned int);
 };
 
 #endif // DIES_H

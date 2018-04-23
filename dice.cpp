@@ -56,7 +56,7 @@ void Dice::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWid
     painter->setBrush(buttonColor);
     painter->drawRect(boundingRect());
     painter->setBrush(QColor(5, 5, 5, 255));
-    painter->setFont(QFont("Arial", 40));
+    painter->setFont(QFont("Arial", 30));
     painter->drawText(QRectF(-2*BoardSquare::WIDTH, 0*BoardSquare::WIDTH,
                              4*BoardSquare::WIDTH, BoardSquare::WIDTH),
                       Qt::AlignCenter, buttonText.c_str());
@@ -65,10 +65,18 @@ void Dice::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWid
 void Dice::diceRolledChanged(bool b)
 {
     if (b)
+    {
         buttonColor = Qt::gray;
+        if (rolledNumber == 0)
+            buttonText = "Number rolled: 0. Too bad!";
+        else
+            buttonText = "Move by " + std::to_string(rolledNumber) + " squares";
+    }
     else
+    {
         buttonColor = Qt::green;
-    buttonText = "Roll";
+        buttonText = "Roll";
+    }
     update();
 }
 
@@ -111,17 +119,4 @@ void Dice::mousePressEvent(QGraphicsSceneMouseEvent *e)
         return;
     roll();
     game->setDiceRolled();
-    if (rolledNumber == 0)
-    {
-        buttonText = "Number rolled: 0. Too bad!";
-        update();
-        activeTimer->start(Game::ONE_MOVE_TIME);
-    }
-}
-
-
-void Dice::changeButtonTextOnNumberChanged(unsigned int num)
-{
-    buttonText = "Move by " + std::to_string(num) + " squares";
-    update();
 }
