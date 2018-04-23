@@ -36,7 +36,7 @@ signals:
     void rolledNumberChanged(unsigned int);
 private:
     Die *dies[NUM_DIES];
-    QTimer *activeTimer;
+    QTimer *activeTimeractiveTimer;
     std::string buttonText = "Roll";
     Game *game;
     unsigned int rolledNumber = 0;

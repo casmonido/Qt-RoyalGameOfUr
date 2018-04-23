@@ -34,8 +34,11 @@ signals:
     void commandLeave(PieceColors);
 private:
     int piecesNum = 0;
-    PieceColors color = NONE;
+    PieceColors prevColor = NONE, color = NONE;
     QPixmap pixmap;
+    QTimer *activeTimer;
+private slots:
+    void emitCommandLeave();
 };
 
 

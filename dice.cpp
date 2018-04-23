@@ -37,9 +37,6 @@ Dice::Dice(Game *parent, QPointF pos)
 {
     srand (time(NULL));
     game = parent;
-    activeTimer = new QTimer(this);
-    activeTimer->setSingleShot(true);
-    connect(activeTimer, SIGNAL(timeout()), game, SLOT(setOtherPlayersTurn()));
     connect(this, SIGNAL(rolledNumberChanged(unsigned int)),
         this, SLOT(changeButtonTextOnNumberChanged(unsigned int)));
     for (int i = 0; i < NUM_DIES; ++i)

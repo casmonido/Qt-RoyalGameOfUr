@@ -5,6 +5,9 @@ BoardSquare::BoardSquare(QGraphicsItem *parent, QImage image, int x, int y)
 {
     this->pixmap = QPixmap::fromImage(image).scaled(WIDTH, WIDTH);
     this->setPos(x, y);
+    activeTimer = new QTimer(this);
+    activeTimer->setSingleShot(true);
+    connect(activeTimer, SIGNAL(timeout()), this, SLOT(emitCommandLeave()));
 }
 
 QRectF BoardSquare::boundingRect() const
@@ -28,12 +31,20 @@ QPointF BoardSquare::getChildCenterPos(Piece *p) const {
 
 OccupySquareResults BoardSquare::tryAndOccupy(Piece *p) {
     if (this->color != NONE && this->color != p->getColor())
-        emit commandLeave(color);
+    {
+        activeTimer->start(1.6*Game::ONE_MOVE_TIME);
+        piecesNum = 0;
+        prevColor = color;
+    }
     connect(this, SIGNAL(commandLeave(PieceColors)),
         p, SLOT(goBackToBeginning(PieceColors)));
     this->piecesNum++;
     this->color = p->getColor();
     return OK; // gdybym nie okroiła zasad to tu mogłoby też być ONE_MORE_HOP
+}
+
+void BoardSquare::emitCommandLeave() {
+    emit commandLeave(prevColor);
 }
 
 void BoardSquare::leave(Piece *p) {
