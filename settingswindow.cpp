@@ -6,6 +6,7 @@ SettingsWindow::SettingsWindow(QWidget *parent) :
 {
     ui = new Ui::SettingsWindow;
     ui->setupUi(this);
+    this->setWindowModality(Qt::ApplicationModal);
 }
 
 SettingsWindow::~SettingsWindow()

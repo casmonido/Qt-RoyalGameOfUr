@@ -24,6 +24,8 @@ GameWindow::GameWindow(QWidget *parent)
 
 void GameWindow::openSettings()
 {
+    SettingsWindow *settings =  new SettingsWindow(this);
+    settings->show();
 //    GameSettingsDialog* settingsDialog = new GameSettingsDialog(player1Name,
 //                                                                player2Name,
 //                                                                this);
@@ -41,7 +43,7 @@ void GameWindow::displayWinner(WhoWon winner) {
 void GameWindow::newGame()
 {
     NewGameDialog* dialog = new NewGameDialog(this);
-    if(dialog->exec() != QDialog::Accepted)
+    if (dialog->exec() != QDialog::Accepted)
         return;
     delete gameScene;
     gameScene = new GraphicsScene();

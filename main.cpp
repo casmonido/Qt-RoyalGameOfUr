@@ -11,7 +11,5 @@ int main(int argc, char **argv)
     window.show();
 
 //    SettingsModel settingsModel;
-//    SettingsWindow settings;
-//    settings.show();
     return app.exec();
 }

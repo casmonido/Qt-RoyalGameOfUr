@@ -4,6 +4,7 @@
 #include <math.h>
 #include "game.h"
 #include "newgamedialog.h"
+#include "settingswindow.h"
 
 class GraphicsScene : public QGraphicsScene
 {
