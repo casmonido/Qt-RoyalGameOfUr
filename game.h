@@ -26,7 +26,7 @@ public:
     void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget = 0) override;
     Square *destinationSquare(Piece *p, unsigned int crossedPathLength, unsigned int pathToCross);
     Turns getTurn() const {return turn;}
-    int getSquaresToMove(); //zmienic nazwę
+    int getRolledNumber(); //zmienic nazwę
     bool getDiceRolled() const;
 
 signals:

@@ -44,7 +44,7 @@ void Game::makeMoveForOpponent() {
     do {
         i = rand() % NUM_PIECES;
     } while (opponentsPieces[i]->getWholePathCrossed()); // potential infinite loop
-    opponentsPieces[i]->move(getSquaresToMove());
+    opponentsPieces[i]->move(getRolledNumber());
 }
 
 void Game::setOtherPlayersTurn() {
@@ -103,7 +103,7 @@ bool Game::getDiceRolled() const {
     return dice->getRolled();
 }
 
-int Game::getSquaresToMove() {
+int Game::getRolledNumber() {
     return dice->getRolledNumber();
 }
 

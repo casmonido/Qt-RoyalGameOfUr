@@ -48,7 +48,7 @@ void PlayersPiece::mousePressEvent(QGraphicsSceneMouseEvent *e)
     if (!(e->buttons() & Qt::LeftButton))
         return;
     if (!wholePathCrossed && (game->getTurn() == PLAYERS_TURN) && game->getDiceRolled())
-        move(game->getSquaresToMove());
+        move(game->getRolledNumber());
 }
 
 

@@ -113,8 +113,6 @@ void Board::paint(QPainter *painter,
     Q_UNUSED(option);
     Q_UNUSED(widget);
     Q_UNUSED(painter);
-    //painter->setBrush(QColor(235, 185, 185, 255));
-    //painter->drawRect(boundingRect());
 }
 
 ZeroSquare *Board::getStartingSquare(PieceColors c)

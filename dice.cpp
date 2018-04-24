@@ -14,8 +14,8 @@ Dice::Dice(Game *parent, QPointF pos)
 {
     srand (time(NULL));
     game = parent;
-    for (int i = 0; i < NUM_DIES; ++i)
-        dies[i] = new Die(this, QPointF((i-1.5)*BoardSquare::WIDTH, -0.5*BoardSquare::WIDTH));
+    for (int i = 0; i < DICE_NUM; ++i)
+        dice[i] = new Die(this, QPointF((i-1.5)*BoardSquare::WIDTH, -0.5*BoardSquare::WIDTH));
     blinkingAnimation = new QPropertyAnimation(this, "pos"); //color
     blinkingAnimation->setDuration(1.5*Game::ONE_MOVE_TIME);
     //blinkingAnimation->setEasingCurve(QEasingCurve::BezierSpline);
@@ -61,8 +61,8 @@ unsigned int Die::roll() {
 
 unsigned int Dice::roll() {
     rolledNumber = 0;
-    for (int i = 0; i < NUM_DIES; ++i)
-        rolledNumber += dies[i]->roll();
+    for (int i = 0; i < DICE_NUM; ++i)
+        rolledNumber += dice[i]->roll();
     rolled = true;
     if (rolledNumber == 0)
         activeTimer->start(Game::ONE_MOVE_TIME);
@@ -71,7 +71,10 @@ unsigned int Dice::roll() {
 }
 
 void Dice::setNotRolled() {
-    rolled=false;
+    rolled = false;
+    rolledNumber = 0;
+    for (int i =0; i < DICE_NUM; ++i)
+        dice[i]->setToZero();
     diceRolledChanged(rolled, game->getTurn());
 }
 
@@ -85,7 +88,7 @@ void Dice::mousePressEvent(QGraphicsSceneMouseEvent *e)
 {
     if (!(e->buttons() & Qt::LeftButton))
         return;
-    if (!rolled)
+    if ((game->getTurn() == PLAYERS_TURN) && !rolled)
         roll();
 }
 
@@ -126,4 +129,9 @@ void Dice::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWid
     painter->drawText(QRectF(-2*BoardSquare::WIDTH, 0*BoardSquare::WIDTH,
                              4*BoardSquare::WIDTH, BoardSquare::WIDTH),
                       Qt::AlignCenter, buttonText.c_str());
+}
+
+void Die::setToZero() {
+    rolledNumber = 0;
+    update();
 }
