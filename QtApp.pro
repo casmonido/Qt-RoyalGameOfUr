@@ -9,7 +9,8 @@ HEADERS += \
     dice.h \
     settingswindow.h \
     gamewindow.h \
-    settingsmodel.h
+    settingsmodel.h \
+    newgamedialog.h
 
 SOURCES += \
         main.cpp \
@@ -20,7 +21,8 @@ SOURCES += \
     dice.cpp \
     settingswindow.cpp \
     gamewindow.cpp \
-    settingsmodel.cpp
+    settingsmodel.cpp \
+    newgamedialog.cpp
 
 # install
 target.path = $$[QT_INSTALL_EXAMPLES]/widgets/graphicsview/royalurgame
@@ -30,4 +32,5 @@ RESOURCES += \
     board.qrc
 
 FORMS += \
-    settingswindow.ui
+    settingswindow.ui \
+    newgamedialog.ui

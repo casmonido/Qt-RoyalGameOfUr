@@ -16,7 +16,9 @@ GameWindow::GameWindow(QWidget *parent)
             this, SLOT(newGame()));
     connect(settingsAction, SIGNAL(triggered()),
             this, SLOT(openSettings()));
-    newGame();
+    gameScene = new GraphicsScene();
+    connect(gameScene, SIGNAL(gameEnded(WhoWon)), this, SLOT(displayWinner(WhoWon)));
+    gameView->setScene(gameScene);
 }
 
 
@@ -38,7 +40,9 @@ void GameWindow::displayWinner(WhoWon winner) {
 
 void GameWindow::newGame()
 {
-    //popup: do you really want to ?
+    NewGameDialog* dialog = new NewGameDialog(this);
+    if(dialog->exec() != QDialog::Accepted)
+        return;
     delete gameScene;
     gameScene = new GraphicsScene();
     connect(gameScene, SIGNAL(gameEnded(WhoWon)), this, SLOT(displayWinner(WhoWon)));

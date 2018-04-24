@@ -3,6 +3,7 @@
 #include <QtWidgets>
 #include <math.h>
 #include "game.h"
+#include "newgamedialog.h"
 
 class GraphicsScene : public QGraphicsScene
 {
