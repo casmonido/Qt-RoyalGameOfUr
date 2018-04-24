@@ -8,7 +8,8 @@ HEADERS += \
     game.h \
     dice.h \
     settingswindow.h \
-    gamewindow.h
+    gamewindow.h \
+    settingsmodel.h
 
 SOURCES += \
         main.cpp \
@@ -18,7 +19,8 @@ SOURCES += \
     game.cpp \
     dice.cpp \
     settingswindow.cpp \
-    gamewindow.cpp
+    gamewindow.cpp \
+    settingsmodel.cpp
 
 # install
 target.path = $$[QT_INSTALL_EXAMPLES]/widgets/graphicsview/royalurgame

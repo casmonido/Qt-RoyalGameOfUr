@@ -25,7 +25,7 @@ private:
 class GraphicsView : public QGraphicsView
 {
 public:
-    GraphicsView(GraphicsScene *scene) : QGraphicsView(scene)
+    GraphicsView(QMainWindow *parent) : QGraphicsView(parent)
     {
         setRenderHint(QPainter::Antialiasing);
         setViewportUpdateMode(QGraphicsView::BoundingRectViewportUpdate);
@@ -40,6 +40,25 @@ protected:
     }
 private:
     QColor backgoundColor = QColor(32, 12, 75);
+};
+
+
+class GameWindow: public QMainWindow
+{
+    Q_OBJECT
+//    QGraphicsView* mainPanel_;
+//    GameState* gameState_;
+public:
+    GameWindow(QWidget *parent = 0);
+    ~GameWindow();
+public slots:
+    void newGame();
+    void openSettings();
+private:
+    QAction *newGameAction;
+    QAction *settingsAction;
+    GraphicsView *gameView;
+    GraphicsScene *gameScene;
 };
 
 #endif // GAMEWINDOW_H
