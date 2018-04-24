@@ -37,8 +37,6 @@ Dice::Dice(Game *parent, QPointF pos)
 {
     srand (time(NULL));
     game = parent;
-    connect(this, SIGNAL(rolledNumberChanged(unsigned int)),
-        this, SLOT(changeButtonTextOnNumberChanged(unsigned int)));
     for (int i = 0; i < NUM_DIES; ++i)
         dies[i] = new Die(this, QPointF((i-1.5)*BoardSquare::WIDTH, -0.5*BoardSquare::WIDTH));
 }
@@ -65,7 +63,7 @@ void Dice::diceRolledChanged(bool b)
     {
         buttonColor = Qt::gray;
         if (rolledNumber == 0)
-            buttonText = "Number rolled: 0. Too bad!";
+            buttonText = "You rolled 0. Too bad!";
         else
             buttonText = "Move by " + std::to_string(rolledNumber) + " squares";
     }

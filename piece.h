@@ -13,6 +13,10 @@ class Game;
 class Piece : public QGraphicsObject
 {
     Q_OBJECT
+public slots:
+    void goBackToBeginning(PieceColors);
+signals:
+    void animationEnd();
 public:
     static const int R = 50;
     Piece(Game *game = 0, Square *location=0);
@@ -21,8 +25,6 @@ public:
     void move(unsigned int);
     void setWholePathCrossed() {wholePathCrossed=true;}
     bool getWholePathCrossed() {return wholePathCrossed;}
-public slots:
-    void goBackToBeginning(PieceColors);
 protected:
     bool wholePathCrossed = false;
     int crossedPathLength = 0;

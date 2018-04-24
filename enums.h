@@ -2,7 +2,7 @@
 #define ENUMS_H
 
 enum OccupySquareResults {
-    OK, ONE_MORE_HOP
+    OK, ONE_MORE_HOP, OK_CAPTURING
 };
 
 enum PieceColors {

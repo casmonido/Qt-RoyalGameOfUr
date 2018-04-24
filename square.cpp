@@ -5,22 +5,6 @@ BoardSquare::BoardSquare(QGraphicsItem *parent, QImage image, int x, int y)
 {
     this->pixmap = QPixmap::fromImage(image).scaled(WIDTH, WIDTH);
     this->setPos(x, y);
-    activeTimer = new QTimer(this);
-    activeTimer->setSingleShot(true);
-    connect(activeTimer, SIGNAL(timeout()), this, SLOT(emitCommandLeave()));
-}
-
-QRectF BoardSquare::boundingRect() const
-{
-    return QRectF(-0.5*WIDTH, -0.5*WIDTH, WIDTH, WIDTH);
-}
-
-void BoardSquare::paint(QPainter *painter,
-           const QStyleOptionGraphicsItem *option, QWidget *widget)
-{
-    Q_UNUSED(option);
-    Q_UNUSED(widget);
-    painter->drawPixmap(QPointF(-0.5*WIDTH, -0.5*WIDTH), pixmap);
 }
 
 QPointF BoardSquare::getChildCenterPos(Piece *p) const {
@@ -32,12 +16,12 @@ QPointF BoardSquare::getChildCenterPos(Piece *p) const {
 OccupySquareResults BoardSquare::tryAndOccupy(Piece *p) {
     if (this->color != NONE && this->color != p->getColor())
     {
-        activeTimer->start(1.6*Game::ONE_MOVE_TIME);
         piecesNum = 0;
         prevColor = color;
     }
     connect(this, SIGNAL(commandLeave(PieceColors)),
         p, SLOT(goBackToBeginning(PieceColors)));
+    connect(p, SIGNAL(animationEnd()), this, SLOT(emitCommandLeave()));
     this->piecesNum++;
     this->color = p->getColor();
     return OK; // gdybym nie okroiła zasad to tu mogłoby też być ONE_MORE_HOP
@@ -50,10 +34,16 @@ void BoardSquare::emitCommandLeave() {
 void BoardSquare::leave(Piece *p) {
     disconnect(this, SIGNAL(commandLeave(PieceColors)),
         p, SLOT(goBackToBeginning(PieceColors)));
+    disconnect(p, SIGNAL(animationEnd()), this, SLOT(emitCommandLeave()));
     this->piecesNum--;
     if (this->piecesNum == 0)
         this->color = NONE;
 }
+
+
+
+
+
 
 ZeroSquare::ZeroSquare(QGraphicsItem *parent, int x, int y)
     : Square(parent)
@@ -71,19 +61,6 @@ QPointF ZeroSquare::getChildCenterPos(Piece *p) const {
             return this->mapToItem(this->parentItem()->parentItem(), qp);
         }
     return QPointF(0, 0);
-}
-
-QRectF ZeroSquare::boundingRect() const
-{
-    return QRectF(-3.5*BoardSquare::WIDTH, -0.5*BoardSquare::WIDTH, 7*BoardSquare::WIDTH, BoardSquare::WIDTH);
-}
-
-void ZeroSquare::paint(QPainter *painter,
-           const QStyleOptionGraphicsItem *option, QWidget *widget)
-{
-    Q_UNUSED(option);
-    Q_UNUSED(widget);
-    Q_UNUSED(painter);
 }
 
 OccupySquareResults ZeroSquare::tryAndOccupy(Piece *p)
@@ -106,6 +83,44 @@ void ZeroSquare::leave(Piece *p)
             break;
         }
 }
+
+
+
+
+
+
+
+QRectF ZeroSquare::boundingRect() const
+{
+    return QRectF(-3.5*BoardSquare::WIDTH, -0.5*BoardSquare::WIDTH, 7*BoardSquare::WIDTH, BoardSquare::WIDTH);
+}
+
+void ZeroSquare::paint(QPainter *painter,
+           const QStyleOptionGraphicsItem *option, QWidget *widget)
+{
+    Q_UNUSED(option);
+    Q_UNUSED(widget);
+    Q_UNUSED(painter);
+}
+
+QRectF BoardSquare::boundingRect() const
+{
+    return QRectF(-0.5*WIDTH, -0.5*WIDTH, WIDTH, WIDTH);
+}
+
+void BoardSquare::paint(QPainter *painter,
+           const QStyleOptionGraphicsItem *option, QWidget *widget)
+{
+    Q_UNUSED(option);
+    Q_UNUSED(widget);
+    painter->drawPixmap(QPointF(-0.5*WIDTH, -0.5*WIDTH), pixmap);
+}
+
+
+
+
+
+
 
 LastSquare::LastSquare(QGraphicsItem *parent, int x, int y)
     : Square(parent) {

@@ -13,6 +13,8 @@ Piece::Piece(Game *parent, Square *location)
     activeTimer = new QTimer(this);
     activeTimer->setSingleShot(true);
     connect(activeTimer, SIGNAL(timeout()), game, SLOT(setOtherPlayersTurn()));
+    connect(animation, SIGNAL(stateChanged(QAbstractAnimation::State, QAbstractAnimation::State)),
+            this, SIGNAL(animationEnd()));
 }
 
 void Piece::goBackToBeginning(PieceColors c) {
@@ -26,30 +28,33 @@ void Piece::goBackToBeginning(PieceColors c) {
     animation->start();
 }
 
-void PlayersPiece::mousePressEvent(QGraphicsSceneMouseEvent *e)
-{
-    if (!(e->buttons() & Qt::LeftButton))
-        return;
-    if (!wholePathCrossed && (game->getTurn() == PLAYERS_TURN) && game->getDiceRolled())
-    {
-        move(game->getSquaresToMove());
-        //change turn was here previously
-    }
-}
-
 void Piece::move(unsigned int squaresToMove)
 {
     if (squaresToMove != 0)
     {
         location->leave(this);
         location = game->destinationSquare(this, crossedPathLength, squaresToMove);
-        location->tryAndOccupy(this);
+        location->tryAndOccupy(this); // można sprawdzić czy wynik nie OK_CAPTURING
         crossedPathLength += squaresToMove;
         animation->setEndValue(location->getChildCenterPos(this));
         animation->start();
     }
-    activeTimer->start(1.5*Game::ONE_MOVE_TIME);
+    activeTimer->start(2*Game::ONE_MOVE_TIME); // sygnał dla zmiany rundy
 }
+
+void PlayersPiece::mousePressEvent(QGraphicsSceneMouseEvent *e)
+{
+    if (!(e->buttons() & Qt::LeftButton))
+        return;
+    if (!wholePathCrossed && (game->getTurn() == PLAYERS_TURN) && game->getDiceRolled())
+        move(game->getSquaresToMove());
+}
+
+
+
+
+
+
 
 void PlayersPiece::paint(QPainter *painter, const QStyleOptionGraphicsItem *option,
            QWidget *widget)
@@ -80,22 +85,18 @@ QRectF Piece::boundingRect() const
     return QRectF(-0.5*R, -0.5*R, R, R);
 }
 
-PieceColors OpponentsPiece::getColor()
-{
+PieceColors OpponentsPiece::getColor() {
     return OPPONENTS;
 }
 
 OpponentsPiece::OpponentsPiece(Game *parent, Square *location)
-    : Piece(parent, location)
-{
+    : Piece(parent, location) {
 }
 
-PieceColors PlayersPiece::getColor()
-{
+PieceColors PlayersPiece::getColor() {
     return PLAYERS;
 }
 
 PlayersPiece::PlayersPiece(Game *parent, Square *location)
-    : Piece(parent, location)
-{
+    : Piece(parent, location) {
 }

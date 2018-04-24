@@ -25,13 +25,13 @@ public:
     Game(QGraphicsItem *parent = 0);
     QRectF boundingRect() const override;
     void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget = 0) override;
-    ZeroSquare *getStartingSquare(PieceColors c);
-    Square *destinationSquare(Piece *p, unsigned int crossedPathLength, unsigned int pathToCross);
+    ZeroSquare *getStartingSquare(PieceColors c);//deprecated
+    Square *destinationSquare(Piece *p, unsigned int crossedPathLength, unsigned int pathToCross);//deprecated
     Turns getTurn() const {return turn;}
     int getSquaresToMove();
-    bool getDiceRolled() {return diceRolled;}
+    bool getDiceRolled() const {return diceRolled;}
     void setDiceRolled();
-    unsigned int getPlayersScore();
+    unsigned int getPlayersScore();//const
     unsigned int getOpponentsScore();
 
 signals:
