@@ -28,6 +28,8 @@ public:
     Turns getTurn() const {return turn;}
     int getRolledNumber(); //zmienic nazwę
     bool getDiceRolled() const;
+    bool getPlayerMoved() {return playerMoved;}
+    void setPlayerMoved() {playerMoved = true;}
 
 signals:
     void turnChanged(Turns);
@@ -38,6 +40,7 @@ private:
     Dice *dice;
     Board *board;
     Turns turn = PLAYERS_TURN;
+    bool playerMoved = false, opponentMoved = false;
     QColor oppontentsTurnColor = Qt::gray;
     QColor playersTurnColor = Qt::gray;
     QTimer *activeTimer;

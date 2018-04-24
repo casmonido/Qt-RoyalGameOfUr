@@ -17,7 +17,7 @@ Piece::Piece(Game *parent, Square *location)
 }
 
 void Piece::goBackToBeginning(PieceColors c) {
-    if (c != this->getColor())
+    if ((c == NONE) || (c != this->getColor())) // if (c != this->getColor() return
         return;
     qobject_cast<BoardSquare*>(location)->leaveWhenEvicted(this);
     crossedPathLength = 0;
@@ -47,8 +47,11 @@ void PlayersPiece::mousePressEvent(QGraphicsSceneMouseEvent *e)
 {
     if (!(e->buttons() & Qt::LeftButton))
         return;
-    if (!wholePathCrossed && (game->getTurn() == PLAYERS_TURN) && game->getDiceRolled())
+    if (!wholePathCrossed && (game->getTurn() == PLAYERS_TURN)  && !game->getPlayerMoved() && game->getDiceRolled())
+    {
+        game->setPlayerMoved();
         move(game->getRolledNumber());
+    }
 }
 
 

@@ -44,6 +44,7 @@ void Game::makeMoveForOpponent() {
     do {
         i = rand() % NUM_PIECES;
     } while (opponentsPieces[i]->getWholePathCrossed()); // potential infinite loop
+    opponentMoved = true; // niewykorzystywane ale jest dla symetrii
     opponentsPieces[i]->move(getRolledNumber());
 }
 
@@ -70,6 +71,8 @@ void Game::setOtherPlayersTurn() {
     else
         turn = PLAYERS_TURN;
     dice->setNotRolled();
+    playerMoved = false;
+    opponentMoved = false;
     emit turnChanged(turn);
 }
 

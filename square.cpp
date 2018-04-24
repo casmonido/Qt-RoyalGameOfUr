@@ -29,7 +29,10 @@ void BoardSquare::leave(Piece *p) {
     disconnect(p, SIGNAL(animationEnd()), this, SLOT(emitCommandLeave()));
     this->piecesNum--;
     if (this->piecesNum == 0)
+    {
+        this->prevColor = NONE;
         this->color = NONE;
+    }
 }
 
 void BoardSquare::leaveWhenEvicted(Piece *p) {
