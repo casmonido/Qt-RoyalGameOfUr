@@ -6,7 +6,9 @@ HEADERS += \
     square.h \
     enums.h \
     game.h \
-    dice.h
+    dice.h \
+    settingswindow.h \
+    gamewindow.h
 
 SOURCES += \
         main.cpp \
@@ -14,7 +16,9 @@ SOURCES += \
     piece.cpp \
     square.cpp \
     game.cpp \
-    dice.cpp
+    dice.cpp \
+    settingswindow.cpp \
+    gamewindow.cpp
 
 # install
 target.path = $$[QT_INSTALL_EXAMPLES]/widgets/graphicsview/royalurgame
@@ -22,3 +26,6 @@ INSTALLS += target
 
 RESOURCES += \
     board.qrc
+
+FORMS += \
+    settingswindow.ui

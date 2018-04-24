@@ -87,17 +87,16 @@ void Game::setOtherPlayersTurn() {
 
 
 
-
 void Game::changeTurnsColorOnTurnChanged(Turns t)
 {
     if (t == PLAYERS_TURN)
     {
-        oppontentsTurnColor = Qt::gray;
-        playersTurnColor = Qt::green;
+        oppontentsTurnColor = Qt::darkGray;
+        playersTurnColor = Qt::white;
     } else
     {
-        oppontentsTurnColor = Qt::green;
-        playersTurnColor = Qt::gray;
+        oppontentsTurnColor = Qt::white;
+        playersTurnColor = Qt::darkGray;
     }
     update();
 }
@@ -138,18 +137,18 @@ void Game::paint(QPainter *painter,
 {
     Q_UNUSED(option);
     Q_UNUSED(widget);
-    painter->setPen(oppontentsTurnColor);
-    painter->setBrush(oppontentsTurnColor);
+    //painter->setPen(oppontentsTurnColor);
+    //painter->setBrush(oppontentsTurnColor);
     QRectF rect = QRectF(1*BoardSquare::WIDTH, -2.5*BoardSquare::WIDTH, 6*BoardSquare::WIDTH, BoardSquare::WIDTH);
-    painter->drawRect(rect);
-    painter->setPen(Qt::white);
+    //painter->drawRect(rect);
+    painter->setPen(oppontentsTurnColor);
     painter->setFont(QFont("Arial", 40));
     painter->drawText(rect, Qt::AlignCenter, "Opponent's turn");
     painter->setPen(playersTurnColor);
-    painter->setBrush(playersTurnColor);
+    //painter->setBrush(playersTurnColor);
     rect = QRectF(1*BoardSquare::WIDTH, 1.5*BoardSquare::WIDTH, 6*BoardSquare::WIDTH, BoardSquare::WIDTH);
-    painter->drawRect(rect);
-    painter->setPen(Qt::white);
+    //painter->drawRect(rect);
+    //painter->setPen(Qt::white);
     painter->setFont(QFont("Arial", 40));
     painter->drawText(rect, Qt::AlignCenter, "Your turn");
 }

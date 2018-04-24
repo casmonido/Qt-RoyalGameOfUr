@@ -41,8 +41,8 @@ private:
     Board *board;
     Turns turn = PLAYERS_TURN;
     bool playerMoved = false, opponentMoved = false;
-    QColor oppontentsTurnColor = Qt::gray;
-    QColor playersTurnColor = Qt::gray;
+    QColor oppontentsTurnColor = Qt::darkGray;
+    QColor playersTurnColor = Qt::darkGray;
     QTimer *activeTimer;
     unsigned int getPlayersScore() const;
     unsigned int getOpponentsScore() const;
