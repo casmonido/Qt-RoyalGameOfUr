@@ -13,14 +13,13 @@ Piece::Piece(Game *parent, Square *location)
     activeTimer = new QTimer(this);
     activeTimer->setSingleShot(true);
     connect(activeTimer, SIGNAL(timeout()), game, SLOT(setOtherPlayersTurn()));
-    connect(animation, SIGNAL(stateChanged(QAbstractAnimation::State, QAbstractAnimation::State)),
-            this, SIGNAL(animationEnd()));
+    connect(animation, SIGNAL(finished()), this, SIGNAL(animationEnd()));
 }
 
 void Piece::goBackToBeginning(PieceColors c) {
     if (c != this->getColor())
         return;
-    location->leave(this);
+    qobject_cast<BoardSquare*>(location)->leaveWhenEvicted(this);
     crossedPathLength = 0;
     location = game->destinationSquare(this, crossedPathLength, 0);
     location->tryAndOccupy(this);
@@ -30,16 +29,18 @@ void Piece::goBackToBeginning(PieceColors c) {
 
 void Piece::move(unsigned int squaresToMove)
 {
+    int timeTillNextRound = 2*Game::ONE_MOVE_TIME;
     if (squaresToMove != 0)
     {
         location->leave(this);
         location = game->destinationSquare(this, crossedPathLength, squaresToMove);
-        location->tryAndOccupy(this); // można sprawdzić czy wynik nie OK_CAPTURING
+        if (location->tryAndOccupy(this) == OK_CAPTURING)
+            timeTillNextRound = 3*Game::ONE_MOVE_TIME;
         crossedPathLength += squaresToMove;
         animation->setEndValue(location->getChildCenterPos(this));
         animation->start();
     }
-    activeTimer->start(2*Game::ONE_MOVE_TIME); // sygnał dla zmiany rundy
+    activeTimer->start(timeTillNextRound); // sygnał dla zmiany rundy
 }
 
 void PlayersPiece::mousePressEvent(QGraphicsSceneMouseEvent *e)

@@ -7,28 +7,20 @@ BoardSquare::BoardSquare(QGraphicsItem *parent, QImage image, int x, int y)
     this->setPos(x, y);
 }
 
-QPointF BoardSquare::getChildCenterPos(Piece *p) const {
-    Q_UNUSED(p);
-    QPointF qp = QPointF(-3*piecesNum, -3*piecesNum);
-    return this->mapToItem(this->parentItem()->parentItem(), qp);
-}
-
 OccupySquareResults BoardSquare::tryAndOccupy(Piece *p) {
+    OccupySquareResults retVal = OK;
     if (this->color != NONE && this->color != p->getColor())
     {
         piecesNum = 0;
         prevColor = color;
+        retVal = OK_CAPTURING;
     }
     connect(this, SIGNAL(commandLeave(PieceColors)),
         p, SLOT(goBackToBeginning(PieceColors)));
     connect(p, SIGNAL(animationEnd()), this, SLOT(emitCommandLeave()));
     this->piecesNum++;
     this->color = p->getColor();
-    return OK; // gdybym nie okroiła zasad to tu mogłoby też być ONE_MORE_HOP
-}
-
-void BoardSquare::emitCommandLeave() {
-    emit commandLeave(prevColor);
+    return retVal;
 }
 
 void BoardSquare::leave(Piece *p) {
@@ -40,7 +32,21 @@ void BoardSquare::leave(Piece *p) {
         this->color = NONE;
 }
 
+void BoardSquare::leaveWhenEvicted(Piece *p) {
+    disconnect(this, SIGNAL(commandLeave(PieceColors)),
+        p, SLOT(goBackToBeginning(PieceColors)));
+    disconnect(p, SIGNAL(animationEnd()), this, SLOT(emitCommandLeave()));
+}
 
+void BoardSquare::emitCommandLeave() {
+    emit commandLeave(prevColor);
+}
+
+QPointF BoardSquare::getChildCenterPos(Piece *p) const {
+    Q_UNUSED(p);
+    QPointF qp = QPointF(-3*piecesNum, -3*piecesNum);
+    return this->mapToItem(this->parentItem()->parentItem(), qp);
+}
 
 
 

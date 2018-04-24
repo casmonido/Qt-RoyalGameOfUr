@@ -30,6 +30,7 @@ public:
     QPointF getChildCenterPos(Piece *) const;
     OccupySquareResults tryAndOccupy(Piece *);
     void leave(Piece *);
+    void leaveWhenEvicted(Piece *);
 signals:
     void commandLeave(PieceColors);
 private:
