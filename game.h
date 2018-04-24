@@ -50,7 +50,7 @@ private:
     QColor playersTurnColor = Qt::gray;
     //QTimer *activeTimer;
 private slots:
-    void flashTurnOnTurnChanged(Turns);
+    void changeTurnsColorOnTurnChanged(Turns);
     void makeMoveOnTurnChanged(Turns);
 public slots:
     void setOtherPlayersTurn();

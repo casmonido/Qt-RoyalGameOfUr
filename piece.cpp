@@ -30,7 +30,7 @@ void Piece::goBackToBeginning(PieceColors c) {
 void Piece::move(unsigned int squaresToMove)
 {
     int timeTillNextRound = 2*Game::ONE_MOVE_TIME;
-    if (squaresToMove != 0)
+    if (squaresToMove != 0) //jesli wylosowano 0 to gra sama zmienia rundę
     {
         location->leave(this);
         location = game->destinationSquare(this, crossedPathLength, squaresToMove);
@@ -39,8 +39,8 @@ void Piece::move(unsigned int squaresToMove)
         crossedPathLength += squaresToMove;
         animation->setEndValue(location->getChildCenterPos(this));
         animation->start();
+        activeTimer->start(timeTillNextRound); // sygnał dla zmiany rundy
     }
-    activeTimer->start(timeTillNextRound); // sygnał dla zmiany rundy
 }
 
 void PlayersPiece::mousePressEvent(QGraphicsSceneMouseEvent *e)
