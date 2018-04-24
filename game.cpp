@@ -11,47 +11,40 @@ Game::Game(QGraphicsItem *parent)
         opponentsPieces[i] = new OpponentsPiece(this, board->getStartingSquare(OPPONENTS));
     dice = new Dice(this);
     dice->setPos(4*BoardSquare::WIDTH, 0*BoardSquare::WIDTH);
+    activeTimer = new QTimer(this);
+    activeTimer->setSingleShot(true);
 
     connect(this, SIGNAL(turnChanged(Turns)),
         this, SLOT(changeTurnsColorOnTurnChanged(Turns)));
-
-    connect(this, SIGNAL(diceRolledChanged(bool)),
-        dice, SLOT(diceRolledChanged(bool)));
     connect(this, SIGNAL(turnChanged(Turns)),
-        this, SLOT(makeMoveOnTurnChanged(Turns)));
+        this, SLOT(opponentsActionOnTurnChanged(Turns)));
     emit turnChanged(turn);
-    emit diceRolledChanged(diceRolled);
 }
 
-void Game::makeMoveOnTurnChanged(Turns t)
+void Game::opponentsActionOnTurnChanged(Turns t)
 {
     if (t != OPPONENTS_TURN)
         return;
-    dice->roll();
-    setDiceRolled();
+    connect(activeTimer, SIGNAL(timeout()), this, SLOT(rollForOpponent()));
+    activeTimer->start(ONE_MOVE_TIME);
+}
+
+void Game::rollForOpponent() {
+    disconnect(activeTimer, SIGNAL(timeout()), this, SLOT(rollForOpponent()));
+    if (dice->roll() > 0)
+    {
+       connect(activeTimer, SIGNAL(timeout()), this, SLOT(makeMoveForOpponent()));
+       activeTimer->start(ONE_MOVE_TIME);
+    }
+}
+
+void Game::makeMoveForOpponent() {
+    disconnect(activeTimer, SIGNAL(timeout()), this, SLOT(makeMoveForOpponent()));
     int i = 0;
     do {
         i = rand() % NUM_PIECES;
     } while (opponentsPieces[i]->getWholePathCrossed()); // potential infinite loop
     opponentsPieces[i]->move(getSquaresToMove());
-}
-
-void Game::changeTurnsColorOnTurnChanged(Turns t)
-{
-    if (t == PLAYERS_TURN)
-    {
-        oppontentsTurnColor = Qt::gray;
-        playersTurnColor = Qt::green;
-    } else
-    {
-        oppontentsTurnColor = Qt::green;
-        playersTurnColor = Qt::gray;
-    }
-    update();
-}
-
-int Game::getSquaresToMove() {
-    return dice->getSquaresToMoveAndReset();
 }
 
 void Game::setOtherPlayersTurn() {
@@ -76,23 +69,52 @@ void Game::setOtherPlayersTurn() {
         turn = OPPONENTS_TURN;
     else
         turn = PLAYERS_TURN;
-    diceRolled = false;
+    dice->setNotRolled();
     emit turnChanged(turn);
-    emit diceRolledChanged(false);
 }
 
-ZeroSquare *Game::getStartingSquare(PieceColors c) {
-    return board->getStartingSquare(c);
+
+
+
+
+
+
+
+
+
+
+
+
+void Game::changeTurnsColorOnTurnChanged(Turns t)
+{
+    if (t == PLAYERS_TURN)
+    {
+        oppontentsTurnColor = Qt::gray;
+        playersTurnColor = Qt::green;
+    } else
+    {
+        oppontentsTurnColor = Qt::green;
+        playersTurnColor = Qt::gray;
+    }
+    update();
 }
 
-unsigned int Game::getPlayersScore() {
+bool Game::getDiceRolled() const {
+    return dice->getRolled();
+}
+
+int Game::getSquaresToMove() {
+    return dice->getRolledNumber();
+}
+
+unsigned int Game::getPlayersScore() const {
     unsigned int tmp = 0;
     for (int i = 0; i < NUM_PIECES; i++)
         tmp += playersPieces[i]->getWholePathCrossed() ? 1 : 0;
     return tmp;
 }
 
-unsigned int Game::getOpponentsScore() {
+unsigned int Game::getOpponentsScore() const {
     unsigned int tmp = 0;
     for (int i = 0; i < NUM_PIECES; i++)
         tmp += opponentsPieces[i]->getWholePathCrossed() ? 1 : 0;
@@ -101,11 +123,6 @@ unsigned int Game::getOpponentsScore() {
 
 Square *Game::destinationSquare(Piece *p, unsigned int crossedPathLength, unsigned int pathToCross) {
     return board->destinationSquare(p, crossedPathLength, pathToCross);
-}
-
-void Game::setDiceRolled() {
-    diceRolled = true;
-    emit diceRolledChanged(true);
 }
 
 QRectF Game::boundingRect() const

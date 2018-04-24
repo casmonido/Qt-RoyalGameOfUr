@@ -9,6 +9,90 @@ Die::Die(QGraphicsItem *parent, QPointF pos)
     this->setPos(pos);
 }
 
+Dice::Dice(Game *parent, QPointF pos)
+    : Die(parent, pos)
+{
+    srand (time(NULL));
+    game = parent;
+    for (int i = 0; i < NUM_DIES; ++i)
+        dies[i] = new Die(this, QPointF((i-1.5)*BoardSquare::WIDTH, -0.5*BoardSquare::WIDTH));
+    blinkingAnimation = new QPropertyAnimation(this, "pos"); //color
+    blinkingAnimation->setDuration(1.5*Game::ONE_MOVE_TIME);
+    //blinkingAnimation->setEasingCurve(QEasingCurve::BezierSpline);
+    activeTimer = new QTimer(this);
+    activeTimer->setSingleShot(true);
+    connect(activeTimer, SIGNAL(timeout()), game, SLOT(setOtherPlayersTurn()));
+}
+
+void Dice::diceRolledChanged(bool rolled, Turns turn)
+{
+    if (rolled)
+    {
+        blinkingAnimation->stop();
+        buttonColor = Qt::gray;
+
+            if (turn == OPPONENTS_TURN)
+                buttonText = "Rolled number: " + std::to_string(rolledNumber);
+            else
+            {
+                if (rolledNumber == 0)
+                    buttonText = "You rolled 0. Too bad!";
+                else
+                    buttonText = "Move by " + std::to_string(rolledNumber) + " squares";
+            }
+    }
+    else
+    {
+        buttonColor = QColor(153, 54, 173, 255);
+        blinkingAnimation->start();
+        if (turn == PLAYERS_TURN)
+            buttonText = "Roll";
+        else
+            buttonText = "...";
+    }
+    update();
+}
+
+unsigned int Die::roll() {
+    rolledNumber = rand() % 2;
+    update();
+    return rolledNumber;
+}
+
+unsigned int Dice::roll() {
+    rolledNumber = 0;
+    for (int i = 0; i < NUM_DIES; ++i)
+        rolledNumber += dies[i]->roll();
+    rolled = true;
+    if (rolledNumber == 0)
+        activeTimer->start(Game::ONE_MOVE_TIME);
+    diceRolledChanged(rolled, game->getTurn());
+    return rolledNumber;
+}
+
+void Dice::setNotRolled() {
+    rolled=false;
+    diceRolledChanged(rolled, game->getTurn());
+}
+
+
+
+
+
+
+
+void Dice::mousePressEvent(QGraphicsSceneMouseEvent *e)
+{
+    if (!(e->buttons() & Qt::LeftButton))
+        return;
+    if (!rolled)
+        roll();
+}
+
+QRectF Dice::boundingRect() const {
+    return QRectF(-2*BoardSquare::WIDTH, -1*BoardSquare::WIDTH, 4*BoardSquare::WIDTH, 2*BoardSquare::WIDTH);
+}
+
 QRectF Die::boundingRect() const {
     return QRectF(-0.5*BoardSquare::WIDTH, -0.5*BoardSquare::WIDTH,
                   BoardSquare::WIDTH, BoardSquare::WIDTH);
@@ -32,19 +116,6 @@ void Die::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidg
     }
 }
 
-Dice::Dice(Game *parent, QPointF pos)
-    : Die(parent, pos)
-{
-    srand (time(NULL));
-    game = parent;
-    for (int i = 0; i < NUM_DIES; ++i)
-        dies[i] = new Die(this, QPointF((i-1.5)*BoardSquare::WIDTH, -0.5*BoardSquare::WIDTH));
-}
-
-QRectF Dice::boundingRect() const {
-    return QRectF(-2*BoardSquare::WIDTH, -1*BoardSquare::WIDTH, 4*BoardSquare::WIDTH, 2*BoardSquare::WIDTH);
-}
-
 void Dice::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget) {
     Q_UNUSED(option);
     Q_UNUSED(widget);
@@ -55,63 +126,4 @@ void Dice::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWid
     painter->drawText(QRectF(-2*BoardSquare::WIDTH, 0*BoardSquare::WIDTH,
                              4*BoardSquare::WIDTH, BoardSquare::WIDTH),
                       Qt::AlignCenter, buttonText.c_str());
-}
-
-void Dice::diceRolledChanged(bool b)
-{
-    if (b)
-    {
-        buttonColor = Qt::gray;
-        if (rolledNumber == 0)
-            buttonText = "You rolled 0. Too bad!";
-        else
-            buttonText = "Move by " + std::to_string(rolledNumber) + " squares";
-    }
-    else
-    {
-        buttonColor = Qt::green;
-        buttonText = "Roll";
-    }
-    update();
-}
-
-unsigned int Die::roll() {
-    rolledNumber = rand() % 2;
-    update();
-    return rolledNumber;
-}
-
-unsigned int Dice::roll() {
-    rolledNumber = 0;
-    for (int i = 0; i < NUM_DIES; ++i)
-        rolledNumber += dies[i]->roll();
-    update();
-    emit rolledNumberChanged(rolledNumber);
-    return rolledNumber;
-}
-
-void Die::setToZero() {
-    rolledNumber = 0;
-}
-
-void Dice::setToZero() {
-    rolledNumber = 0;
-    for (int i = 0; i < NUM_DIES; ++i)
-        dies[i]->setToZero();
-}
-
-unsigned int Dice::getSquaresToMoveAndReset() {
-    unsigned int tmp = rolledNumber;
-    setToZero();
-    return tmp;
-}
-
-void Dice::mousePressEvent(QGraphicsSceneMouseEvent *e)
-{
-    if (!(e->buttons() & Qt::LeftButton))
-        return;
-    if (game->getDiceRolled())
-        return;
-    roll();
-    game->setDiceRolled();
 }

@@ -15,7 +15,6 @@ public:
     QRectF boundingRect() const override;
     void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget = 0) override;
     unsigned int roll();
-    void setToZero();
 private:
     unsigned int rolledNumber = 0;
 };
@@ -29,20 +28,21 @@ public:
     QRectF boundingRect() const override;
     void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget = 0) override;
     unsigned int roll();
-    void setToZero();
-    unsigned int getSquaresToMoveAndReset();
+    unsigned int getRolledNumber() const {return rolledNumber;}
+    bool getRolled() const {return rolled;}
+    void setNotRolled();
     void mousePressEvent(QGraphicsSceneMouseEvent *e);
-signals:
-    void rolledNumberChanged(unsigned int);
+
 private:
     Die *dies[NUM_DIES];
-    QTimer *activeTimeractiveTimer;
-    std::string buttonText = "Roll";
+    QTimer *activeTimer;
     Game *game;
     unsigned int rolledNumber = 0;
+    bool rolled = false;
+    QPropertyAnimation *blinkingAnimation;
+    std::string buttonText = "Roll";
     QColor buttonColor = Qt::green;
-private slots:
-    void diceRolledChanged(bool);
+    void diceRolledChanged(bool, Turns);
 };
 
 #endif // DIES_H
