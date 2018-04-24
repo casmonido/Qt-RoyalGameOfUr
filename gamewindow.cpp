@@ -3,7 +3,8 @@
 GameWindow::GameWindow(QWidget *parent)
     : QMainWindow(parent)
 {
-    QToolBar *mainBar = new QToolBar;
+    this->setWindowTitle("The royal game of Ur");
+    QToolBar *mainBar = new QToolBar(this);
     addToolBar(mainBar);
     newGameAction = new QAction(tr("New game"), mainBar);
     settingsAction = new QAction(tr("Settings"), mainBar);
@@ -11,19 +12,10 @@ GameWindow::GameWindow(QWidget *parent)
     mainBar->addAction(settingsAction);
     gameView = new GraphicsView(this);
     setCentralWidget(gameView);
-
-    //    connect(newGameAction,
-    //            SIGNAL(triggered()),
-    //            this,
-    //            SLOT(newGame()));
-    //    connect(settingsAction,
-    //            SIGNAL(triggered()),
-    //            this,
-    //            SLOT(openSettings()));
-    //    connect(exitAction,
-    //            SIGNAL(triggered()),
-    //            this,
-    //            SLOT(close()));
+    connect(newGameAction, SIGNAL(triggered()),
+            this, SLOT(newGame()));
+    connect(settingsAction, SIGNAL(triggered()),
+            this, SLOT(openSettings()));
     newGame();
 }
 
@@ -40,11 +32,16 @@ void GameWindow::openSettings()
 //    }
 }
 
+void GameWindow::displayWinner(WhoWon winner) {
+    // open popup dialog with options
+}
+
 void GameWindow::newGame()
 {
     //popup: do you really want to ?
     delete gameScene;
     gameScene = new GraphicsScene();
+    connect(gameScene, SIGNAL(gameEnded(WhoWon)), this, SLOT(displayWinner(WhoWon)));
     gameView->setScene(gameScene);
 }
 

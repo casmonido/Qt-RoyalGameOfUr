@@ -53,17 +53,17 @@ void Game::setOtherPlayersTurn() {
     int opponentsScore = getOpponentsScore();
     if (playerScore >= NUM_PIECES && opponentsScore >= NUM_PIECES)
     {
-        emit gameEnd(DRAW);
+        emit gameEnded(DRAW);
         return;
     }
     if (playerScore >= NUM_PIECES)
     {
-        emit gameEnd(PLAYER);
+        emit gameEnded(PLAYER);
         return;
     }
     if (opponentsScore >= NUM_PIECES)
     {
-        emit gameEnd(OPPONENT);
+        emit gameEnded(OPPONENT);
         return;
     }
     if (turn == PLAYERS_TURN)

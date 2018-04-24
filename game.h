@@ -33,7 +33,7 @@ public:
 
 signals:
     void turnChanged(Turns);
-    void gameEnd(WhoWon);
+    void gameEnded(WhoWon);
 private:
     Piece *opponentsPieces [NUM_PIECES];
     Piece *playersPieces [NUM_PIECES];

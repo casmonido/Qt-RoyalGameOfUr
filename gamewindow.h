@@ -6,6 +6,7 @@
 
 class GraphicsScene : public QGraphicsScene
 {
+    Q_OBJECT
 public:
     GraphicsScene():
         QGraphicsScene(-8*BoardSquare::WIDTH, -3*BoardSquare::WIDTH, 16*BoardSquare::WIDTH, 6*BoardSquare::WIDTH)
@@ -13,10 +14,13 @@ public:
         game = new Game();
         game->setPos(0*BoardSquare::WIDTH, 0*BoardSquare::WIDTH);
         addItem(game);
+        connect(game, SIGNAL(gameEnded(WhoWon)), this, SIGNAL(gameEnded(WhoWon)));
     }
     ~GraphicsScene() {
         delete game;
     }
+signals:
+    void gameEnded(WhoWon);
 private:
     Game *game;
 };
@@ -46,14 +50,13 @@ private:
 class GameWindow: public QMainWindow
 {
     Q_OBJECT
-//    QGraphicsView* mainPanel_;
-//    GameState* gameState_;
 public:
     GameWindow(QWidget *parent = 0);
     ~GameWindow();
 public slots:
     void newGame();
     void openSettings();
+    void displayWinner(WhoWon);
 private:
     QAction *newGameAction;
     QAction *settingsAction;
