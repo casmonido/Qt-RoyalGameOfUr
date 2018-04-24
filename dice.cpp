@@ -43,12 +43,17 @@ void Dice::diceRolledChanged(bool rolled, Turns turn)
     }
     else
     {
-        buttonColor = QColor(153, 54, 173, 255);
         blinkingAnimation->start();
         if (turn == PLAYERS_TURN)
+        {
+            buttonColor = QColor(153, 54, 173, 255);
             buttonText = "Roll";
+        }
         else
+        {
+            buttonColor = Qt::gray;
             buttonText = "...";
+        }
     }
     update();
 }

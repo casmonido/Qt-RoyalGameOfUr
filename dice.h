@@ -42,7 +42,7 @@ private:
     bool rolled = false;
     QPropertyAnimation *blinkingAnimation;
     std::string buttonText = "Roll";
-    QColor buttonColor = Qt::green;
+    QColor buttonColor = QColor(153, 54, 173, 255);
     void diceRolledChanged(bool, Turns);
 };
 
