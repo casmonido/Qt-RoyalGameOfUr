@@ -19,21 +19,17 @@ GameWindow::GameWindow(QWidget *parent)
     gameScene = new GraphicsScene();
     connect(gameScene, SIGNAL(gameEnded(WhoWon)), this, SLOT(displayWinner(WhoWon)));
     gameView->setScene(gameScene);
+    settingsModel = SettingsModel::getInstance(); //new SettingsModel();
+    connect(settingsModel, SIGNAL(fontChanged(QFont)), gameScene, SLOT(changeFont(QFont)));
+    connect(settingsModel, SIGNAL(moveTimeChanged(int)), gameScene, SLOT(changeMoveTime(int)));
+    connect(settingsModel, SIGNAL(playersColorChanged(QColor)), gameScene, SLOT(changePlayersColor(QColor)));
 }
 
 
 void GameWindow::openSettings()
 {
-    SettingsWindow *settings =  new SettingsWindow(this);
+    SettingsWindow *settings =  new SettingsWindow(this, settingsModel);
     settings->show();
-//    GameSettingsDialog* settingsDialog = new GameSettingsDialog(player1Name,
-//                                                                player2Name,
-//                                                                this);
-//    if(settingsDialog->exec() == QDialog::Accepted)
-//    {
-//        player1Name = settingsDialog->getPlayer1Name();
-//        player2Name = settingsDialog->getPlayer2Name();
-//    }
 }
 
 void GameWindow::displayWinner(WhoWon winner) {
@@ -55,4 +51,22 @@ GameWindow::~GameWindow()
 {
     delete gameScene;
     delete gameView;
+    delete settingsModel;
+}
+
+
+
+
+
+
+void GraphicsScene::changeFont(QFont f) {
+    game->changeFont(f);
+}
+
+void GraphicsScene::changeMoveTime(int time) {
+    game->changeMoveTime(time);
+}
+
+void GraphicsScene::changePlayersColor(QColor c) {
+    game->changePlayersColor(c);
 }

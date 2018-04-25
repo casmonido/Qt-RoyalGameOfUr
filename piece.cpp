@@ -1,4 +1,5 @@
 #include "piece.h"
+#include "settingsmodel.h"
 
 Piece::Piece(Game *parent, Square *location)
     : QGraphicsObject(parent)
@@ -37,6 +38,7 @@ void Piece::move(unsigned int squaresToMove)
         if (location->tryAndOccupy(this) == OK_CAPTURING)
             timeTillNextRound = 3*Game::ONE_MOVE_TIME;
         crossedPathLength += squaresToMove;
+        animation->setDuration(Game::ONE_MOVE_TIME);
         animation->setEndValue(location->getChildCenterPos(this));
         animation->start();
         activeTimer->start(timeTillNextRound); // sygnał dla zmiany rundy
