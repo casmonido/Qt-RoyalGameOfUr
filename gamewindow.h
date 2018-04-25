@@ -6,6 +6,7 @@
 #include "newgamedialog.h"
 #include "settingswindow.h"
 #include "settingsmodel.h"
+#include "gameenddialog.h"
 
 class GraphicsScene : public QGraphicsScene
 {

@@ -10,7 +10,8 @@ HEADERS += \
     settingswindow.h \
     gamewindow.h \
     settingsmodel.h \
-    newgamedialog.h
+    newgamedialog.h \
+    gameenddialog.h
 
 SOURCES += \
         main.cpp \
@@ -22,7 +23,8 @@ SOURCES += \
     settingswindow.cpp \
     gamewindow.cpp \
     settingsmodel.cpp \
-    newgamedialog.cpp
+    newgamedialog.cpp \
+    gameenddialog.cpp
 
 # install
 target.path = $$[QT_INSTALL_EXAMPLES]/widgets/graphicsview/royalurgame
@@ -33,4 +35,5 @@ RESOURCES += \
 
 FORMS += \
     settingswindow.ui \
-    newgamedialog.ui
+    newgamedialog.ui \
+    gameenddialog.ui

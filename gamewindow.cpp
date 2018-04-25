@@ -33,7 +33,13 @@ void GameWindow::openSettings()
 }
 
 void GameWindow::displayWinner(WhoWon winner) {
-    // open popup dialog with options
+    QString strlabel = QString("Congratulations, you won!");
+    if (winner == OPPONENT)
+        strlabel = QString("You lost!");
+    if (winner == DRAW)
+        strlabel = QString("It's a draw");
+    GameEndDialog *dialog = new GameEndDialog(this, strlabel);
+    dialog->exec();
 }
 
 void GameWindow::newGame()
