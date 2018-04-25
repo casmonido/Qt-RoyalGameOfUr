@@ -23,7 +23,7 @@ Game::Game(QGraphicsItem *parent)
 
 void Game::opponentsActionOnTurnChanged(Turns t)
 {
-    if (t != OPPONENTS_TURN)
+    if (t != OPPONENTS_TURN || getGameEnd())
         return;
     connect(activeTimer, SIGNAL(timeout()), this, SLOT(rollForOpponent()));
     activeTimer->start(SettingsModel::MOVE_TIME);
@@ -36,6 +36,8 @@ void Game::rollForOpponent() {
        connect(activeTimer, SIGNAL(timeout()), this, SLOT(makeMoveForOpponent()));
        activeTimer->start(SettingsModel::MOVE_TIME);
     }
+//    gameEnd = true;
+//    emit gameEnded(OPPONENT);
 }
 
 void Game::makeMoveForOpponent() {
@@ -54,16 +56,19 @@ void Game::setOtherPlayersTurn() {
     if (playerScore >= NUM_PIECES && opponentsScore >= NUM_PIECES)
     {
         emit gameEnded(DRAW);
+        gameEnd = true;
         return;
     }
     if (playerScore >= NUM_PIECES)
     {
         emit gameEnded(PLAYER);
+        gameEnd = true;
         return;
     }
     if (opponentsScore >= NUM_PIECES)
     {
         emit gameEnded(OPPONENT);
+        gameEnd = true;
         return;
     }
     if (turn == PLAYERS_TURN)
@@ -75,8 +80,6 @@ void Game::setOtherPlayersTurn() {
     opponentMoved = false;
     emit turnChanged(turn);
 }
-
-
 
 
 

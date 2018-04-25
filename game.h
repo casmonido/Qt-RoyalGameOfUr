@@ -27,13 +27,15 @@ public:
     Turns getTurn() const {return turn;}
     int getRolledNumber(); //zmienic nazwę
     bool getDiceRolled() const;
-    bool getPlayerMoved() {return playerMoved;}
+    bool getPlayerMoved() const {return playerMoved;}
     void setPlayerMoved() {playerMoved = true;}
+    bool getGameEnd() const {return gameEnd;}
 
 signals:
     void turnChanged(Turns);
     void gameEnded(WhoWon);
 private:
+    bool gameEnd = false;
     Piece *opponentsPieces [NUM_PIECES];
     Piece *playersPieces [NUM_PIECES];
     Dice *dice;

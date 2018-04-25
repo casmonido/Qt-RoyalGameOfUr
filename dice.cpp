@@ -93,7 +93,7 @@ void Dice::mousePressEvent(QGraphicsSceneMouseEvent *e)
 {
     if (!(e->buttons() & Qt::LeftButton))
         return;
-    if ((game->getTurn() == PLAYERS_TURN) && !rolled)
+    if (!game->getGameEnd() && (game->getTurn() == PLAYERS_TURN) && !rolled)
         roll();
 }
 
