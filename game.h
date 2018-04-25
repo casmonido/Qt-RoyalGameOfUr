@@ -18,7 +18,6 @@ class Square;
 class Game: public QGraphicsObject
 {
     Q_OBJECT
-    Q_PROPERTY(Turns turn READ getTurn NOTIFY turnChanged)
 public:
     static const int NUM_PIECES = 7;
     Game(QGraphicsItem *parent = 0);

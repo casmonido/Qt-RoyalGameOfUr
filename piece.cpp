@@ -67,7 +67,7 @@ void PlayersPiece::paint(QPainter *painter, const QStyleOptionGraphicsItem *opti
 {
     Q_UNUSED(option);
     Q_UNUSED(widget);
-    painter->setBrush(QColor(255, 250, 250, 255));
+    painter->setBrush(SettingsModel::PLAYER_COLOR);
     painter->drawEllipse(boundingRect());
 }
 
@@ -76,7 +76,7 @@ void OpponentsPiece::paint(QPainter *painter, const QStyleOptionGraphicsItem *op
 {
     Q_UNUSED(option);
     Q_UNUSED(widget);
-    painter->setBrush(QColor(5, 5, 5, 255));
+    painter->setBrush(SettingsModel::OPPONENT_COLOR);
     painter->drawEllipse(boundingRect());
 }
 

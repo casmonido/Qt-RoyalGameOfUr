@@ -14,6 +14,7 @@ public:
     static QFont FONT;
     static int MOVE_TIME;
     static QColor PLAYER_COLOR;
+    static QColor OPPONENT_COLOR;
     static const QString Q_STRING_WHITE;
     static const QString Q_STRING_BLACK;
     SettingsModel() {}

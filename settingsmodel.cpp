@@ -12,8 +12,12 @@ void SettingsModel::setMoveTime(int val) {
 }
 
 void SettingsModel::setPlayersColor(QString c) {
-    QColor qc = Qt::black;
+    QColor qp = Qt::black, qo = Qt::white;
     if (c == Q_STRING_WHITE)
-        qc = Qt::white;
-    PLAYER_COLOR = qc;
+    {
+         qp = Qt::white;
+         qo = Qt::black;
+    }
+    PLAYER_COLOR = qp;
+    OPPONENT_COLOR = qo;
 }

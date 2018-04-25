@@ -130,7 +130,7 @@ void Dice::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWid
     painter->setBrush(buttonColor);
     painter->drawRect(boundingRect());
     painter->setBrush(QColor(5, 5, 5, 255));
-    painter->setFont(QFont("Arial", 30));
+    painter->setFont(SettingsModel::FONT);
     painter->drawText(QRectF(-2*BoardSquare::WIDTH, 0*BoardSquare::WIDTH,
                              4*BoardSquare::WIDTH, BoardSquare::WIDTH),
                       Qt::AlignCenter, buttonText.c_str());

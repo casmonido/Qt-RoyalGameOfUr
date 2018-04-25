@@ -6,6 +6,7 @@
 QFont SettingsModel::FONT = QFont("Arial", 30);
 int SettingsModel::MOVE_TIME = 1000;
 QColor SettingsModel::PLAYER_COLOR = Qt::white;
+QColor SettingsModel::OPPONENT_COLOR = Qt::black;
 const QString SettingsModel::Q_STRING_WHITE = QString("White");
 const QString SettingsModel::Q_STRING_BLACK = QString("Black");
 
