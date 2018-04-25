@@ -89,15 +89,13 @@ Board::Board(QGraphicsItem *parent)
 
 Square *Board::destinationSquare(Piece *p, unsigned int crossedPathLength, unsigned int pathToCross)
 {
-    if (crossedPathLength + pathToCross > PATH_LEN-1)
-    {
-        p->setWholePathCrossed();
-        return lastSquare;
-    }
+    unsigned int index = crossedPathLength + pathToCross;
+    if (index > PATH_LEN-1)
+        index = PATH_LEN-1;
     if (p->getColor() == PLAYERS)
-        return playersPath[crossedPathLength + pathToCross];
+        return playersPath[index];
     else
-        return opponentsPath[crossedPathLength + pathToCross];
+        return opponentsPath[index];
     return getStartingSquare(p->getColor()); //wont happen
 }
 

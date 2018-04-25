@@ -152,7 +152,7 @@ QPointF LastSquare::getChildCenterPos(Piece *p) const {
 }
 
 OccupySquareResults LastSquare::tryAndOccupy(Piece *p) {
-    Q_UNUSED(p);
+    p->setWholePathCrossed();
     return OK;
 }
 
