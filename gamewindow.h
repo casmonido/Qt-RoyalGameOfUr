@@ -22,10 +22,6 @@ public:
     ~GraphicsScene() {
         delete game;
     }
-public slots:
-    void changeFont(QFont);
-    void changeMoveTime(int);
-    void changePlayersColor(QColor);
 signals:
     void gameEnded(WhoWon);
 private:

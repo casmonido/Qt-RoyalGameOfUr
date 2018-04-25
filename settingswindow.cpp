@@ -2,14 +2,17 @@
 #include "ui_settingswindow.h"
 
 
-SettingsWindow::SettingsWindow(QWidget *parent, SettingsModel *model) :
+SettingsWindow::SettingsWindow(QWidget *parent, SettingsModel *model,
+                               const QFont &font, int time, const QString &color) :
     QMainWindow(parent)
 {
     this->model = model;
     ui = new Ui::SettingsWindow;
     ui->setupUi(this);
+    ui->fontComboBox->setCurrentFont(font);
+    ui->comboBox->setCurrentText(color);
+    ui->horizontalSlider->setValue(time);
     this->setWindowModality(Qt::ApplicationModal);
-
 }
 
 void SettingsWindow::saveSettings() {

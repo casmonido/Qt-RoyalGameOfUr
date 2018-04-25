@@ -26,7 +26,7 @@ void Game::opponentsActionOnTurnChanged(Turns t)
     if (t != OPPONENTS_TURN)
         return;
     connect(activeTimer, SIGNAL(timeout()), this, SLOT(rollForOpponent()));
-    activeTimer->start(ONE_MOVE_TIME);
+    activeTimer->start(SettingsModel::MOVE_TIME);
 }
 
 void Game::rollForOpponent() {
@@ -34,7 +34,7 @@ void Game::rollForOpponent() {
     if (dice->roll() > 0)
     {
        connect(activeTimer, SIGNAL(timeout()), this, SLOT(makeMoveForOpponent()));
-       activeTimer->start(ONE_MOVE_TIME);
+       activeTimer->start(SettingsModel::MOVE_TIME);
     }
 }
 
@@ -137,18 +137,11 @@ void Game::paint(QPainter *painter,
 {
     Q_UNUSED(option);
     Q_UNUSED(widget);
-    //painter->setPen(oppontentsTurnColor);
-    //painter->setBrush(oppontentsTurnColor);
     QRectF rect = QRectF(1*BoardSquare::WIDTH, -2.5*BoardSquare::WIDTH, 6*BoardSquare::WIDTH, BoardSquare::WIDTH);
-    //painter->drawRect(rect);
     painter->setPen(oppontentsTurnColor);
-    painter->setFont(QFont("Arial", 40));
+    painter->setFont(SettingsModel::FONT);
     painter->drawText(rect, Qt::AlignCenter, "Opponent's turn");
     painter->setPen(playersTurnColor);
-    //painter->setBrush(playersTurnColor);
     rect = QRectF(1*BoardSquare::WIDTH, 1.5*BoardSquare::WIDTH, 6*BoardSquare::WIDTH, BoardSquare::WIDTH);
-    //painter->drawRect(rect);
-    //painter->setPen(Qt::white);
-    painter->setFont(QFont("Arial", 40));
     painter->drawText(rect, Qt::AlignCenter, "Your turn");
 }

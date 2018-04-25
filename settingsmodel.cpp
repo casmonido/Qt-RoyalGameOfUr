@@ -2,31 +2,18 @@
 
 
 void SettingsModel::setFont(QFont nf) {
-    if (nf != font)
-    {
-        font = nf;
-        emit fontChanged(font);
-    }
+    nf.setPointSize(30);
+    FONT = nf;
 }
 
+
 void SettingsModel::setMoveTime(int val) {
-    if (moveTime != val)
-    {
-        moveTime = val;
-        emit moveTimeChanged(moveTime);
-    }
-    Game::ONE_MOVE_TIME = 0;
+    MOVE_TIME = val;
 }
 
 void SettingsModel::setPlayersColor(QString c) {
-    QColor qc;
-    if (c == qStringWhite)
+    QColor qc = Qt::black;
+    if (c == Q_STRING_WHITE)
         qc = Qt::white;
-    else
-        qc = Qt::black;
-    if (qc != playersColor)
-    {
-        playersColor = qc;
-        emit playersColorChanged(playersColor);
-    }
+    PLAYER_COLOR = qc;
 }

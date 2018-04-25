@@ -8,6 +8,7 @@
 #include "enums.h"
 #include "board.h"
 #include "dice.h"
+#include "settingsmodel.h"
 class Board;
 class Dice;
 class Piece;
@@ -20,7 +21,6 @@ class Game: public QGraphicsObject
     Q_PROPERTY(Turns turn READ getTurn NOTIFY turnChanged)
 public:
     static const int NUM_PIECES = 7;
-    static int ONE_MOVE_TIME;
     Game(QGraphicsItem *parent = 0);
     QRectF boundingRect() const override;
     void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget = 0) override;
@@ -30,10 +30,6 @@ public:
     bool getDiceRolled() const;
     bool getPlayerMoved() {return playerMoved;}
     void setPlayerMoved() {playerMoved = true;}
-    void changeFont(QFont c) {}
-    void changeMoveTime(int time) {Game::ONE_MOVE_TIME = 0;}
-    void changePlayersColor(QColor c) {}
-
 
 signals:
     void turnChanged(Turns);

@@ -10,32 +10,19 @@
 class SettingsModel: public QObject
 {
     Q_OBJECT
-private:
-    SettingsModel() {}
-    static SettingsModel *model;
 public:
-    static SettingsModel *getInstance() {
-        if (model == 0)
-            model = new SettingsModel();
-        return model;
-    }
-    QFont getFont() const {return font;}
-    int getMoveTime() const {return moveTime;}
-    QColor getPlayersColor() const {return playersColor;}
+    static QFont FONT;
+    static int MOVE_TIME;
+    static QColor PLAYER_COLOR;
+    static const QString Q_STRING_WHITE;
+    static const QString Q_STRING_BLACK;
+    SettingsModel() {}
+    QFont getFont() const {return FONT;}
+    int getMoveTime() const {return MOVE_TIME;}
+    QColor getPlayersColor() const {return PLAYER_COLOR;}
     void setFont(QFont);
     void setMoveTime(int);
     void setPlayersColor(QString);
-
-signals:
-    void fontChanged(QFont);
-    void moveTimeChanged(int);
-    void playersColorChanged(QColor);
-private:
-    QFont font = "Arial";
-    int moveTime = 1000;
-    QColor playersColor = Qt::white;
-    const QString qStringWhite = QString("White");
-
 };
 
 #endif // SETTINGSMODEL_H

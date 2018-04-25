@@ -17,7 +17,7 @@ Dice::Dice(Game *parent, QPointF pos)
     for (int i = 0; i < DICE_NUM; ++i)
         dice[i] = new Die(this, QPointF((i-1.5)*BoardSquare::WIDTH, -0.5*BoardSquare::WIDTH));
     blinkingAnimation = new QPropertyAnimation(this, "pos"); //color
-    blinkingAnimation->setDuration(1.5*Game::ONE_MOVE_TIME);
+    blinkingAnimation->setDuration(1.5*SettingsModel::MOVE_TIME);
     //blinkingAnimation->setEasingCurve(QEasingCurve::BezierSpline);
     activeTimer = new QTimer(this);
     activeTimer->setSingleShot(true);
@@ -70,7 +70,7 @@ unsigned int Dice::roll() {
         rolledNumber += dice[i]->roll();
     rolled = true;
     if (rolledNumber == 0)
-        activeTimer->start(Game::ONE_MOVE_TIME);
+        activeTimer->start(SettingsModel::MOVE_TIME);
     diceRolledChanged(rolled, game->getTurn());
     return rolledNumber;
 }

@@ -3,8 +3,11 @@
 #include "gamewindow.h"
 #include "settingsmodel.h"
 
-int Game::ONE_MOVE_TIME = 1000;
-SettingsModel *SettingsModel::model = 0;
+QFont SettingsModel::FONT = QFont("Arial", 30);
+int SettingsModel::MOVE_TIME = 1000;
+QColor SettingsModel::PLAYER_COLOR = Qt::white;
+const QString SettingsModel::Q_STRING_WHITE = QString("White");
+const QString SettingsModel::Q_STRING_BLACK = QString("Black");
 
 int main(int argc, char **argv)
 {
@@ -12,7 +15,5 @@ int main(int argc, char **argv)
     QApplication app(argc, argv);
     GameWindow window;
     window.show();
-
-//    SettingsModel settingsModel;
     return app.exec();
 }

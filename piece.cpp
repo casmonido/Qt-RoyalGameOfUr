@@ -9,7 +9,6 @@ Piece::Piece(Game *parent, Square *location)
     this->location->tryAndOccupy(this);
     this->setPos(location->getChildCenterPos(this));
     animation  = new QPropertyAnimation(this, "pos");
-    animation->setDuration(Game::ONE_MOVE_TIME);
     animation->setEasingCurve(QEasingCurve::BezierSpline);
     activeTimer = new QTimer(this);
     activeTimer->setSingleShot(true);
@@ -25,20 +24,21 @@ void Piece::goBackToBeginning(PieceColors c) {
     location = game->destinationSquare(this, crossedPathLength, 0);
     location->tryAndOccupy(this);
     animation->setEndValue(location->getChildCenterPos(this));
+    animation->setDuration(SettingsModel::MOVE_TIME);
     animation->start();
 }
 
 void Piece::move(unsigned int squaresToMove)
 {
-    int timeTillNextRound = 2*Game::ONE_MOVE_TIME;
+    int timeTillNextRound = 2*SettingsModel::MOVE_TIME;
     if (squaresToMove != 0) //jesli wylosowano 0 to gra sama zmienia rundę
     {
         location->leave(this);
         location = game->destinationSquare(this, crossedPathLength, squaresToMove);
         if (location->tryAndOccupy(this) == OK_CAPTURING)
-            timeTillNextRound = 3*Game::ONE_MOVE_TIME;
+            timeTillNextRound = 3*SettingsModel::MOVE_TIME;
         crossedPathLength += squaresToMove;
-        animation->setDuration(Game::ONE_MOVE_TIME);
+        animation->setDuration(SettingsModel::MOVE_TIME);
         animation->setEndValue(location->getChildCenterPos(this));
         animation->start();
         activeTimer->start(timeTillNextRound); // sygnał dla zmiany rundy
