@@ -44,6 +44,8 @@ private:
     std::string buttonText = "Roll";
     QColor buttonColor = QColor(153, 54, 173, 255);
     void diceRolledChanged(bool, Turns);
+    virtual void hoverEnterEvent (QGraphicsSceneHoverEvent *event) override;
+    virtual void hoverLeaveEvent (QGraphicsSceneHoverEvent *event) override;
 };
 
 #endif // DIES_H

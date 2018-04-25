@@ -50,6 +50,8 @@ public:
     PieceColors getColor();
     void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget = 0) override;
     void mousePressEvent(QGraphicsSceneMouseEvent *e);
+    virtual void hoverEnterEvent (QGraphicsSceneHoverEvent *event) override;
+    virtual void hoverLeaveEvent (QGraphicsSceneHoverEvent *event) override;
 };
 
 #endif // PIECE_H

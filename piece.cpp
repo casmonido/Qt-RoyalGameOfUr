@@ -106,4 +106,17 @@ PieceColors PlayersPiece::getColor() {
 
 PlayersPiece::PlayersPiece(Game *parent, Square *location)
     : Piece(parent, location) {
+    setAcceptHoverEvents(true);
+}
+
+void PlayersPiece::hoverEnterEvent (QGraphicsSceneHoverEvent *event)
+{
+  QGraphicsItem::hoverEnterEvent(event);
+  QApplication::setOverrideCursor(Qt::PointingHandCursor);
+}
+
+void PlayersPiece::hoverLeaveEvent (QGraphicsSceneHoverEvent *event)
+{
+  QGraphicsItem::hoverLeaveEvent(event);
+  QApplication::setOverrideCursor(Qt::ArrowCursor);
 }

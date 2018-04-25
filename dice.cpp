@@ -22,6 +22,7 @@ Dice::Dice(Game *parent, QPointF pos)
     activeTimer = new QTimer(this);
     activeTimer->setSingleShot(true);
     connect(activeTimer, SIGNAL(timeout()), game, SLOT(setOtherPlayersTurn()));
+    setAcceptHoverEvents(true);
 }
 
 void Dice::diceRolledChanged(bool rolled, Turns turn)
@@ -139,4 +140,16 @@ void Dice::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWid
 void Die::setToZero() {
     rolledNumber = 0;
     update();
+}
+
+void Dice::hoverEnterEvent (QGraphicsSceneHoverEvent *event)
+{
+  QGraphicsItem::hoverEnterEvent(event);
+  QApplication::setOverrideCursor(Qt::PointingHandCursor);
+}
+
+void Dice::hoverLeaveEvent (QGraphicsSceneHoverEvent *event)
+{
+  QGraphicsItem::hoverLeaveEvent(event);
+  QApplication::setOverrideCursor(Qt::ArrowCursor);
 }
