@@ -37,8 +37,10 @@ void GameWindow::displayWinner(WhoWon winner) {
     if (winner == OPPONENT)
         strlabel = QString("You lost!");
     if (winner == DRAW)
-        strlabel = QString("It's a draw");
+        strlabel = QString("It's a draw!");
     GameEndDialog *dialog = new GameEndDialog(this, strlabel);
+    connect(dialog, SIGNAL(newGame()), this, SLOT(newGame()));
+    connect(dialog, SIGNAL(closeApp()), this, SLOT(close()));
     dialog->exec();
 }
 

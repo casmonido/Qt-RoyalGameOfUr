@@ -35,13 +35,6 @@
         <enum>QLayout::SetMinimumSize</enum>
        </property>
        <item>
-        <widget class="QPushButton" name="pushButton">
-         <property name="text">
-          <string>Settings</string>
-         </property>
-        </widget>
-       </item>
-       <item>
         <widget class="QPushButton" name="pushButton_2">
          <property name="text">
           <string>Play again</string>
@@ -63,4 +56,7 @@
  </widget>
  <resources/>
  <connections/>
+ <slots>
+  <signal>newGame()</signal>
+ </slots>
 </ui>

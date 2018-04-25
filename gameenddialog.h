@@ -14,9 +14,13 @@ class GameEndDialog : public QDialog
 public:
     explicit GameEndDialog(QWidget *parent = 0, const QString &strlabel = QString(""));
     ~GameEndDialog();
-
+signals:
+    void closeApp();
+    void newGame();
 private:
     Ui::GameEndDialog *ui;
+public slots:
+    void closeAndNewGame();
 };
 
 #endif // GAMEENDDIALOG_H
